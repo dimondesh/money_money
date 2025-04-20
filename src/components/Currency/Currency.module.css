@@ -1,0 +1,28 @@
+.wrapper {
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+    padding: 4px 0;
+  }
+  
