@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-
 import css from "./FormButton.module.css";
 
 const FormButton = ({ isLink, to, type = "button", children }) => {
@@ -12,7 +11,6 @@ const FormButton = ({ isLink, to, type = "button", children }) => {
   }
 
   return (
-
     <button type={type} className={css.submitBtn}>
       {children}
     </button>
