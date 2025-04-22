@@ -1,5 +1,6 @@
 import { logIn } from "../../redux/auth/operations.js";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import FormButton from "../common/FormButton/FormButton";
@@ -20,10 +21,14 @@ const schema = Yup.object().shape({
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = (values, { resetForm }) => {
-    dispatch(logIn(values));
-    resetForm();
+  const handleSubmit = async (values, { resetForm }) => {
+    const action = await dispatch(logIn(values));
+    if (logIn.fulfilled.match(action)) {
+      navigate("/dashboard");
+      resetForm();
+    }
   };
 
   return (
