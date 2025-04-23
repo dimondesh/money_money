@@ -1,0 +1,82 @@
+.statistics {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: #ffffff;
+}
+
+.chartContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.chart {
+  width: 100%;
+  max-width: 288px;
+}
+
+.statisticsData {
+  width: 100%;
+}
+
+.statisticsDashboard {
+  margin-bottom: 20px;
+}
+
+.statisticsTable {
+  width: 100%;
+}
+
+.noData {
+  text-align: center;
+  padding: 30px 20px;
+  background-color: rgba(31, 31, 46, 0.6);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+}
+
+.error {
+  color: #ff6596;
+  text-align: center;
+  padding: 30px;
+  font-size: 16px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .statistics {
+    padding: 20px 40px;
+  }
+
+  .chartContainer {
+    margin-bottom: 40px;
+  }
+
+  .chart {
+    max-width: 336px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .statistics {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .chartContainer {
+    margin-bottom: 0;
+    width: 288px;
+    flex-shrink: 0;
+  }
+
+  .statisticsData {
+    flex-grow: 1;
+    max-width: 395px;
+  }
+
+  .statisticsDashboard {
+    margin-bottom: 20px;
+  }
+}

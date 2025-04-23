@@ -1,0 +1,143 @@
+.tableWrapper {
+  width: 100%;
+  background-color: rgba(31, 31, 46, 0.6);
+  border-radius: 8px;
+  overflow: hidden;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  margin-top: 20px;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background-color: rgba(82, 85, 154, 0.5);
+  font-weight: 600;
+  font-size: 16px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background-color 0.2s;
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.table td {
+  padding: 14px 0;
+  font-size: 16px;
+}
+
+.table td:first-child {
+  padding-left: 20px;
+  width: 24px;
+}
+
+.table td:nth-child(2) {
+  padding-left: 16px;
+  text-align: left;
+}
+
+.table td:last-child {
+  padding-right: 20px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.dotCell {
+  width: 24px;
+  padding-right: 0 !important;
+}
+
+.colorDot {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+}
+
+.expenses,
+.income {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.expenses {
+  font-size: 16px;
+}
+
+.income {
+  font-size: 16px;
+  color: #24cca7;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.value {
+  font-weight: 600;
+}
+
+@media screen and (max-width: 767px) {
+  .tableHeader,
+  .table td {
+    font-size: 14px;
+  }
+
+  .tableHeader {
+    padding: 14px 16px;
+  }
+
+  .table td {
+    padding: 12px 0;
+  }
+
+  .table td:first-child {
+    padding-left: 16px;
+  }
+
+  .table td:last-child {
+    padding-right: 16px;
+  }
+
+  .colorDot {
+    width: 20px;
+    height: 20px;
+  }
+
+  .expenses,
+  .income {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .tableWrapper {
+    margin-top: 30px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .tableWrapper {
+    margin-top: 32px;
+    max-width: 395px;
+  }
+}
