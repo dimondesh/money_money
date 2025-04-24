@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import FormButton from "../common/FormButton/FormButton";
+import LoginValidatiSchema from "../../../helpers/LoginValidatiSchema";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -33,20 +34,9 @@ const LoginForm = () => {
   return (
     <div className={css.FormWrapper}>
       <div className={css.FormCard}>
-        <div className={css.logoBlock}>
-          <img
-            src="/money-guard.svg"
-            alt="MoneyGuard logo"
-            className={css.logo}
-            width="36"
-            height="36"
-          />
-          <h2 className={css.logoText}>MoneyGuard</h2>
-        </div>
-
         <Formik
           initialValues={{ email: "", password: "" }}
-          validationSchema={schema}
+          validationSchema={LoginValidatiSchema}
           onSubmit={handleSubmit}
         >
           {(formik) => (
@@ -55,6 +45,17 @@ const LoginForm = () => {
               autoComplete="off"
               className={css.form}
             >
+              <div className={css.logoBlock}>
+                <img
+                  src="/money-guard.svg"
+                  alt="MoneyGuard logo"
+                  className={css.logo}
+                  width="36"
+                  height="36"
+                />
+                <h2 className={css.logoText}>MoneyGuard</h2>
+              </div>
+
               <div className={css.inputGroup}>
                 <div
                   className={`${css.inputBorderWrap} ${
