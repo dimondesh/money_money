@@ -1,18 +1,17 @@
-.backdrop {
+.loaderBackdrop {
   position: fixed;
-  background-color: #38254e;
-  opacity: 0.4;
-
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(220deg, #6d54eb 28.31%, #652392 66.76%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
-.loader {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1001;
+.spinnerWrapper {
+  width: 100px;
+  height: 100px;
 }

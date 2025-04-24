@@ -1,24 +1,20 @@
-import { Watch } from 'react-loader-spinner';
+
+import { RotatingLines } from 'react-loader-spinner';
 import s from './Loader.module.css';
 
 const Loader = () => {
-  return (
-    <>
-      <div className={s.backdrop}></div>
-      <div className={s.loader}>
-        <Watch
-          visible={true}
-          height="80"
-          width="80"
-          radius="48"
-          color="#ffd8d0"
-          ariaLabel="watch-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-      </div>
-    </>
-  );
+    return (
+        <div className={s.loaderBackdrop}>
+         <div className={s.spinnerWrapper}>
+             <RotatingLines
+                strokeColor="lavender"
+                strokeWidth="4"
+                animationDuration="0.8"
+                width="96"
+                visible={true} />
+            </div>
+        </div>
+    );
 };
 
 export default Loader;
