@@ -14,8 +14,8 @@ const initialState = {
     balance: null,
   },
   token: null,
-  selectIsLoggedIn: false,
-  selectIsRefreshing: false,
+  isLoggedIn: false,
+  isRefreshing: false,
   isLoading: false,
   isError: null,
 };
@@ -31,7 +31,6 @@ const slice = createSlice({
       .addCase(refreshUserThunk.pending, (state) => {
         state.isRefreshing = true;
         state.isLoading = true;
-        state.isLoggedIn = true;
       })
       .addCase(refreshUserThunk.rejected, (state) => {
         state.isRefreshing = false;
@@ -42,7 +41,6 @@ const slice = createSlice({
         state.user.name = payload.username;
         state.user.email = payload.email;
         state.user.balance = payload.balance;
-
         state.isLoggedIn = true;
         state.isRefreshing = false;
         state.isLoading = false;
@@ -80,4 +78,3 @@ const slice = createSlice({
 });
 
 export const authReducer = slice.reducer;
-export const { updateBalance } = slice.actions;
