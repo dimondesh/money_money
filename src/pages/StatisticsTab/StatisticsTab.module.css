@@ -1,82 +1,78 @@
 .statistics {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  color: #ffffff;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
 }
 
-.chartContainer {
-  display: flex;
-  justify-content: center;
+.statisticsTitle {
+  font-weight: 400;
+  font-size: 30px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.doughnutChart {
+  width: 280px;
+  height: 280px;
   margin-bottom: 32px;
 }
 
-.chart {
-  width: 100%;
-  max-width: 288px;
-}
-
-.statisticsData {
-  width: 100%;
-}
-
-.statisticsDashboard {
+.statisticDatePicker {
+  height: 120px;
   margin-bottom: 20px;
 }
 
-.statisticsTable {
-  width: 100%;
-}
-
-.noData {
-  text-align: center;
-  padding: 30px 20px;
-  background-color: rgba(31, 31, 46, 0.6);
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 16px;
-}
-
-.error {
-  color: #ff6596;
-  text-align: center;
-  padding: 30px;
-  font-size: 16px;
-}
-
-@media screen and (min-width: 768px) and (max-width: 1279px) {
+@media (min-width: 768px) {
   .statistics {
-    padding: 20px 40px;
-  }
-
-  .chartContainer {
-    margin-bottom: 40px;
-  }
-
-  .chart {
-    max-width: 336px;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .statistics {
+    padding: 0;
+    display: flex;
     flex-direction: row;
-    justify-content: space-between;
     gap: 32px;
   }
 
-  .chartContainer {
+  .statisticsTitle {
+    margin-bottom: 20px;
+  }
+
+  .doughnutChart {
+    width: 336px;
+    height: 336px;
     margin-bottom: 0;
-    width: 288px;
-    flex-shrink: 0;
   }
 
   .statisticsData {
-    flex-grow: 1;
-    max-width: 395px;
+    display: flex;
+    flex-direction: column;
   }
 
-  .statisticsDashboard {
-    margin-bottom: 20px;
+  .statisticDatePicker {
+    margin-top: 20px;
+    height: 50px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .statistics {
+    padding-left: 69px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-right: 16px;
+  }
+
+  .statisticsTitle {
+    margin-left: 15px;
+  }
+
+  .doughnutChart {
+    width: 288px;
+    height: 288px;
+  }
+
+  .statisticsData {
+    width: 395px;
+  }
+
+  .statisticDatePicker {
+    margin-top: 65px;
   }
 }

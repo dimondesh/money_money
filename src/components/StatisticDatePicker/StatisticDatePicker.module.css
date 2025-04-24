@@ -1,109 +1,120 @@
 .wrapper {
   display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
-  justify-content: center;
+  gap: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 10;
 }
 
 .dropdownWrapper {
   position: relative;
   width: 100%;
-  max-width: 182px;
 }
 
 .dropdownButton {
-  width: 100%;
-  height: 50px;
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
-  color: #ffffff;
-  padding: 0 20px;
-  font-size: 16px;
-  font-weight: 400;
-  text-align: left;
-  cursor: pointer;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  transition: border-color 0.3s;
+  align-items: center;
+  background: rgba(74, 86, 226, 0.1);
+  border: 1px solid #7771cc;
+  border-radius: 12px;
+  color: #fff;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  width: 280px;
+  height: 50px;
+  position: relative;
+  outline: none;
+}
+
+.dropdownWrapper::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  padding: 4px;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.dropdownWrapper.open::after {
+  transform: translateY(-50%) rotate(-135deg);
 }
 
 .dropdownButton:hover {
-  border-color: rgba(255, 255, 255, 0.6);
-}
-
-.dropdownButton::after {
-  content: "";
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: transform 0.3s;
-}
-
-.open .dropdownButton::after {
-  transform: rotate(180deg);
+  background: linear-gradient(180deg, #4c3e9d, #6649cf);
 }
 
 .dropdownList {
   position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  max-height: 300px;
-  overflow-y: auto;
-  background-color: #21222c;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
   margin-top: 4px;
-  padding: 12px 0;
-  z-index: 10;
+  background: linear-gradient(180deg, #705aed, #300fb3);
+  border-radius: 8px;
+  padding: 8px 0;
+  width: 280px;
+  max-height: 157px;
+  overflow-y: auto;
+  z-index: 50;
+  border: none;
+  outline: none;
+  font-size: 16px;
   list-style: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownList::-webkit-scrollbar {
+  display: none;
 }
 
 .dropdownItem {
-  padding: 8px 20px;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.8);
+  padding: 10px 16px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  color: #fff;
+  transition: background 0.2s;
+  text-align: left;
+  width: 100%;
 }
 
-.dropdownItem:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-}
-
+.dropdownItem:hover,
 .dropdownItemActive {
-  background-color: rgba(110, 120, 232, 0.3);
-  color: #ffffff;
-  position: relative;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ff8a65;
 }
 
-.dropdownItemActive::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-@media screen and (max-width: 767px) {
-  .wrapper {
-    flex-direction: column;
-    align-items: center;
+@media (min-width: 768px) {
+  .dropdownButton {
+    width: 160px;
   }
 
-  .dropdownWrapper {
-    max-width: 280px;
+  .dropdownList {
+    width: 159px;
+  }
+
+  .wrapper {
+    flex-direction: row;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .dropdownButton {
+    width: 181px;
+  }
+
+  .dropdownList {
+    width: 182px;
+  }
+
+  .wrapper {
+    gap: 32px;
   }
 }

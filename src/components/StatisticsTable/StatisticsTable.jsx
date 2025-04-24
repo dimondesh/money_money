@@ -1,73 +1,70 @@
 import React from "react";
 import css from "./StatisticsTable.module.css";
 
-const StatisticsTable = ({ summary, categories, income, expenses }) => {
-  const formatNumber = (number) => {
-    return number
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  };
+const formatNumber = (number) => {
+  return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+};
 
+const StatisticsTable = ({
+  summary,
+  categories,
+  incomeSummaryByPeriod,
+  expensesSummaryByPeriod,
+}) => {
   const getCategoryName = (id) => {
-    const category = categories.find((cat) => cat.id === id);
-    return category ? category.name : "Невідомо";
+    return categories.find((cat) => cat.id === id)?.name;
   };
 
   const getCategoryColor = (index) => {
     const colors = [
-      "#FF6384",
-      "#36A2EB",
-      "#FFCE56",
-      "#8E44AD",
-      "#2ECC71",
-      "#F39C12",
-      "#E74C3C",
-      "#3498DB",
-      "#1ABC9C",
-      "#D35400",
+      "#FED057",
+      "#FFD8D0",
+      "#FD9498",
+      "#C5BAFF",
+      "#6E78E8",
+      "#4A56E2",
+      "#81E1FF",
+      "#24CCA7",
+      "#00AD84",
     ];
     return colors[index % colors.length];
   };
 
-  const expensesItems = summary.filter((item) => item.type === "EXPENSE");
+  const expenseItems = summary.filter((item) => item.type === "EXPENSE");
 
   return (
-    <div className={css.tableWrapper}>
-      <div className={css.tableHeader}>
+    <div className={css.wrapper}>
+      <div className={css.headerRow}>
         <span>Category</span>
         <span>Sum</span>
       </div>
-
       <table className={css.table}>
         <tbody>
-          {expensesItems.map((item, index) => {
-            const categoryName = getCategoryName(item.categoryId);
-            const color = getCategoryColor(index);
-            return (
-              <tr key={item.categoryId}>
-                <td className={css.dotCell}>
-                  <span
-                    className={css.colorDot}
-                    style={{ backgroundColor: color }}
-                  />
-                </td>
-                <td>{categoryName}</td>
-                <td>{formatNumber(item.EXPENSE)}</td>
-              </tr>
-            );
-          })}
+          {expenseItems.map((item, index) => (
+            <tr key={item.categoryId} className={css.row}>
+              <td className={css.dotCell}>
+                <span
+                  className={css.dot}
+                  style={{ backgroundColor: getCategoryColor(index) }}
+                />
+              </td>
+              <td className={css.name}>{getCategoryName(item.categoryId)}</td>
+              <td className={css.amount}>{formatNumber(item.EXPENSE)}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
-
-      <div className={css.expenses}>
+      <div className={css.summaryRow}>
         <span className={css.label}>Expenses:</span>
-        <span className={css.value}>{formatNumber(expenses)}</span>
+        <span className={css.value}>
+          {formatNumber(expensesSummaryByPeriod)}
+        </span>
       </div>
-
-      <div className={css.income}>
+      <div className={css.summaryRow}>
         <span className={css.label}>Income:</span>
-        <span className={css.value}>{formatNumber(income)}</span>
+        <span className={css.income}>
+          {formatNumber(incomeSummaryByPeriod)}
+        </span>
       </div>
     </div>
   );

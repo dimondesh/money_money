@@ -1,67 +1,77 @@
 .chartWrapper {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 300px;
-  height: auto;
+  width: 280px;
+  height: 280px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .chartCenter {
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  color: var(--white);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  max-width: 140px;
+  word-break: break-word;
+  line-height: 1.2;
+  padding: 0 4px;
 }
 
-.balanceAmount {
-  font-size: 24px;
-  font-weight: 700;
-  color: #ffffff;
+.chartCenter span {
+  display: block;
+  animation: fadeInText 0.4s ease forwards;
+  opacity: 0;
+  transform: translateY(8px);
 }
 
-.categoryName {
-  font-size: 14px;
-  font-weight: 500;
-  color: #ffffff;
-  margin-bottom: 6px;
+.categoryText {
+  font-size: 18px;
+  font-weight: 600;
 }
 
-.categoryAmount {
-  font-size: 20px;
-  font-weight: 700;
-  color: #ffffff;
+.amountText {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 4px;
 }
 
 .emptyText {
-  font-size: 16px;
-  font-weight: 500;
-  color: #7b7a80;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.8;
+  transition: opacity 0.3s;
 }
 
-@media screen and (min-width: 768px) {
-  .chartWrapper {
-    max-width: 400px;
-  }
+.fadeIn {
+  opacity: 1;
+}
 
-  .balanceAmount {
-    font-size: 28px;
-  }
+.fadeBack {
+  opacity: 0.8;
+}
 
-  .categoryAmount {
-    font-size: 24px;
+@keyframes fadeInText {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media (min-width: 768px) {
   .chartWrapper {
-    max-width: 288px;
+    width: 336px;
+    height: 336px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .chartWrapper {
+    width: 288px;
+    height: 288px;
   }
 }
