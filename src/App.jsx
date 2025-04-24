@@ -12,39 +12,53 @@ import { useMedia } from "./hooks";
 const CurrencyTab = lazy(() => import("./pages/CurrencyTab/CurrencyTab"));
 const HomeTab = lazy(() => import("./pages/HomeTab/HomeTab"));
 const StatisticsTab = lazy(() => import("./pages/StatisticsTab/StatisticsTab"));
-
-const RegistrationPage = lazy(() =>
-  import("./pages/RegisterPage/RegistrationPage")
-);
+const RegistrationPage = lazy(() => import("./pages/RegisterPage/RegistrationPage"));
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 
 function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
+  const { isMobile } = useMedia();
+
   useEffect(() => {
     dispatch(refreshUserThunk());
   }, [dispatch]);
-  const { isMobile } = useMedia();
+
+  if (isRefreshing) {
+    return <Loader />;
+  }
 
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        {/* <Route
+        <Route
           path="/"
           element={
             <PrivateRoute>
-              {" "}
               <Dashboard />
             </PrivateRoute>
           }
-        >
-          <Route index element={<HomeTab />} />
-          <Route path="statistics" element={<StatisticsTab />} />
-          {isMobile ? (
-            <Route path="currency" element={<CurrencyTab />} />
-          ) : (
-            <Route path="currency" element={<Navigate to="/" />} />
-          )}
-        </Route> */}
+        />
+        <Route
+          path="/statistics"
+          element={
+            <PrivateRoute>
+              <StatisticsTab />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/currency"
+          element={
+            isMobile ? (
+              <PrivateRoute>
+                <CurrencyTab />
+              </PrivateRoute>
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
 
         <Route
           path="/register"

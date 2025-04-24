@@ -1,0 +1,46 @@
+.header {
+    background-color: #1a1442;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .username {
+    font-size: 1rem;
+    color: #f1f1f1;
+  }
+  
+  .logoutButton {
+    background-color: transparent;
+    border: 1px solid #f87171;
+    color: #f87171;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .logoutButton:hover {
+    background-color: #f87171;
+    color: #fff;
+  }
+  
