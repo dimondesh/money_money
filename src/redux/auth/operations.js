@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { api, setToken } from "../../helpers/api";
+import { api, setToken, clearToken } from "../../helpers/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
