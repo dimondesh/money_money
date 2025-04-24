@@ -3,7 +3,8 @@ import { api, setToken } from "../../helpers/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const logIn = createAsyncThunk(
+// export const logIn = createAsyncThunk(
+export const loginThunk = createAsyncThunk(
   "auth/login",
   async (credentials, thunkApi) => {
     try {
