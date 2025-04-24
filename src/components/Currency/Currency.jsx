@@ -23,3 +23,4 @@ const Currency = () => {
 };
 
 export default Currency;
+// Compare this snippet from src/redux/currency/selectors.js:
