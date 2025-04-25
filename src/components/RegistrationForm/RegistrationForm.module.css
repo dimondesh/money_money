@@ -1,214 +1,108 @@
-.wrapper {
+.backdrop {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("../../images/register/register-modal-mob@1x.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 0px 0px;
+  position: fixed;
+  /* padding-top: 60px; */
+  /* top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; */
+
+  width: 100%;
   height: 100vh;
+  /* min-height: 100vh; */
+  background-image: url('../../images/login/login-modal-mob@1x.webp'),
+    url('../../images/login/login-modal-circle-mob@1x.webp');
+  background-color: var(--form-color);
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-y: auto;
 }
-.container {
-  padding-top: 23px;
-  padding-bottom: 23px;
-  padding-right: 20px;
-  padding-left: 20px;
+
+@media only screen and (min-width: 768px) {
+  .backdrop {
+    background-color: var(--background);
+    background-size: 100% 100%;
+    background-image: url('../../images/register/bg-register-tab@1x.webp');
+  }
+}
+
+@media only screen and (min-width: 768px) and (min-resolution: 192dpi) {
+  .backdrop {
+    background-image: url('../../images/register/bg-register-tab@2x.webp');
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .backdrop {
+    background-image: url('../../images/register/bg-register-desk@1x.webp');
+  }
+}
+
+@media only screen and (min-width: 1280px) and (min-resolution: 192dpi) {
+  .backdrop {
+    background-image: url('../../images/register/bg-register-desk@1x.webp');
+  }
+}
+
+.modal {
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  gap: 8px;
-  width: 320px;
-  border-radius: 8px;
-  backdrop-filter: blur(100px);
-}
-
-.label {
-  display: flex;
+  align-self: center;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  opacity: 0.4;
-  gap: 4px;
-  width: 280px;
+  margin: 0 auto;
+  padding: 20px;
+
+  background-repeat: no-repeat;
 }
 
-.fieldForm {
-  padding: 12px;
-  width: 280px;
-  border: none;
-  border: none;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background-color: transparent;
+@media only screen and (min-resolution: 192dpi) {
+  .modal {
+    background-image: url('../../images/login/login-modal-mob@2x.webp'),
+      url('../../images/login/login-modal-circle-mob@2x.webp');
+  }
 }
 
-.fieldForm:focus,
-.fieldForm:active {
-  outline: none;
-  border: none;
-  box-shadow: none;
-}
-
-.fieldForm::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 18px;
-}
-
-.formBtn {
-  margin-top: 40px;
-  padding: 13px 61px;
-  border: none;
-  color: #fbfbfb;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 20px;
-  width: 280px;
-  box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
-  background: linear-gradient(
-    167deg,
-    #ffc727 0%,
-    #9e40ba 61.46%,
-    #7000ff 90.54%
-  );
-}
-
-.btnLogin {
-  padding: 13px 61px;
-  border-radius: 20px;
-  width: 280px;
-  box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
-  background: #fcfcfc;
-  border: none;
-  cursor: pointer;
-  text-transform: uppercase;
-  color: #623f8b;
-}
-
-.link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.registerH1 {
-  font-weight: 400;
-  margin-bottom: 40px;
-  font-size: 19px;
-  color: #fbfbfb;
-}
-.wrapperInput {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-p {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
-
-.link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.wrapperCheckbox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 20px;
-}
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-@media screen and (min-device-width: 768px) {
-  .wrapper {
-    backdrop-filter: blur(100px);
-    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
-    background: rgba(255, 255, 255, 0.1);
+@media only screen and (min-width: 768px) {
+  .modal {
     border-radius: 8px;
-    padding-top: 200px;
-    padding-bottom: 200px;
-    background-image: url("../../images/register/bg-register-tab@1x.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%;
-  }
-
-  .container {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    padding-left: 62px;
-    padding-right: 62px;
-    width: 533px;
-    gap: 40px;
     backdrop-filter: blur(100px);
     box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
-    background-image: url("../../images/register/register-modal-tab@1x.webp");
-    background-repeat: no-repeat;
-    background-size: 1000px 1000px;
-    background-position: center;
-  }
-
-  @media screen and (-webkit-min-device-pixel-ratio: 2),
-    (min-resolution: 2dppx),
-    (min-resolution: 192dpi) {
-    .container {
-      background-image: url("../../images/register/register-modal-tab@2x.webp");
-    }
-    .wrapper {
-      background-image: url("../../images/register/bg-register-tab@2x.webp");
-    }
-  }
-
-  .formBtn {
-    margin-top: 0px;
-    width: 300px;
-  }
-
-  .btnLogin {
-    width: 300px;
-  }
-
-  .fieldForm {
-    width: 409px;
-  }
-
-  .wrapperCheckbox {
-    gap: 20px;
-  }
-
-  .registerH1 {
-    margin-bottom: 0px;
-  }
-
-  .label {
-    width: 433px;
+    width: 533px;
+    height: 624px;
+    padding: 40px 62px;
+    background-position: -60px -60px;
+    background-size: 125% 125%;
+    background-image: url('../../images/register/register-modal-tab@1x.webp'),
+      url('../../images/register/register-circle-tab@1x.webp');
   }
 }
 
-@media screen and (min-device-width: 1280px) {
-  .wrapper {
-    padding-top: 48px;
-    padding-bottom: 48px;
-    background-image: url("../../images/register/bg-register-desk@1x.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
+@media only screen and (min-width: 768px) and (min-resolution: 192dpi) {
+  .modal {
+    background-image: url('../../images/register/register-modal-tab@2x.webp'),
+      url('../../images/register/register-circle-tab@2x.webp');
   }
+}
 
-  @media screen and (-webkit-min-device-pixel-ratio: 2),
-    (min-resolution: 2dppx),
-    (min-resolution: 192dpi) {
-    .wrapper {
-      background-image: url("../../images/register/bg-register-desk@2x.webp");
-    }
+.inputs {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.btns {
+  margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  @media (min-width: 768px) {
+    margin-top: 40px;
   }
 }

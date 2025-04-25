@@ -12,9 +12,9 @@ import { useMedia } from "./hooks";
 const CurrencyTab = lazy(() => import("./pages/CurrencyTab/CurrencyTab"));
 const HomeTab = lazy(() => import("./pages/HomeTab/HomeTab"));
 const StatisticsTab = lazy(() => import("./pages/StatisticsTab/StatisticsTab"));
-const RegistrationPage = lazy(() =>
-  import("./pages/RegisterPage/RegistrationPage")
-);
+
+const RegistrationPage = lazy(() => import("./pages/RegisterPage/RegistrationPage"));
+
 const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 
 function App() {

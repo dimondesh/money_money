@@ -1,88 +1,71 @@
-import { logIn } from "../../redux/auth/operations.js";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Formik, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import FormButton from "../common/FormButton/FormButton";
-
-import "react-toastify/dist/ReactToastify.css";
-
-import sprite from "../../images/icons/sprite.svg";
-
-import css from "./LoginForm.module.css";
-
-const schema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .max(12, "Password must be at most 12 characters")
-    .required("Password is required"),
-});
-
-const LoginForm = () => {
+import { Form, Formik } from 'formik';
+import { MdOutlineMailOutline } from 'react-icons/md';
+import { MdLock } from 'react-icons/md';
+import s from './LoginForm.module.css';
+import { loginThunk } from '../../redux/auth/operations';
+import { useDispatch } from 'react-redux';
+import { loginValidatiSchema } from 'helpers';
+import FormButton from '../common/FormButton/FormButton';
+import { Link } from 'react-router-dom';
+import Logo from '../common/Logo/Logo';
+import InputFormField from 'components/InputFormField/InputFormField';
+import { motion } from 'framer-motion';
+export const LoginForm = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleSubmit = async (values, { resetForm }) => {
-    const action = await dispatch(logIn(values));
-    if (logIn.fulfilled.match(action)) {
-      navigate("/dashboard");
-      resetForm();
-    }
+  const initialValues = {
+    email: '',
+    password: '',
   };
+  const handleSubmit = async (values, actions) => {
+   dispatch(loginThunk(values));    
+   actions.resetForm();
+
+};
 
   return (
-    <Formik
-      initialValues={{ email: "", password: "" }}
-      validationSchema={schema}
-      onSubmit={handleSubmit}
-    >
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit} autoComplete="off" className={css.form}>
-          <div className={css.logoBlock}>
-            <svg className={css.logo} width="36" height="36">
-              <use href={`${sprite}#logo`} />
-            </svg>
-            <h2 className={css.logoText}>MoneyGuard</h2>
-          </div>
-
-          <label className={css.inputGroup}>
-            <svg className={css.icon} width="24" height="24">
-              <use href={`${sprite}#mail`} />
-            </svg>
-            <Field
-              type="email"
-              name="email"
-              placeholder="Email"
-              className={css.input}
-            />
-            <ErrorMessage name="email" component="div" className={css.error} />
-          </label>
-
-          <label className={css.inputGroup}>
-            <svg className={css.icon} width="24" height="24">
-              <use href={`${sprite}#lock`} />
-            </svg>
-            <Field
-              type="password"
-              name="password"
-              placeholder="Password"
-              className={css.input}
-            />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className={css.error}
-            />
-          </label>
-
-          <FormButton type="submit">Log in</FormButton>
-          <FormButton isLink to="/register">
-            Register
-          </FormButton>
-        </form>
-      )}
-    </Formik>
+    <div className={s.backdrop}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <div className={s.modal}>
+          <Logo />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={loginValidatiSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form className={s.form}>
+              <div className={s.inputs}>
+                <InputFormField
+                  icon={MdOutlineMailOutline}
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                />
+                <InputFormField
+                  icon={MdLock}
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                />
+              </div>
+              <div className={s.btns}>
+                <FormButton
+                  type="submit"
+                  text={'LogIn'}
+                  variant={'multiColorButtton'}
+                />
+                <Link to="/register">
+                  <FormButton
+                    type="button"
+                    text={'Register'}
+                    variant={'whiteButtton'}
+                  />
+                </Link>
+              </div>
+            </Form>
+          </Formik>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 
