@@ -1,7 +1,7 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   getBalanceThunk,
-  logIn as loginThunk,
+  loginThunk,
   logoutThunk,
   refreshUserThunk,
   registerThunk,
