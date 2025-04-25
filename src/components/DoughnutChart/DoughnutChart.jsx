@@ -1,34 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import css from "./DoughnutChart.module.css";
 
 ChartJS.register(ArcElement, Tooltip);
 
-const DoughnutChart = ({ summary, categories, balance }) => {
+const formatNumber = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+};
+
+const DoughnutChart = ({ summary, categories, expensesSummaryByPeriod }) => {
+  const chartRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(null);
+
   const colors = [
-    "#24CCA7",
-    "#6E78E8",
-    "#FFCF26",
-    "#FED057",
-    "#FFD8D0",
-    "#4A56E2",
-    "#81E1FF",
-    "#FF6596",
-    "#C5BAFF",
-    "#00AD84",
+    "#FF6384",
+    "#36A2EB",
+    "#FFCE56",
+    "#8E44AD",
+    "#2ECC71",
+    "#F39C12",
+    "#E74C3C",
+    "#3498DB",
+    "#1ABC9C",
+    "#D35400",
   ];
 
   const expensesOnly = summary?.filter((item) => item.type === "EXPENSE") || [];
   const hasExpenses = expensesOnly.length > 0;
-  const [activeIndex, setActiveIndex] = useState(null);
 
   const labels = hasExpenses
     ? expensesOnly.map((item) => {
         const category = categories.find((cat) => cat.id === item.categoryId);
         return category ? category.name : "Невідомо";
       })
-    : ["No Data"];
+    : ["Немає даних"];
 
   const data = {
     labels,
@@ -38,50 +44,75 @@ const DoughnutChart = ({ summary, categories, balance }) => {
         backgroundColor: hasExpenses
           ? expensesOnly.map((_, i) =>
               activeIndex === null
-                ? colors[i % colors.length]
+                ? colors[i]
                 : i === activeIndex
-                ? colors[i % colors.length]
-                : `${colors[i % colors.length]}80`
+                ? colors[i]
+                : `${colors[i]}80`
             )
           : ["#e0e0e0"],
-        borderWidth: 0,
-        hoverOffset: 5,
+        borderWidth: 1,
       },
     ],
   };
 
   const options = {
     responsive: true,
-    maintainAspectRatio: true,
     plugins: {
       legend: {
         display: false,
       },
       tooltip: {
-        enabled: true,
+        enabled: false,
         callbacks: {
-          label: (context) => {
-            return `${context.label}: €${context.raw.toFixed(2)}`;
+          label: function (context) {
+            const label = context.label || "";
+            const value = context.raw || 0;
+            return `${label}: ₴${formatNumber(value.toFixed(2))}`;
           },
         },
       },
     },
     cutout: "70%",
     onHover: (event, elements) => {
-      if (elements.length > 0) {
-        setActiveIndex(elements[0].index);
-      } else {
-        setActiveIndex(null);
-      }
-    },
-    onClick: (event, elements) => {
-      if (elements.length > 0) {
-        setActiveIndex(elements[0].index);
-      } else {
-        setActiveIndex(null);
+      if (event?.native?.target) {
+        event.native.target.style.cursor =
+          elements.length > 0 ? "pointer" : "default";
       }
     },
   };
+
+  const handleCanvasClick = (event) => {
+    const chart = chartRef.current;
+    if (!chart) return;
+
+    const points = chart.getElementsAtEventForMode(
+      event.nativeEvent,
+      "nearest",
+      { intersect: true },
+      true
+    );
+
+    if (points.length > 0) {
+      setActiveIndex(points[0].index);
+    } else {
+      setActiveIndex(null);
+    }
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!chartRef.current?.canvas) return;
+
+      if (!chartRef.current.canvas.contains(e.target)) {
+        setActiveIndex(null);
+      }
+    };
+
+    window.addEventListener("click", handleOutsideClick);
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   const activeCategory = activeIndex !== null ? labels[activeIndex] : null;
   const activeAmount =
@@ -89,32 +120,34 @@ const DoughnutChart = ({ summary, categories, balance }) => {
       ? expensesOnly[activeIndex]?.EXPENSE?.toFixed(2)
       : null;
 
-  const formatBalance = (value) => {
-    return value
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  };
-
   return (
     <div className={css.chartWrapper}>
-      <Doughnut data={data} options={options} />
-      <div className={css.chartCenter}>
+      <Doughnut
+        ref={chartRef}
+        data={data}
+        options={options}
+        onClick={handleCanvasClick}
+      />
+      <div
+        className={`${css.chartCenter} ${
+          activeIndex !== null ? css.fadeIn : css.fadeBack
+        }`}
+      >
         {hasExpenses ? (
           activeIndex !== null ? (
             <>
-              <span className={css.categoryName}>{activeCategory}</span>
-              <span className={css.categoryAmount}>€{activeAmount}</span>
-            </>
-          ) : (
-            <>
-              <span className={css.balanceAmount}>
-                € {formatBalance(balance)}
+              <span className={css.categoryText}>{activeCategory}</span>
+              <span className={css.amountText}>
+                ₴ {formatNumber(activeAmount)}
               </span>
             </>
+          ) : (
+            <span className={css.amountText}>
+              ₴ {formatNumber(expensesSummaryByPeriod.toFixed(2))}
+            </span>
           )
         ) : (
-          <p className={css.emptyText}>No expenses</p>
+          <p className={css.emptyText}>Немає витрат</p>
         )}
       </div>
     </div>

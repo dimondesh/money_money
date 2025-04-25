@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  getTransactionsCategoriesThunk,
-  getTransactionsSummaryThunk,
-} from "../../redux/transactions/operations";
+// import {
+//   getTransactionsCategories,
+//   getExpenseSummaryByCategories,
+//   getIncomeAndExpenseSummaryByPeriod,
+// } from "../../redux/transactions/operations";
+
 import css from "./StatisticDatePicker.module.css";
 
 const months = [
-  "All month",
   "January",
   "February",
   "March",
@@ -21,116 +22,107 @@ const months = [
   "November",
   "December",
 ];
+
 const years = Array.from(
   { length: new Date().getFullYear() - 2020 + 1 },
   (_, i) => `${2020 + i}`
 );
 
-const StatisticDatePicker = () => {
-  const dispatch = useDispatch();
-  const currentMonthIndex = new Date().getMonth() + 1;
-  const currentMonth = months[currentMonthIndex];
-  const currentYear = `${new Date().getFullYear()}`;
-
-  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-  const [selectedYear, setSelectedYear] = useState(currentYear);
-  const [isMonthOpen, setIsMonthOpen] = useState(false);
-  const [isYearOpen, setIsYearOpen] = useState(false);
+const Dropdown = ({ options, value, onChange, label }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(getTransactionsCategoriesThunk());
-  }, [dispatch]);
+    if (!isOpen) return;
 
-  useEffect(() => {
-    const period =
-      selectedMonth === "All month"
-        ? { year: selectedYear }
-        : { month: selectedMonth, year: selectedYear };
-
-    dispatch(getTransactionsSummaryThunk(period));
-  }, [dispatch, selectedMonth, selectedYear]);
-
-  useEffect(() => {
-    const handleClickOutside = () => {
-      setIsMonthOpen(false);
-      setIsYearOpen(false);
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest(`.${css.dropdownWrapper}`)) {
+        setIsOpen(false);
+      }
     };
 
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [isOpen]);
 
-  const toggleMonthDropdown = (e) => {
-    e.stopPropagation();
-    setIsMonthOpen(!isMonthOpen);
-    setIsYearOpen(false);
-  };
-
-  const toggleYearDropdown = (e) => {
-    e.stopPropagation();
-    setIsYearOpen(!isYearOpen);
-    setIsMonthOpen(false);
-  };
-
-  const handleMonthSelect = (month) => {
-    setSelectedMonth(month);
-    setIsMonthOpen(false);
-  };
-
-  const handleYearSelect = (year) => {
-    setSelectedYear(year);
-    setIsYearOpen(false);
+  const handleSelect = (option) => {
+    onChange(option);
+    setIsOpen(false);
   };
 
   return (
-    <div className={css.wrapper}>
-      {/* Month */}
-      <div className={`${css.dropdownWrapper} ${isMonthOpen ? css.open : ""}`}>
-        <button className={css.dropdownButton} onClick={toggleMonthDropdown}>
-          {selectedMonth}
-        </button>
-        {isMonthOpen && (
-          <ul className={css.dropdownList}>
-            {months.map((month) => (
-              <li
-                key={month}
-                className={`${css.dropdownItem} ${
-                  selectedMonth === month ? css.dropdownItemActive : ""
-                }`}
-                onClick={() => handleMonthSelect(month)}
-              >
-                {month}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+    <div className={`${css.dropdownWrapper} ${isOpen ? css.open : ""}`}>
+      <button
+        className={css.dropdownButton}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label={`Select ${label}`}
+        aria-expanded={isOpen}
+        type="button"
+      >
+        {value}
+      </button>
 
-      {/* Year  */}
-      <div className={`${css.dropdownWrapper} ${isYearOpen ? css.open : ""}`}>
-        <button className={css.dropdownButton} onClick={toggleYearDropdown}>
-          {selectedYear}
-        </button>
-        {isYearOpen && (
-          <ul className={css.dropdownList}>
-            {years.map((year) => (
-              <li
-                key={year}
-                className={`${css.dropdownItem} ${
-                  selectedYear === year ? css.dropdownItemActive : ""
-                }`}
-                onClick={() => handleYearSelect(year)}
-              >
-                {year}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      {isOpen && (
+        <div className={css.dropdownList} role="listbox">
+          {options.map((option) => (
+            <div
+              key={option}
+              className={`${css.dropdownItem} ${
+                value === option ? css.dropdownItemActive : ""
+              }`}
+              onClick={() => handleSelect(option)}
+              role="option"
+              aria-selected={value === option}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-export default StatisticDatePicker;
+const StatisticsDatePicker = () => {
+  const dispatch = useDispatch();
+
+  const currentDate = new Date();
+  const initialMonth = months[currentDate.getMonth()];
+  const initialYear = currentDate.getFullYear().toString();
+
+  const [selectedMonth, setSelectedMonth] = useState(initialMonth);
+  const [selectedYear, setSelectedYear] = useState(initialYear);
+
+  // useEffect(() => {
+  //   dispatch(getTransactionsCategories());
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   const period =
+  //     selectedMonth === "All month"
+  //       ? { year: selectedYear }
+  //       : { month: selectedMonth, year: selectedYear };
+
+  //   dispatch(getExpenseSummaryByCategories(period));
+  //   dispatch(getIncomeAndExpenseSummaryByPeriod(period));
+  // }, [dispatch, selectedMonth, selectedYear]);
+
+  return (
+    <div className={css.wrapper}>
+      <Dropdown
+        options={months}
+        value={selectedMonth}
+        onChange={setSelectedMonth}
+        label="month"
+      />
+
+      <Dropdown
+        options={years}
+        value={selectedYear}
+        onChange={setSelectedYear}
+        label="year"
+      />
+    </div>
+  );
+};
+
+export default StatisticsDatePicker;
