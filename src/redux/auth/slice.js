@@ -1,3 +1,5 @@
+// Файл: src/redux/auth/slice.js
+
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   getBalanceThunk,
@@ -5,17 +7,18 @@ import {
   logoutThunk,
   refreshUserThunk,
   registerThunk,
-} from "./operations";
+} from "./operations.js"; 
+
 
 const initialState = {
   user: {
-    name: null,
+    username: null,
     email: null,
     balance: null,
   },
   token: null,
   isLoggedIn: false,
-  isRefreshing: false,
+  isRefreshing: false, 
   isLoading: false,
   isError: null,
 };
@@ -25,8 +28,36 @@ const slice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
+      // --- УСПЕШНЫЙ ЛОГИН ---
+      .addCase(loginThunk.fulfilled, (state, { payload }) => {
+        state.user.username = payload.user?.username; // Используем state.user.username
+        state.user.email = payload.user?.email;
+        state.user.balance = payload.user?.balance;
+        state.token = payload.token; // Устанавливаем токен
+        state.isLoggedIn = true; // Пользователь вошел
+        state.isLoading = false;
+        state.isError = null;
+      })
+      // --- УСПЕШНАЯ РЕГИСТРАЦИЯ ---
+      .addCase(registerThunk.fulfilled, (state, { payload }) => {
+ 
+         state.user.username = payload.username; 
+         state.user.email = payload.email;
+         state.user.balance = payload.balance; 
+         state.isLoading = false;
+         state.isError = null;
+      })
+      .addCase(refreshUserThunk.fulfilled, (state, { payload }) => {
+        state.user.username = payload.username; 
+        state.user.email = payload.email;
+        state.user.balance = payload.balance;
+        state.isLoggedIn = true; 
+        state.isRefreshing = false;
+        state.isLoading = false;
+      })
+      // --- ОСТАЛЬНЫЕ ОБРАБОТЧИКИ ---
       .addCase(logoutThunk.fulfilled, () => {
-        return initialState;
+        return initialState; 
       })
       .addCase(refreshUserThunk.pending, (state) => {
         state.isRefreshing = true;
@@ -36,39 +67,20 @@ const slice = createSlice({
         state.isRefreshing = false;
         state.isLoading = false;
         state.isLoggedIn = false;
-      })
-      .addCase(refreshUserThunk.fulfilled, (state, { payload }) => {
-        state.user.name = payload.username;
-        state.user.email = payload.email;
-        state.user.balance = payload.balance;
-        state.isLoggedIn = true;
-        state.isRefreshing = false;
-        state.isLoading = false;
+        state.token = null; 
       })
       .addCase(getBalanceThunk.fulfilled, (state, { payload }) => {
         state.user.balance = payload;
       })
-      .addMatcher(
-        isAnyOf(loginThunk.fulfilled, registerThunk.fulfilled),
-        (state, { payload }) => {
-          state.user.name = payload.user.username;
-          state.user.email = payload.user.email;
-          state.user.balance = payload.user.balance;
-          state.token = payload.token;
-          state.isLoggedIn = true;
-          state.isLoading = false;
-          state.isError = null;
-        }
-      )
-      .addMatcher(
-        isAnyOf(loginThunk.pending, registerThunk.pending),
+      .addMatcher( 
+        isAnyOf(loginThunk.pending, registerThunk.pending /* refreshUserThunk.pending обработан */),
         (state) => {
           state.isLoading = true;
           state.isError = null;
         }
       )
       .addMatcher(
-        isAnyOf(loginThunk.rejected, registerThunk.rejected),
+        isAnyOf(loginThunk.rejected, registerThunk.rejected /* refreshUserThunk.rejected обработан */),
         (state, { payload }) => {
           state.isLoading = false;
           state.isError = payload;

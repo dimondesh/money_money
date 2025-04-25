@@ -16,10 +16,11 @@ export const LoginForm = () => {
     email: '',
     password: '',
   };
-  const handleSubmit = (values, actions) => {
-    dispatch(signInThunk(values));
-    actions.resetForm();
-  };
+  const handleSubmit = async (values, actions) => {
+   dispatch(loginThunk(values));    
+   actions.resetForm();
+
+};
 
   return (
     <div className={s.backdrop}>

@@ -6,6 +6,7 @@ import { IoPerson } from 'react-icons/io5';
 import s from './RegistrationForm.module.css';
 import { useDispatch } from 'react-redux';
 import { registerThunk } from '../../redux/auth/operations';
+console.log('Проверка импорта registerThunk:', registerThunk);
 import { registerValidatSchema } from 'helpers';
 import FormButton from '../common/FormButton/FormButton';
 import { Link } from 'react-router-dom';
@@ -25,34 +26,36 @@ export const RegistrationForm = () => {
   };
 
   const handleSubmit = async (values, actions) => {
-    console.log('handleSubmit called with values:', values); 
-    const { username, email, password } = values;
-    try {
-      const resultAction = await dispatch(
-        registerThunk({ username, email, password }) 
-      );
+  console.log('handleSubmit called with values:', values);
+  const { username, email, password } = values;
+  try {
+    const resultAction = await dispatch(
+      registerThunk({ username, email, password })
+    );
 
-      if (registerThunk.fulfilled.match(resultAction)) {
-        navigate('/dashboard'); 
-        actions.resetForm(); // Сбрасываем форму ТОЛЬКО при успехе
+    if (registerThunk.fulfilled.match(resultAction)) {
+
+      navigate('/login');
+      actions.resetForm(); 
+    } else {
+
+      if (resultAction.payload) {
+
+         console.error("Registration failed (rejectedWithValue):", resultAction.payload);
       } else {
 
-        if (resultAction.payload) {
-           console.error("Registration failed:", resultAction.payload);
-        } else {
-           // Общая ошибка, если payload не пришел
-           console.error("Registration failed with unknown error");
-           toast.error("Щось пішло не так під час реєстрації.");
-        }
+         console.error("Registration failed with unknown error object:", resultAction);
+         toast.error("Щось пішло не так під час реєстрації.");
       }
-    } catch (error) {
-      // Обработка непредвиденных ошибок при dispatch
-      console.error("Dispatch error:", error);
-      toast.error("Сталася непередбачена помилка.");
-    } finally {
-      actions.setSubmitting(false);
     }
-  };
+  } catch (error) {
+
+    console.error("Dispatch error:", error);
+    toast.error(error.message || "Сталася непередбачена помилка.");
+  } finally {
+    actions.setSubmitting(false);
+  }
+};
 
   return (
     <div className={s.backdrop}>
