@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import FormButton from "../common/FormButton/FormButton";
-import LoginValidatiSchema from "../../../helpers/LoginValidatiSchema";
+import LoginValidatiSchema from "helpers/loginValidatiSchema";
 
 import "react-toastify/dist/ReactToastify.css";
 
