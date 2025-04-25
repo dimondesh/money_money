@@ -1,21 +1,54 @@
-import React from 'react';
+import { Suspense, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styles from './Header.module.css';
+import { ImExit } from 'react-icons/im';
+import { useMedia } from 'hooks';
+import { selectUser } from '../../redux/auth/selectors';
 
-const Header = ({ onLogout }) => {
-  const email = useSelector(state => state.auth.user?.email || 'user@example.com');
-  const username = email.split('@')[0];
+import s from './Header.module.css';
+import Logo from 'components/common/Logo/Logo';
+import Loader from 'components/Loader/Loader';
+import LogoutModal from 'components/LogoutModal/LogoutModal';
+import { NavLink } from 'react-router-dom';
+
+const Header = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const user = useSelector(selectUser);
+  const userName = user ? user.username : null;
+  const { isMobile } = useMedia();
+
+  const open = () => {
+    setIsModalOpen(true);
+  };
+
+  const close = () => {
+    setIsModalOpen(false);
+  };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
-        <div className={styles.logo}>Finance App</div>
-        <div className={styles.userInfo}>
-          <span className={styles.username}>{username}</span>
-          <button onClick={onLogout} className={styles.logoutButton}>Exit</button>
+    <>
+      <header className={s.header}>
+        <NavLink to="">
+          <Logo
+            type="header"
+            width={isMobile ? 18 : 25}
+            height={isMobile ? 18 : 23}
+          />
+        </NavLink>
+        <div className={s.user}>
+          <span className={s.userName}>{userName || 'Guest'}</span>
+          <button onClick={open} className={s.exitBtn}>
+            <ImExit width={18} height={18} />
+            {!isMobile && <p>Exit</p>}
+          </button>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {isModalOpen && (
+        <Suspense fallback={<Loader />}>
+          <LogoutModal onClose={close} />
+        </Suspense>
+      )}
+    </>
   );
 };
 

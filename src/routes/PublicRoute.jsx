@@ -1,12 +1,29 @@
+// Файл: PublicRoute.jsx
 import { Navigate, useLocation } from "react-router-dom";
-import { selectIsLoggedIn } from "../redux/auth/selectors";
-import { useSelector } from "react-redux";
 
-const PublicRoute = ({ component: Component }) => {
+import { selectIsLoggedIn, selectIsRefreshing } from "../redux/auth/selectors";
+import { useSelector } from "react-redux";
+import Loader from "components/Loader/Loader";
+
+const PublicRoute = ({ children }) => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isRefreshing = useSelector(selectIsRefreshing); 
   const location = useLocation();
 
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const shouldRedirect = isLoggedIn && !isRefreshing;
 
-  return isLoggedIn ? <Navigate to={location?.state || "/"} /> : Component;
+
+  if (isRefreshing) {
+    return <Loader />;;
+  }
+
+  if (shouldRedirect) {
+  
+    const fromPage = location.state?.from?.pathname || "/";
+    return <Navigate to={fromPage} replace />;
+  }
+
+
+  return children;
 };
 export default PublicRoute;

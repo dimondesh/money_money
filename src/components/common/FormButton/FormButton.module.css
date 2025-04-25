@@ -1,47 +1,82 @@
-.btnBase {
+.formButton {
   width: 280px;
   height: 50px;
-  border: none;
   border-radius: 20px;
-  font-family: "Poppins", sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  text-align: center;
+  box-shadow: 1px 9px 15px 0px rgba(0, 0, 0, 0.2);
+
+  border: none;
+  cursor: pointer;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: 0.1em;
+  transition: all 0.5s ease 0s;
 }
 
-.submitBtn {
-  background: linear-gradient(90deg, #ffc727 0%, #9e40ba 51%, #7000ff 100%);
-  color: var(--white);
-  box-shadow: 1px 9px 14px rgba(0, 0, 0, 0.2);
+/* Variant styles: 1) Multi color button, 2) White button, 3) btn_delete */
+
+/* 1) Multi color button */
+.multiColorButtton {
+  color: rgba(251, 251, 251, 1);
+  background: linear-gradient(96.76deg,
+      #ffc727 -16.42%,
+      #9e40ba 97.04%,
+      #7000ff 150.71%);
 }
 
-.submitBtn:hover {
-  background-color: var(--white);
-  color: var(--text-button);
+.multiColorButtton:hover {
+  transform: scale(1.05);
+  background-image: linear-gradient(to right,
+      #7000ff 0%,
+      #9e40ba 31%,
+      #ffc727 100%);
+  background-size: 200%;
+  background-position: right center;
+  transition: all 1s ease 0s;
 }
 
-.navLinkBtn {
-  background-color: #fcfcfc;
-  color: var(--text-button);
-  box-shadow: 1px 9px 14px rgba(0, 0, 0, 0.2);
+.multiColorButtton:active {
+  transform: scale(1.08);
+  font-size: 19px;
 }
 
-.navLinkBtn:hover {
-  background-color: #e0e0e0;
+/* 2) White button */
+.whiteButtton {
+  color: #623f8b;
+  background: #fcfcfc;
 }
 
-.btnBase:focus {
-  outline: none;
+.whiteButtton:hover {
+  transform: scale(1.05);
+  background-image: linear-gradient(to right,
+      rgb(255, 255, 255) 0%,
+      rgb(98, 63, 139) 31%,
+      rgb(255, 255, 255) 100%);
+  background-size: 200%;
+  background-position: right center;
+  transition: all 1s ease 0s;
 }
 
-.btnBase:active {
-  transform: translateY(2px);
+.whiteButtton:active {
+  transform: scale(1.08);
+  font-size: 19px;
+}
+
+@media screen and (min-width: 768px) {
+  .formButton {
+    width: 300px;
+  }
+}
+
+.btn_delete {
+  padding: 4px 12px;
+  height: 29px;
+  width: 69px;
+  font-size: 14px;
+  text-transform: capitalize;
 }
