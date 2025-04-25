@@ -1,16 +1,22 @@
+//файл helpers/registerValidatSchema.js
 import * as yup from "yup";
 
 const registerValidatSchema = yup.object().shape({
-  name: yup.string().required("Name обов’язкове"),
+
+  username: yup.string().required("Username is required"), 
   email: yup
     .string()
-    .email("Невірна email адреса")
-    .required("Email обов’язковий"),
-  password: yup.string().min(6).max(12).required("Пароль обов’язковий"),
+    .email("Invalid email address")
+    .required("Email is required"),
+
+  password: yup.string()
+    .min(8, "Password must be at least 8 characters") 
+
+    .required("Password is required"),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password")], "Паролі не співпадають")
-    .required("Підтвердження обов’язкове"),
+    .oneOf([yup.ref("password")], "Passwords must match") 
+    .required("Password confirmation is required"), 
 });
 
 export default registerValidatSchema;

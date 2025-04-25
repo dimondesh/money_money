@@ -1,24 +1,31 @@
-import { NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
+import clsx from 'clsx';
+import styles from './FormButton.module.css';
 
-const FormButton = ({ isLink, to, type = "button", className, children }) => {
-  return isLink ? (
-    <NavLink to={to} className={className}>
-      {children}
-    </NavLink>
-  ) : (
-    <button type={type} className={className}>
-      {children}
+const FormButton = ({
+  type,
+  text,
+  handlerFunction,
+  variant,
+  isDisabled = false,
+}) => {
+  return (
+    <button
+      type={type}
+      onClick={handlerFunction}
+      className={clsx(
+        styles.formButton,
+        variant === 'multiColorButtton' && styles.multiColorButtton,
+        variant === 'whiteButtton' && styles.whiteButtton,
+        variant === 'btn_delete' && [
+          styles.multiColorButtton,
+          styles.btn_delete,
+        ]
+      )}
+      disabled={isDisabled}
+    >
+      {text}
     </button>
   );
-};
-
-FormButton.propTypes = {
-  isLink: PropTypes.bool,
-  to: PropTypes.string,
-  type: PropTypes.string,
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
 };
 
 export default FormButton;

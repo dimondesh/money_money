@@ -8,4 +8,5 @@ const LoginValidatiSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
+
 export default LoginValidatiSchema;

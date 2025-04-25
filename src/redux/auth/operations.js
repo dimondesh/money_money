@@ -1,102 +1,73 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { api, setToken, clearToken } from "../../helpers/api";
+// Убедитесь, что путь и расширение .js верны
+import { walletAPI, setToken, clearToken } from "../../helpers/api.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// export const logIn = createAsyncThunk(
 export const loginThunk = createAsyncThunk(
   "auth/login",
   async (credentials, thunkApi) => {
     try {
-      const res = await api.post("/auth/sign-in", credentials);
-      setToken(res.data.token);
-      const { username } = res.data.user;
-      toast.success(`Welcome back, ${username}!`, {
-        position: "top-right",
-        autoClose: 5000,
-      });
-      return res.data;
+      // Используем walletAPI
+      const res = await walletAPI.post("/api/auth/login", credentials);
+      setToken(res.data.data.accessToken);
+      return res.data.data;
     } catch (error) {
-      if (error.response) {
-        const { status } = error.response;
-        if (status === 400) {
-          toast.error("Please fill in all fields correctly.", {
-            position: "top-right",
-            autoClose: 5000,
-          });
-        } else if (status === 403) {
-          toast.error("Wrong password. Try again.", {
-            position: "top-right",
-            autoClose: 5000,
-          });
-        } else if (status === 404) {
-          toast.error("User with such email not found. Please register!", {
-            position: "top-right",
-            autoClose: 5000,
-          });
-        }
-        return thunkApi.rejectWithValue(
-          error.response.data.message || "Login failed. Please try again."
-        );
-      }
+      const message = error.response?.data?.message || error.message || "Login failed";
+      toast.error(message);
+      return thunkApi.rejectWithValue(message);
     }
   }
 );
+
 export const registerThunk = createAsyncThunk(
   "auth/register",
   async (credentials, thunkApi) => {
     try {
-      const res = await api.post("/auth/sign-up", credentials);
-      setToken(res.data.token);
-      const { username } = res.data.user;
+      const res = await walletAPI.post("/api/auth/register", credentials);
+      const registeredUser = res.data.data;
 
-      toast.success(`Welcome, ${username}! Registration successful 🎉`, {
-        position: "top-right",
-        autoClose: 5000,
-      });
-
-      return res.data;
-    } catch (error) {
-      if (error.response) {
-        const { status } = error.response;
-
-        if (status === 400) {
-          toast.error("Please fill in all fields correctly.", {
-            position: "top-right",
-            autoClose: 5000,
-          });
-        } else if (status === 409) {
-          toast.error("A user with this email already exists.", {
-            position: "top-right",
-            autoClose: 5000,
-          });
-        } else {
-          toast.error("Something went wrong. Please try again.", {
-            position: "top-right",
-            autoClose: 5000,
-          });
-        }
-
-        return thunkApi.rejectWithValue(
-          error.response.data.message || "Registration failed. Try again."
-        );
+      if (!registeredUser || !registeredUser.username) {
+        console.error("Registration response from backend is missing user data:", res.data);
+        throw new Error("Registration response missing user data.");
       }
 
-      toast.error("Network error. Please check your connection.");
-      return thunkApi.rejectWithValue("Network error");
+      const { username } = registeredUser;
+
+      toast.success(`Welcome, ${username}! Registration successful. Please log in.`);
+
+      return registeredUser;
+
+    } catch (error) {
+      let message = "Registration failed";
+      if (error.response?.status === 409) {
+
+         message = error.response.data?.message || "Email already in use.";
+      } else if (error.response?.status === 400) {
+
+         message = error.response.data?.message || "Bad Request. Check input data.";
+      }
+      else {
+         message = error.response?.data?.message || error.message || "Registration failed";
+      }
+      toast.error(message);
+      return thunkApi.rejectWithValue(message);
     }
   }
 );
+
 
 export const logoutThunk = createAsyncThunk(
   "auth/logout",
   async (_, thunkApi) => {
     try {
-      const { data } = await api.delete("/api/auth/sign-out");
-      removeToken();
-      return data;
+      // Используем walletAPI и метод POST
+      await walletAPI.post("/api/auth/logout");
+      clearToken();
     } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
+      const message = error.response?.data?.message || error.message || "Logout failed";
+      toast.error(message);
+      return thunkApi.rejectWithValue(message);
     }
   }
 );
@@ -105,17 +76,17 @@ export const refreshUserThunk = createAsyncThunk(
   "auth/refresh",
   async (_, thunkApi) => {
     const savedToken = thunkApi.getState().auth.token;
-    if (savedToken) {
-      setToken(savedToken);
-    } else {
-      return thunkApi.rejectWithValue("Token doesn't exist");
-    }
-
+    if (!savedToken) { return thunkApi.rejectWithValue("Token doesn't exist"); }
+    setToken(savedToken);
     try {
-      const { data } = await api.get("/api/users/current");
-      return data;
+      // Используем walletAPI
+      const { data } = await walletAPI.get("/api/users/current");
+      return data.data;
     } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
+       const message = error.response?.data?.message || error.message || "Refresh failed";
+       toast.error(message);
+       clearToken();
+       return thunkApi.rejectWithValue(message);
     }
   }
 );
@@ -123,11 +94,17 @@ export const refreshUserThunk = createAsyncThunk(
 export const getBalanceThunk = createAsyncThunk(
   "getBalance",
   async (_, thunkApi) => {
+     const savedToken = thunkApi.getState().auth.token;
+     if (!savedToken) { return thunkApi.rejectWithValue("Not authenticated"); }
+     setToken(savedToken);
     try {
-      const { data } = await api.get("/api/users/current");
-      return data.balance;
+      // Используем walletAPI
+      const { data } = await walletAPI.get("/api/users/current");
+      return data.data.balance;
     } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
+      const message = error.response?.data?.message || error.message || "Failed to get balance";
+      toast.error(message);
+      return thunkApi.rejectWithValue(message);
     }
   }
 );
