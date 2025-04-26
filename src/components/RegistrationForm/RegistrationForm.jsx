@@ -26,7 +26,7 @@ export const RegistrationForm = () => {
   };
 
   const handleSubmit = async (values, actions) => {
-  console.log('handleSubmit called with values:', values);
+  // console.log('handleSubmit called with values:', values);
   const { username, email, password } = values;
   try {
     const resultAction = await dispatch(

@@ -17,22 +17,13 @@ const ProgressBar = () => {
 
   return (
     <>
-      <PasswordStrengthBar
-        password={confirmValue}
-        scoreWordStyle={{ display: "none" }}
-        score={getFakeStrength(confirmValue)}
-        shortScoreWord=""
-      />
       {!isMatch && confirmValue && (
-        <div className={s.progressBar}>
-          <div
-            className={s.confirmProgresFill}
-            style={{
-              width: isMatch ? "100%" : "50%",
-              backgroundColor: isMatch ? "#ffc727" : "#ff6b6b", // жовта або червона
-            }}
-          ></div>
-        </div>
+        <PasswordStrengthBar
+          password={confirmValue}
+          scoreWordStyle={{ display: "none" }}
+          score={getFakeStrength(confirmValue)}
+          shortScoreWord=""
+        />
       )}
     </>
   );
