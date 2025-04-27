@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import useMedia from '../../hooks/useMedia.jsx';
+import { useMedia } from '../../hooks/useMedia.jsx';
 import { getTransactions } from '../../redux/transactions/operations.js';
 import Balance from '../../components/Balance/Balance.jsx';
 import TransactionsList from '../../components/TransactionsList/TransactionsList.jsx';
