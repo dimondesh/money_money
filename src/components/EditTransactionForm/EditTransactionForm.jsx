@@ -15,7 +15,6 @@ import { selectCurrentTransaction } from '../../redux/transactions/selectors';
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-// Валідація форми
 const ValidationEditTransaction = () => {
     return yup.object().shape({
         amount: yup.number().typeError('Amount must be a number').positive('Amount must be a positive number').required('Amount is required'),
@@ -71,7 +70,7 @@ const EditTransactionForm = () => {
 
     return (
         <>
-            {isLoading && <Loader />}  {/* Покажемо лоадер, якщо isLoading === true */}
+            {isLoading && <Loader />}
             <div className={css.backdrop} onClick={() => dispatch(closeModal())}></div>
             <div className={css.modal}>
                 <div className={css.header}>
