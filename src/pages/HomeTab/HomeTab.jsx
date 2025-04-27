@@ -1,13 +1,12 @@
+import Balance from '../../components/Balance/Balance.jsx';
+import CreateButton from '../../components/CreateButton/CreateButton.jsx';
+import TransactionsList from '../../components/TransactionsList/TransactionsList.jsx';
+import css from './HomeTab.module.css';
+import { getTransactions } from '../../redux/transactions/operations.js';
+import { getTransactionsCategories } from '../../redux/statistics/operations.js';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import useMedia from '../../hooks/useMedia.jsx';
-import { getTransactions } from '../../redux/transactions/operations.js';
-import Balance from '../../components/Balance/Balance.jsx';
-import TransactionsList from '../../components/TransactionsList/TransactionsList.jsx';
-import CreateButton from '../../components/CreateButton/CreateButton.jsx';
-import { getTransactionsCategories } from '../../redux/statistics/operations.js';
-
-import css from './HomeTab.module.css';
+import { useMedia } from '../../hooks/useMedia';
 
 const HomeTab = () => {
     const { isMobile } = useMedia();
