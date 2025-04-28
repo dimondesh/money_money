@@ -13,7 +13,7 @@
 
 .modalContent {
   position: relative;
-  background: var(--background);
+  background: linear-gradient(180deg, #6E54EB 3%, #553382 90%);
   border: 1px solid var(--white-40);
   border-radius: 15px;
   padding: 32px;

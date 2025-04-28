@@ -51,15 +51,11 @@ export const SidebarGraph = () => {
           margin={{ top: 10, right: 15, left: 15, bottom: 0 }}
         >
           <defs>
-            <linearGradient
-              id="sidebarGraphGradientDef"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-            >
-              <stop offset="5%" stopColor="var(--white)" stopOpacity={0.25} />
-              <stop offset="95%" stopColor="var(--white)" stopOpacity={0} />
+
+            <linearGradient id="sidebarGraphGradientDef" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="var(--white)" stopOpacity={0.4}/>
+              <stop offset="95%" stopColor="var(--white)" stopOpacity={0}/>
+
             </linearGradient>
           </defs>
           <Tooltip content={() => null} cursor={false} />
