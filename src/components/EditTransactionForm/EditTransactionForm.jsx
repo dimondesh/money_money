@@ -1,4 +1,5 @@
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import * as yup from 'yup';
 
@@ -12,6 +13,7 @@ import { closeModal } from '../../redux/modal/slice';
 import css from './EditTransactionForm.module.css';
 import { editTransactions } from '../../redux/transactions/operations';
 import { selectCurrentTransaction } from '../../redux/transactions/selectors';
+import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -47,26 +49,28 @@ const EditTransactionForm = () => {
     const currentCategory = categories.find(cat => cat.id === transaction.categoryId)?.name;
 
     const onSubmit = async (data) => {
-        setIsLoading(true);
+    setIsLoading(true);
 
-        const updatedTransaction = {
-            date: startDate.toISOString(),
-            comment: data.comment,
-            amount: parseFloat(data.amount) * (transaction.type === 'EXPENSE' ? -1 : 1),
-            type: transaction.type,
-            categoryId: transaction.categoryId,
-            id: transaction._id,
-        };
-
-        try {
-            await dispatch(editTransactions(updatedTransaction)).unwrap();
-            dispatch(closeModal());
-        } catch (error) {
-            console.error('Failed to edit transaction:', error.message);
-        } finally {
-            setIsLoading(false);
-        }
+    const updatedTransaction = {
+        date: startDate.toISOString(),
+        comment: data.comment,
+        amount: parseFloat(data.amount) * (transaction.type === 'EXPENSE' ? -1 : 1),
+        type: transaction.type,
+        categoryId: transaction.categoryId,
+        id: transaction._id,
     };
+
+    try {
+        await dispatch(editTransactions(updatedTransaction)).unwrap();
+        dispatch(closeModal());
+        toast.success('Transaction updated successfully!'); // показ тосту при успіху
+    } catch (error) {
+        console.error('Failed to edit transaction:', error.message);
+        toast.error('Failed to update transaction!'); // показ тосту при помилці
+    } finally {
+        setIsLoading(false);
+    }
+};
 
     return (
         <>
