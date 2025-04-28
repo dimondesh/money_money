@@ -5,13 +5,12 @@ import { Navigate, useLocation } from "react-router-dom";
 import { selectIsLoggedIn, selectIsRefreshing } from "../redux/auth/selectors";
 // Можно добавить импорт Loader, если хотите показывать его здесь,
 // но можно положиться и на Loader в App.jsx
-// import Loader from "components/Loader/Loader";
+import Loader from "components/Loader/Loader";
 
 const PrivateRoute = ({ children }) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const isRefreshing = useSelector(selectIsRefreshing); 
+  const isRefreshing = useSelector(selectIsRefreshing);
   const location = useLocation();
-
 
   const shouldRedirect = !isLoggedIn && !isRefreshing;
 
