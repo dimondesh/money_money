@@ -1,30 +1,30 @@
-import React, { lazy, Suspense, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useMediaQuery } from 'react-responsive';
+import React, { lazy, Suspense, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useMediaQuery } from "react-responsive";
 
-import PrivateRoute from './routes/PrivateRoute';
-import PublicRoute from './routes/PublicRoute';
-import Loader from './components/Loader/Loader';
+import PrivateRoute from "./routes/PrivateRoute";
+import PublicRoute from "./routes/PublicRoute";
+import Loader from "./components/Loader/Loader";
 import { refreshUserThunk } from "./redux/auth/operations";
 import { selectIsRefreshing } from "./redux/auth/selectors";
 
-
 const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 
-const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
-const RegistrationPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
-const HomeTab = lazy(() => import('./pages/HomeTab/HomeTab'));
-const StatisticsTab = lazy(() => import('./pages/StatisticsTab/StatisticsTab'));
-const CurrencyTab = lazy(() => import('./pages/CurrencyTab/CurrencyTab'));
-const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
-
+const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
+const RegistrationPage = lazy(() =>
+  import("./pages/RegistrationPage/RegistrationPage")
+);
+const HomeTab = lazy(() => import("./pages/HomeTab/HomeTab"));
+const StatisticsTab = lazy(() => import("./pages/StatisticsTab/StatisticsTab"));
+const CurrencyTab = lazy(() => import("./pages/CurrencyTab/CurrencyTab"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-  const globalIsLoading = useSelector(state => state.global?.isLoading);
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const globalIsLoading = useSelector((state) => state.global?.isLoading);
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   useEffect(() => {
     dispatch(refreshUserThunk());
@@ -41,7 +41,7 @@ function App() {
             path="/"
             element={
               <PrivateRoute>
-                <DashboardPage />
+                <Dashboard />
               </PrivateRoute>
             }
           >
@@ -71,13 +71,10 @@ function App() {
           />
 
           <Route path="*" element={<NotFound />} />
-
         </Routes>
       </Suspense>
     </>
   );
 }
 
-
 export default App;
-
