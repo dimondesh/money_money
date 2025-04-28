@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
 import { walletAPI, setToken } from "../../helpers/api.js";
 import { toast } from "react-toastify";
 
@@ -39,3 +40,4 @@ export const getTransactionsCategories = createAsyncThunk(
      }
   }
 );
+

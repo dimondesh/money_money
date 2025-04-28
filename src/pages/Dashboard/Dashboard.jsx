@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
@@ -10,9 +11,12 @@ import Currency from '../../components/Currency/Currency';
 import SidebarGraph from '../../components/SidebarGraph/SidebarGraph';
 import { AddTransactionModal } from '../../components/ModalAddTransaction/ModalAddTransaction';
 import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
-import styles from "./Dashboard.module.css";
 
-const DashboardPage = () => {
+import styles from "./Dashboard.module.css";
+import { SidebarGraph } from "components/SidebarGraph/SidebarGraph.jsx";
+
+
+const Dashboard = () => {
   const isAddModalOpen = useSelector(state => state.modals.isAddModalOpen);
   const dispatch = useDispatch();
 
@@ -22,6 +26,7 @@ const DashboardPage = () => {
   const isTablet = useMediaQuery({ query: '(min-width: 768px) and (max-width: 1199px)'});
   const isDesktop = useMediaQuery({ query: '(min-width: 1200px)' });
 
+
   const location = useLocation();
   useEffect(() => {
      dispatch(closeAddModal());
@@ -29,7 +34,7 @@ const DashboardPage = () => {
 
   return (
     <div className={styles.pageWrapper}>
-       <Header />
+      <Header />
 
        <div className={styles.contentWrapper}>
           {(isTablet || isDesktop) && (
@@ -59,8 +64,9 @@ const DashboardPage = () => {
        </div>
 
        {isAddModalOpen && <AddTransactionModal onClose={handleCloseModal} />}
+
     </div>
   );
 };
 
-export default DashboardPage;
+export default Dashboard;

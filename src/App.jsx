@@ -9,13 +9,16 @@ import Loader from './components/Loader/Loader';
 import { refreshUserThunk } from "./redux/auth/operations";
 import { selectIsRefreshing } from "./redux/auth/selectors";
 
-const DashboardPage = lazy(() => import('./pages/Dashboard/Dashboard'));
+
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const RegistrationPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
 const HomeTab = lazy(() => import('./pages/HomeTab/HomeTab'));
 const StatisticsTab = lazy(() => import('./pages/StatisticsTab/StatisticsTab'));
 const CurrencyTab = lazy(() => import('./pages/CurrencyTab/CurrencyTab'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+
 
 function App() {
   const dispatch = useDispatch();
@@ -75,4 +78,6 @@ function App() {
   );
 }
 
+
 export default App;
+
