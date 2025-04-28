@@ -4,22 +4,25 @@ import Header from '../../components/Header/Header';
 import Navigation from "../../components/Navigation/Navigation";
 import Balance from "../../components/Balance/Balance";
 import Currency from '../../components/Currency/Currency';
+import SidebarGraph from '../../components/SidebarGraph/SidebarGraph';
 import styles from "./Dashboard.module.css";
 
 const DashboardPage = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
-  const isTabletOrDesktop = useMediaQuery({ query: '(min-width: 768px)' });
+  const isTablet = useMediaQuery({ query: '(min-width: 768px) and (max-width: 1199px)'});
+  const isDesktop = useMediaQuery({ query: '(min-width: 1200px)' });
 
   return (
     <div className={styles.pageWrapper}>
        <Header />
 
        <div className={styles.contentWrapper}>
-          {isTabletOrDesktop && (
+          {(isTablet || isDesktop) && (
             <aside className={styles.sidebar}>
               <Navigation />
               <Balance />
-              <Currency />
+              {isDesktop && <Currency />}
+              {isDesktop && <SidebarGraph />}
             </aside>
           )}
 

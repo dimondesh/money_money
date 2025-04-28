@@ -6,7 +6,7 @@ import { clearAuthData } from '../../redux/auth/slice';
 import Modal from '../Modal/Modal';
 import { toast } from 'react-toastify';
 import styles from './Header.module.css';
-
+import { FaSignOutAlt } from 'react-icons/fa';
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,27 +31,31 @@ const Header = () => {
     }
   };
 
-  // if (!isLoggedIn) {
-  //    return null;
-  // }
+  //  if (!isLoggedIn) {
+  //     return null;
+  //  }
 
   return (
     <header className={styles.headerWrapper}>
       <div className={styles.logoContainer}>
+         <img src="/money-guard.svg" alt="Logo" className={styles.logoIcon} />
          <span className={styles.logoText}>Money Guard</span>
       </div>
       <div className={styles.userInfo}>
         <span className={styles.userName}>{userName}</span>
         <button onClick={() => setIsModalOpen(true)} className={styles.exitButton}>
-           <span>Exit</span>
+           <FaSignOutAlt />
+           <span className={styles.exitText}>Exit</span>
         </button>
       </div>
 
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
            <h2 className={styles.modalTitle}>Log out</h2>
-           <p>Are you sure you want to log out?</p>
-           <div style={{ marginTop: '20px', textAlign: 'right' }}>
+           <p style={{ marginBottom: '30px', color: 'var(--white-60)' }}>
+              Are you sure you want to log out?
+           </p>
+           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '15px' }}>
                <button onClick={handleLogout} className={styles.modalLogoutButton}>Log out</button>
                <button onClick={() => setIsModalOpen(false)} className={styles.modalCancelButton}>Cancel</button>
            </div>

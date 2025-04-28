@@ -1,0 +1,10 @@
+.graphWrapper {
+    width: calc(100% + 64px);
+    margin-left: -32px;
+    margin-right: -32px;
+    height: 80px;
+    margin-top: auto;
+    opacity: 0.9;
+    position: relative;
+    bottom: -32px;
+  }
