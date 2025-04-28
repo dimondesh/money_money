@@ -15,7 +15,7 @@ import { authReducer } from "./auth/slice";
 import currencyReducer from './currency/currencySlice';
 import globalReducer from './global/globalSlice';
 import financeReducer from './finance/financeSlice';
-
+import { modalsReducer } from './modals/slice'; 
 
 const authPersistConfig = {
   key: "auth",
@@ -31,12 +31,13 @@ export const store = configureStore({
     currency: currencyReducer,
     global: globalReducer,
     finance: financeReducer,
+    modals: modalsReducer, 
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        ignoredPaths: ['auth.reducers.clearAuthData'], // Додано ігнорування
+        ignoredPaths: ['auth.reducers.clearAuthData'],
       },
     }),
 });

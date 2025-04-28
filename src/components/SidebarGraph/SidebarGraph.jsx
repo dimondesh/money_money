@@ -34,7 +34,7 @@ const SidebarGraph = () => {
         >
           <defs>
             <linearGradient id="sidebarGraphGradientDef" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="var(--white)" stopOpacity={0.25}/>
+              <stop offset="5%" stopColor="var(--white)" stopOpacity={0.4}/>
               <stop offset="95%" stopColor="var(--white)" stopOpacity={0}/>
             </linearGradient>
           </defs>

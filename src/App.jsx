@@ -1,87 +1,67 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import { useEffect, Suspense } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectIsRefreshing } from "./redux/auth/selectors";
-import { refreshUserThunk } from "./redux/auth/operations";
-import { lazy } from "react";
-import { PrivateRoute, PublicRoute } from "./routes";
-import Loader from "components/Loader/Loader";
-import { LoginPage, NotFound } from "./pages";
-import { useMedia } from "./hooks";
+import React, { lazy, Suspense } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
-const CurrencyTab = lazy(() => import("./pages/CurrencyTab/CurrencyTab"));
-const HomeTab = lazy(() => import("./pages/HomeTab/HomeTab"));
-const StatisticsTab = lazy(() => import("./pages/StatisticsTab/StatisticsTab"));
+import PrivateRoute from './routes/PrivateRoute';
+import PublicRoute from './routes/PublicRoute';
+import Loader from './components/Loader/Loader';
 
-const RegistrationPage = lazy(() => import("./pages/RegisterPage/RegistrationPage"));
-
-const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+const DashboardPage = lazy(() => import('./pages/Dashboard/Dashboard'));
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
+const RegistrationPage = lazy(() => import('./pages/RegisterPage/RegistrationPage'));
+const HomeTab = lazy(() => import('./pages/HomeTab/HomeTab'));
+const StatisticsTab = lazy(() => import('./pages/StatisticsTab/StatisticsTab'));
+const CurrencyTab = lazy(() => import('./pages/CurrencyTab/CurrencyTab'));
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
 function App() {
-  const dispatch = useDispatch();
-  const isRefreshing = useSelector(selectIsRefreshing);
-  const { isMobile } = useMedia();
-
-  useEffect(() => {
-    dispatch(refreshUserThunk());
-  }, [dispatch]);
-
-  if (isRefreshing) {
-    return <Loader />;
-  }
+  const isLoading = useSelector(state => state.global?.isLoading);
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   return (
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/statistics"
-          element={
-            <PrivateRoute>
-              <StatisticsTab />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/currency"
-          element={
-            isMobile ? (
+    <>
+      {isLoading && <Loader />}
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route
+            path="/"
+            element={
               <PrivateRoute>
-                <CurrencyTab />
+                <DashboardPage />
               </PrivateRoute>
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
+            }
+          >
+            <Route index element={<HomeTab />} />
+            <Route path="statistics" element={<StatisticsTab />} />
+            <Route
+              path="currency"
+              element={isMobile ? <CurrencyTab /> : <Navigate to="/" replace />}
+            />
+          </Route>
 
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <RegistrationPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <LoginPage />
-            </PublicRoute>
-          }
-        />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute restricted>
+                <RegistrationPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute restricted>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
+          <Route path="*" element={<NotFound />} />
+
+        </Routes>
+      </Suspense>
+    </>
   );
 }
 

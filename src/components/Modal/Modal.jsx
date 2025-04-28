@@ -14,11 +14,15 @@ const Modal = ({ children, onClose }) => {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
+    if (document.body) {
+      document.body.style.overflow = 'hidden';
+    }
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'auto';
+      if (document.body) {
+        document.body.style.overflow = 'auto';
+      }
     };
   }, [onClose]);
 
@@ -27,6 +31,12 @@ const Modal = ({ children, onClose }) => {
       onClose();
     }
   };
+
+  if (!modalRoot) {
+      console.error("Modal root element '#modal-root' not found in the DOM.");
+      return null;
+  }
+
 
   return createPortal(
     <div className={styles.modalOverlay} onClick={handleBackdropClick}>

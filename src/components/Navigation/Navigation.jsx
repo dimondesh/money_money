@@ -12,18 +12,18 @@ const Navigation = () => {
 
   return (
     <nav className={styles.navWrapper}>
-      <NavLink to="/dashboard/home" className={getNavLinkClass}>
+      <NavLink to="/" end className={getNavLinkClass}>
          <FaHome className={styles.navIcon}/>
          {isTabletOrDesktop && <span className={styles.navText}>Home</span>}
          {isMobile && <span className={styles.navText}>Home</span>}
       </NavLink>
-      <NavLink to="/dashboard/statistics" className={getNavLinkClass}>
+      <NavLink to="/statistics" className={getNavLinkClass}>
          <FaChartBar className={styles.navIcon}/>
          {isTabletOrDesktop && <span className={styles.navText}>Statistics</span>}
          {isMobile && <span className={styles.navText}>Statistics</span>}
       </NavLink>
       {isMobile && (
-        <NavLink to="/dashboard/currency" className={getNavLinkClass}>
+        <NavLink to="/currency" className={getNavLinkClass}>
           <FaDollarSign className={styles.navIcon}/>
           <span className={styles.navText}>Currency</span>
         </NavLink>
