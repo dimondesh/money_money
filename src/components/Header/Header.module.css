@@ -35,7 +35,6 @@
   font-weight: 400;
   font-size: 16px;
   color: var(--white-60);
-  text-align: right;
 }
 
 .userName {
@@ -48,6 +47,8 @@
   color: var(--white-60);
   cursor: pointer;
   font-size: 16px;
+  font-weight: 400;
+  font-family: var(--font-family);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -62,10 +63,15 @@
 
 }
 
-
 .exitButton:hover {
   color: var(--white);
 }
+
+.exitButton svg {
+    width: 18px;
+    height: 18px;
+}
+
 
 .modalTitle {
   font-weight: 600;
