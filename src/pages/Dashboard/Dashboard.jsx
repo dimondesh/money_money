@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutThunk } from "../../redux/auth/operations";
 
+
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
