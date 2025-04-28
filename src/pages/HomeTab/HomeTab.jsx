@@ -1,3 +1,4 @@
+
 import Balance from '../../components/Balance/Balance.jsx';
 import CreateButton from '../../components/CreateButton/CreateButton.jsx';
 import TransactionsList from '../../components/TransactionsList/TransactionsList.jsx';

@@ -16,9 +16,10 @@
   --second-family: 'Circe', sans-serif;
 }
 body {
+  margin: 0;
   font-family: var(--font-family), sans-serif;
+  background-color: var(--background);
   color: var(--white);
-  background-color: #623f8b;
 }
 
 input::-webkit-outer-spin-button,
@@ -43,4 +44,7 @@ input {
 }
 input:focus {
   border-bottom: 1px solid var(--white-60);
+}
+* {
+  box-sizing: border-box;
 }

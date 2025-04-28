@@ -1,29 +1,44 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logoutThunk } from "../../redux/auth/operations";
+import { Outlet } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import Header from '../../components/Header/Header';
+import Navigation from "../../components/Navigation/Navigation";
+import Balance from "../../components/Balance/Balance";
+import Currency from '../../components/Currency/Currency';
+import SidebarGraph from '../../components/SidebarGraph/SidebarGraph';
+import styles from "./Dashboard.module.css";
 
-const Dashboard = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    dispatch(logoutThunk());
-    navigate("/login");
-  };
+const DashboardPage = () => {
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const isTablet = useMediaQuery({ query: '(min-width: 768px) and (max-width: 1199px)'});
+  const isDesktop = useMediaQuery({ query: '(min-width: 1200px)' });
 
   return (
-    <div>
-      <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1rem" }}>
-        <h1>Dashboard</h1>
-        <button onClick={handleLogout} style={{ padding: "0.5rem 1rem", cursor: "pointer" }}>
-          Log out
-        </button>
-      </header>
-      <main>
-        <Outlet />
-      </main>
+    <div className={styles.pageWrapper}>
+       <Header />
+
+       <div className={styles.contentWrapper}>
+          {(isTablet || isDesktop) && (
+            <aside className={styles.sidebar}>
+              <Navigation />
+              <Balance />
+              {isDesktop && <Currency />}
+              {isDesktop && <SidebarGraph />}
+            </aside>
+          )}
+
+          {isMobile && (
+              <div className={styles.mobileNavBalanceContainer}>
+                  <Navigation />
+                  <Balance />
+              </div>
+          )}
+
+          <main className={styles.mainContent}>
+             <Outlet />
+          </main>
+       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardPage;
