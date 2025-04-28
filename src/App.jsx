@@ -1,12 +1,13 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import { useEffect, Suspense } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectIsRefreshing } from "./redux/auth/selectors";
-import { refreshUserThunk } from "./redux/auth/operations";
-import { lazy } from "react";
-import { PrivateRoute, PublicRoute } from "./routes";
-import Loader from "components/Loader/Loader";
 import { LoginPage, NotFound } from "./pages";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { PrivateRoute, PublicRoute } from "./routes";
+import { Suspense, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import Loader from "components/Loader/Loader";
+import { lazy } from "react";
+import { refreshUserThunk } from "./redux/auth/operations";
+import { selectIsRefreshing } from "./redux/auth/selectors";
 import { useMedia } from "./hooks";
 
 const CurrencyTab = lazy(() => import("./pages/CurrencyTab/CurrencyTab"));
@@ -84,5 +85,15 @@ function App() {
     </Suspense>
   );
 }
+
+<Route
+  path="/home"
+  element={
+    <PrivateRoute>
+      <HomeTab />
+    </PrivateRoute>
+  }
+/>
+
 
 export default App;
