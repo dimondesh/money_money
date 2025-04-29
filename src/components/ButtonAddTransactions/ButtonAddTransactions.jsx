@@ -1,22 +1,24 @@
-import { FiPlus } from 'react-icons/fi';
-import s from './ButtonAddTransactions.module.css';
-import { openAddModal } from '../../redux/modals/slice';
-import { useDispatch } from 'react-redux';
+import { FiPlus } from "react-icons/fi";
+import s from "./ButtonAddTransactions.module.css";
+
+import { useDispatch } from "react-redux";
+import { openModalAddTransaction } from "../../redux/modal/modalSlice";
+// import { addTransactions } from "../../redux/transactions/operations";
 
 const ButtonAddTransactions = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    return (
-        <button
-            className={s.btn}
-            type="button"
-            onClick={() => {
-                dispatch(openAddModal());
-            }}
-        >
-            <FiPlus className={s.icon} />
-        </button>
-    );
+  return (
+    <button
+      className={s.btn}
+      type="button"
+      onClick={() => {
+        dispatch(openModalAddTransaction());
+      }}
+    >
+      <FiPlus className={s.icon} />
+    </button>
+  );
 };
 
 export default ButtonAddTransactions;

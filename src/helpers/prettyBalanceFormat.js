@@ -1,8 +1,7 @@
-export const prettyBalanceFormat = number => {
-  return new Intl.NumberFormat('en-US', {
+export const prettyBalanceFormat = (balance) =>
+  new Intl.NumberFormat("uk-UA", {
+    style: "decimal",
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
   })
-    .format(number)
-    .replace(/,/g, ' ');
-};
+    .format(balance)
+    .replace(",", ".");

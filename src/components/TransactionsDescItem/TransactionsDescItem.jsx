@@ -1,29 +1,37 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
+
 import {
-  setTrasactionForUpdate,
-  setTrasactionIdForDelete,
-} from '../../redux/transactions/transactionsSlice';
-import { formatData, getTransactionCategory } from '../../constants/TransactionConstants';
+  formatData,
+  getTransactionCategory,
+} from "../../constants/TransactionConstants";
 
-import icons from '../../images/icons/sprite.svg';
+import icons from "../../images/icons/sprite.svg";
 
-import styles from './TransactionsDescItem.module.css';
+import styles from "./TransactionsDescItem.module.css";
+import {
+  deleteTransactions,
+  editTransactions,
+} from "../../redux/transactions/operations";
 
-const TransactionsDescItem = ({ transaction, openDeleteModal, openEditModal }) => {
+const TransactionsDescItem = ({
+  transaction,
+  openDeleteModal,
+  openEditModal,
+}) => {
   const { id, type, category, comment, sum, transactionDate } = transaction;
   const dispatch = useDispatch();
 
   const handleDeleteClick = () => {
     openDeleteModal();
-    dispatch(setTrasactionIdForDelete(id));
+    dispatch(deleteTransactions(id));
   };
 
   const handleEditClick = () => {
     openEditModal();
-    dispatch(setTrasactionForUpdate({ id, type }));
+    dispatch(editTransactions({ id, type }));
   };
 
-  const isIncome = type === 'INCOME';
+  const isIncome = type === "INCOME";
   const textClass = isIncome ? styles.incomeText : styles.expenseText;
   const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
 
@@ -31,11 +39,13 @@ const TransactionsDescItem = ({ transaction, openDeleteModal, openEditModal }) =
     <li className={`${styles.TransactionItem} ${borderClass}`}>
       <div className={`${styles.row} ${styles.firstRow}`}>
         <span className={styles.fixData}>Date</span>
-        <span className={styles.dynamicData}>{formatData(transactionDate)}</span>
+        <span className={styles.dynamicData}>
+          {formatData(transactionDate)}
+        </span>
       </div>
       <div className={`${styles.row} ${styles.secondRow}`}>
         <span className={styles.fixData}>Type</span>
-        <span className={styles.dynamicData}>{isIncome ? '+' : '-'}</span>
+        <span className={styles.dynamicData}>{isIncome ? "+" : "-"}</span>
       </div>
       <div className={`${styles.row} ${styles.thirdRow}`}>
         <span className={styles.fixData}>Category</span>
@@ -45,7 +55,7 @@ const TransactionsDescItem = ({ transaction, openDeleteModal, openEditModal }) =
       </div>
       <div className={`${styles.row} ${styles.forthRow}`}>
         <span className={styles.fixData}>Comment</span>
-        <span className={styles.dynamicData}>{comment || '-'}</span>
+        <span className={styles.dynamicData}>{comment || "-"}</span>
       </div>
       <div className={`${styles.row} ${styles.fifthRow}`}>
         <span className={styles.fixData}>Sum</span>
@@ -71,11 +81,9 @@ const TransactionsDescItem = ({ transaction, openDeleteModal, openEditModal }) =
         >
           Delete
         </button>
-        
       </div>
     </li>
   );
 };
 
 export default TransactionsDescItem;
-
