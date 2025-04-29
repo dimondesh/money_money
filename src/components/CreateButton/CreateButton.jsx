@@ -12,3 +12,24 @@ const CreateButton = () => {
 };
 
 export default CreateButton;
+
+// import { useDispatch } from 'react-redux';
+// import { openModalAddTransaction } from '../../redux/modal/modalSlice';
+// import styles from './CreateButton.module.css';
+// import { FaPlus } from 'react-icons/fa'; 
+
+// const CreateButton = () => {
+//   const dispatch = useDispatch();
+
+//   const handleClick = () => {
+//     dispatch(openModalAddTransaction());
+//   };
+
+//   return (
+//     <button type="button" onClick={handleClick} className={styles.addButton}>
+//       <FaPlus size={20} />
+//     </button>
+//   );
+// };
+
+// export default CreateButton;

@@ -2,33 +2,8 @@
     position: relative;
 }
 
-/* Ascunde săgețile de incrementare/decrementare din câmpul număr */
-.inputField input[type='number']::-webkit-inner-spin-button,
-.inputField input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
 
-.modalContent form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-}
 
-form .formTitle {
-    color: rgba(251, 251, 251, 1);
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 36px;
-}
-
-form .inputWrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
 
 .inputWrapper .inputField input,
 .inputWrapper .inputField select {
@@ -60,6 +35,33 @@ form .inputWrapper {
     /* background-color: rgba(106, 70, 165, 0.52); */
     /* background-color: rgba(133, 93, 175, 0.13); */
     color: rgba(251, 251, 251, 1);
+}
+
+.inputField input[type='number']::-webkit-inner-spin-button,
+.inputField input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.modalContent form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+form .formTitle {
+    color: rgba(251, 251, 251, 1);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 36px;
+}
+
+form .inputWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 .inputField input:focus,
@@ -294,4 +296,4 @@ label:active::after {
         font-size: 30px;
         line-height: 45px;
     }
-}
+} 

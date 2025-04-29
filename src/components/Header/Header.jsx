@@ -1,54 +1,63 @@
-import { Suspense, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { ImExit } from 'react-icons/im';
-import { useMedia } from 'hooks';
-import { selectUser } from '../../redux/auth/selectors';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logoutThunk } from '../../redux/auth/operations';
+import { clearAuthData } from '../../redux/auth/slice';
+import Modal from '../Modal/Modal';
+import { toast } from 'react-toastify';
+import styles from './Header.module.css';
 
-import s from './Header.module.css';
-import Logo from 'components/common/Logo/Logo';
-import Loader from 'components/Loader/Loader';
-import LogoutModal from 'components/LogoutModal/LogoutModal';
-import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const user = useSelector(selectUser);
-  const userName = user ? user.username : null;
-  const { isMobile } = useMedia();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const open = () => {
-    setIsModalOpen(true);
+  const userEmail = useSelector(state => state.auth?.user?.email);
+  const isLoggedIn = useSelector(state => !!state.auth?.token);
+  const userName = userEmail ? userEmail.split('@')[0] : 'User';
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutThunk()).unwrap();
+       navigate('/login');
+    } catch (error) {
+      toast.error(error?.message || 'Logout failed');
+      dispatch(clearAuthData());
+      localStorage.removeItem('authToken');
+      navigate('/login');
+    } finally {
+       setIsModalOpen(false);
+    }
   };
 
-  const close = () => {
-    setIsModalOpen(false);
-  };
+  // if (!isLoggedIn) {
+  //    return null;
+  // }
 
   return (
-    <>
-      <header className={s.header}>
-        <NavLink to="">
-          <Logo
-            type="header"
-            width={isMobile ? 18 : 25}
-            height={isMobile ? 18 : 23}
-          />
-        </NavLink>
-        <div className={s.user}>
-          <span className={s.userName}>{userName || 'Guest'}</span>
-          <button onClick={open} className={s.exitBtn}>
-            <ImExit width={18} height={18} />
-            {!isMobile && <p>Exit</p>}
-          </button>
-        </div>
-      </header>
+    <header className={styles.headerWrapper}>
+      <div className={styles.logoContainer}>
+         <span className={styles.logoText}>Money Guard</span>
+      </div>
+      <div className={styles.userInfo}>
+        <span className={styles.userName}>{userName}</span>
+        <button onClick={() => setIsModalOpen(true)} className={styles.exitButton}>
+           <span>Exit</span>
+        </button>
+      </div>
 
       {isModalOpen && (
-        <Suspense fallback={<Loader />}>
-          <LogoutModal onClose={close} />
-        </Suspense>
+        <Modal onClose={() => setIsModalOpen(false)}>
+           <h2 className={styles.modalTitle}>Log out</h2>
+           <p>Are you sure you want to log out?</p>
+           <div style={{ marginTop: '20px', textAlign: 'right' }}>
+               <button onClick={handleLogout} className={styles.modalLogoutButton}>Log out</button>
+               <button onClick={() => setIsModalOpen(false)} className={styles.modalCancelButton}>Cancel</button>
+           </div>
+        </Modal>
       )}
-    </>
+    </header>
   );
 };
 

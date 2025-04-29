@@ -16,6 +16,11 @@ const initialState = {
     email: null,
     balance: null,
   },
+  reducers: {
+    clearAuthData() { 
+      return initialState; 
+    }
+  },
   token: null,
   isLoggedIn: false,
   isRefreshing: false, 
@@ -88,5 +93,7 @@ const slice = createSlice({
       );
   },
 });
+
+export const { clearAuthData } = slice.actions;
 
 export const authReducer = slice.reducer;
