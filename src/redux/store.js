@@ -28,7 +28,6 @@ import { transactionsReducer } from "./transactions/slice";
 import { categoriesReducer } from "./categories/slice";
 
 import { modalsReducer } from "./modals/slice";
-main;
 
 const authPersistConfig = {
   key: "auth",
@@ -42,17 +41,16 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     currency: currencyReducer,
     global: globalReducer,
-    HEAD,
     // finance: financeReducer,
-    // transactions: transactionsReducer,
+    transactions: transactionsReducer,
     // modal: modalReducer,
     // categories: categoriesReducer,
 
-    // transactions: transactionsReducer,
-    // categories: categoriesReducer,
+    transactions: transactionsReducer,
+    categories: categoriesReducer,
     // finance: financeReducer,
 
-    // modals: modalsReducer,
+    modals: modalsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
