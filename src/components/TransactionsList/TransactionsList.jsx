@@ -1,4 +1,4 @@
-// <<<<<<< HEAD
+
 // import { useSelector } from 'react-redux';
 // import TransactionItem from '../TransactionsDescItem/TransactionsDescItem';
 // import TransactionsMobileItem from '../TransactionsMobileItem/TransactionsMobileItem';
@@ -39,7 +39,7 @@
 // export default TransactionsList;
 
 
-=======
+
 import React from 'react';
 
 
@@ -53,4 +53,4 @@ export const TransactionsList = () => {
     </div>
   );
 };
->>>>>>> main
+

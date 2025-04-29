@@ -12,7 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 
 import { authReducer } from "./auth/slice";
-<<<<<<< HEAD
+
 // import currencyReducer from "./currency/currencySlice";
 // import globalReducer from "./global/globalSlice";
 // import financeReducer from "./finance/financeSlice";
@@ -20,7 +20,6 @@ import { authReducer } from "./auth/slice";
 // import categoriesReducer from "./categories/slice";
 // import modalReducer from "./modal/modalSlice";
 // import transactionsReducer from "./transactions/transactionsSlice";
-=======
 
 import currencyReducer from "./currency/currencySlice";
 import globalReducer from "./global/globalSlice";
@@ -28,8 +27,8 @@ import globalReducer from "./global/globalSlice";
 import { transactionsReducer } from "./transactions/slice";
 import { categoriesReducer } from "./categories/slice";
 
-import { modalsReducer } from './modals/slice'; 
->>>>>>> main
+import { modalsReducer } from "./modals/slice";
+main;
 
 const authPersistConfig = {
   key: "auth",
@@ -43,33 +42,24 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     currency: currencyReducer,
     global: globalReducer,
-<<<<<<< HEAD
+    HEAD,
     // finance: financeReducer,
     // transactions: transactionsReducer,
     // modal: modalReducer,
     // categories: categoriesReducer,
-=======
-    transactions: transactionsReducer,
-    categories: categoriesReducer,
+
+    // transactions: transactionsReducer,
+    // categories: categoriesReducer,
     // finance: financeReducer,
 
-  
-    modals: modalsReducer, 
-
->>>>>>> main
+    // modals: modalsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-<<<<<<< HEAD
-        ignoredPaths: ["auth.reducers.clearAuthData"], // Додано ігнорування
-=======
 
         ignoredPaths: ["auth.reducers.clearAuthData"], // Додано ігнорування
-
-
->>>>>>> main
       },
     }),
 });

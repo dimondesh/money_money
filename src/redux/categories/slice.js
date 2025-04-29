@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-<<<<<<< HEAD
+
 
 
 // const categoriesSlice = createSlice({

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 // import React, { useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -53,7 +53,7 @@
 // };
 
 // export default ModalAddTransaction;
-=======
+
 import React from 'react';
 import Modal from '../Modal/Modal';
 
@@ -71,4 +71,4 @@ export const AddTransactionModal = ({ onClose }) => {
     </Modal>
   );
 };
->>>>>>> main
+
