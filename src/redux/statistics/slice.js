@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { getIncomeAndExpenseSummaryByPeriod } from "./operations";
 
 const initialState = {
@@ -20,6 +20,7 @@ const slice = createSlice({
           state.isStatisticsLoading = false;
           state.incomeSummaryByPeriod = payload.incomeSummaryByPeriod;
           state.expenseSummaryByPeriod = payload.expenseSummaryByPeriod;
+          state.summary = payload.summary; // 👈 ОБОВ'ЯЗКОВО ДОДАЙ!
         }
       )
       .addMatcher(

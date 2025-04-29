@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 // import {
-//   getTransactionsCategories,
-//   getExpenseSummaryByCategories,
 //   getIncomeAndExpenseSummaryByPeriod,
-// } from "../../redux/transactions/operations";
+// } from "../../redux/statistics/operations";
 
 import css from "./StatisticDatePicker.module.css";
 
@@ -93,16 +91,10 @@ const StatisticsDatePicker = () => {
   const [selectedYear, setSelectedYear] = useState(initialYear);
 
   // useEffect(() => {
-  //   dispatch(getTransactionsCategories());
-  // }, [dispatch]);
-
-  // useEffect(() => {
   //   const period =
   //     selectedMonth === "All month"
   //       ? { year: selectedYear }
   //       : { month: selectedMonth, year: selectedYear };
-
-  //   dispatch(getExpenseSummaryByCategories(period));
   //   dispatch(getIncomeAndExpenseSummaryByPeriod(period));
   // }, [dispatch, selectedMonth, selectedYear]);
 

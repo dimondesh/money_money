@@ -12,7 +12,7 @@ const StatisticsTable = ({
   expensesSummaryByPeriod,
 }) => {
   const getCategoryName = (id) => {
-    return categories.find((cat) => cat.id === id)?.name;
+    return categories.find((cat) => cat.id === id)?.name || "Unknown";
   };
 
   const getCategoryColor = (index) => {
@@ -49,7 +49,7 @@ const StatisticsTable = ({
                 />
               </td>
               <td className={css.name}>{getCategoryName(item.categoryId)}</td>
-              <td className={css.amount}>{formatNumber(item.EXPENSE)}</td>
+              <td className={css.amount}>{formatNumber(item.total)}</td>
             </tr>
           ))}
         </tbody>

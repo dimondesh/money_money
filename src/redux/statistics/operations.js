@@ -1,7 +1,8 @@
-import { walletAPI } from "helpers/api";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { walletAPI, setToken } from "helpers/api";
 
 export const getIncomeAndExpenseSummaryByPeriod = createAsyncThunk(
-  "transactions/summaryByPeriod",
+  "statistics/getIncomeAndExpenseSummaryByPeriod",
   async ({ month, year }, thunkApi) => {
     const savedToken = thunkApi.getState().auth.token;
 
@@ -21,16 +22,16 @@ export const getIncomeAndExpenseSummaryByPeriod = createAsyncThunk(
       const { income, totalExpenses, expenses } = data.data;
 
       return {
-        income,
-        totalExpenses,
-        expenses,
+        incomeSummaryByPeriod: income,
+        expenseSummaryByPeriod: totalExpenses,
+        summary: expenses || [],
       };
     } catch (error) {
       if (error.response?.status === 404) {
         return {
-          income: 0,
-          totalExpenses: 0,
-          expenses: 0,
+          incomeSummaryByPeriod: 0,
+          expenseSummaryByPeriod: 0,
+          summary: [],
         };
       }
       return thunkApi.rejectWithValue(
