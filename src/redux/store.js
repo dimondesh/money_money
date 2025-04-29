@@ -12,13 +12,24 @@ import {
 import storage from "redux-persist/lib/storage";
 
 import { authReducer } from "./auth/slice";
+<<<<<<< HEAD
+// import currencyReducer from "./currency/currencySlice";
+// import globalReducer from "./global/globalSlice";
+// import financeReducer from "./finance/financeSlice";
+
+// import categoriesReducer from "./categories/slice";
+// import modalReducer from "./modal/modalSlice";
+// import transactionsReducer from "./transactions/transactionsSlice";
+=======
+
 import currencyReducer from "./currency/currencySlice";
 import globalReducer from "./global/globalSlice";
-import financeReducer from "./finance/financeSlice";
+// import financeReducer from "./finance/financeSlice";
+import { transactionsReducer } from "./transactions/slice";
+import { categoriesReducer } from "./categories/slice";
 
-import categoriesReducer from "./categories/slice";
-import modalReducer from "./modal/modalSlice";
-import transactionsReducer from "./transactions/transactionsSlice";
+import { modalsReducer } from './modals/slice'; 
+>>>>>>> main
 
 const authPersistConfig = {
   key: "auth",
@@ -32,16 +43,33 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     currency: currencyReducer,
     global: globalReducer,
-    finance: financeReducer,
+<<<<<<< HEAD
+    // finance: financeReducer,
+    // transactions: transactionsReducer,
+    // modal: modalReducer,
+    // categories: categoriesReducer,
+=======
     transactions: transactionsReducer,
-    modal: modalReducer,
     categories: categoriesReducer,
+    // finance: financeReducer,
+
+  
+    modals: modalsReducer, 
+
+>>>>>>> main
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+<<<<<<< HEAD
         ignoredPaths: ["auth.reducers.clearAuthData"], // Додано ігнорування
+=======
+
+        ignoredPaths: ["auth.reducers.clearAuthData"], // Додано ігнорування
+
+
+>>>>>>> main
       },
     }),
 });

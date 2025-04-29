@@ -6,7 +6,6 @@ import { IoPerson } from "react-icons/io5";
 import s from "./RegistrationForm.module.css";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../../redux/auth/operations";
-console.log("Проверка импорта registerThunk:", registerThunk);
 import { registerValidatSchema } from "helpers";
 import FormButton from "../common/FormButton/FormButton";
 import { Link } from "react-router-dom";

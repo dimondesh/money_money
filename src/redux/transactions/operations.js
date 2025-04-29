@@ -1,50 +1,100 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { walletAPI } from "../../helpers/index.js";
+<<<<<<< HEAD
+// import { walletAPI } from "../../helpers/index.js";
 
-export const fetchTransactions = createAsyncThunk(
-  "transactions/fetchAll",
-  async (_, { rejectWithValue }) => {
+// export const fetchTransactions = createAsyncThunk(
+//   "transactions/fetchAll",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const { data } = await walletAPI.get("api/transactions");
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data?.message || error.message);
+=======
+import { walletAPI } from "helpers/api";
+import { getBalanceThunk } from "../auth/operations";
+
+export const getTransactions = createAsyncThunk(
+  "transactions/all",
+  async (_, thunkApi) => {
     try {
-      const { data } = await walletAPI.get("api/transactions");
+      const { data } = await walletAPI.get("/api/transactions");
       return data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return thunkApi.rejectWithValue(error.message);
+>>>>>>> main
     }
   }
 );
 
-export const addTransaction = createAsyncThunk(
-  "transactions/addTransaction",
-  async (transactionData, { rejectWithValue }) => {
+<<<<<<< HEAD
+// export const addTransaction = createAsyncThunk(
+//   "transactions/addTransaction",
+//   async (transactionData, { rejectWithValue }) => {
+//     try {
+//       const formattedData = {
+//         type: transactionData.type,
+//         category: transactionData.category,
+//         sum: Number(transactionData.sum),
+//         comment: transactionData.comment || "",
+
+//         // date: transactionData.date || new Date().toISOString(),
+//       };
+
+//       const response = await walletAPI.post("api/transactions", formattedData);
+
+//       return response.data;
+//     } catch (error) {
+//       const errorMessage = error.response?.data?.message || error.message;
+//       console.error("Error", errorMessage);
+//       return rejectWithValue(errorMessage);
+=======
+export const addTransactions = createAsyncThunk(
+  "transactions/add",
+  async (transaction, thunkApi) => {
     try {
-      const formattedData = {
-        type: transactionData.type,
-        category: transactionData.category,
-        sum: Number(transactionData.sum),
-        comment: transactionData.comment || "",
+      const { data } = await walletAPI.post("/api/transactions", transaction);
 
-        // date: transactionData.date || new Date().toISOString(),
-      };
-
-      const response = await walletAPI.post("api/transactions", formattedData);
-
-      return response.data;
+      thunkApi.dispatch(getBalanceThunk());
+      return data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      console.error("Error", errorMessage);
-      return rejectWithValue(errorMessage);
+      return thunkApi.rejectWithValue(error.message);
+>>>>>>> main
     }
   }
 );
 
-export const deleteTransaction = createAsyncThunk(
-  "transactions/deleteTransaction",
-  async (transactionId, { rejectWithValue }) => {
+<<<<<<< HEAD
+
+=======
+export const deleteTransactions = createAsyncThunk(
+  "transactions/delete",
+  async (id, thunkApi) => {
     try {
-      await walletAPI.delete(`api/transactions/${transactionId}`);
-      return transactionId;
+      await walletAPI.delete(`/api/transactions/${id}`);
+      thunkApi.dispatch(getBalanceThunk());
+      return id;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const editTransactions = createAsyncThunk(
+  "transactions/edit",
+  async ({ id, updatedTransaction }, thunkApi) => {
+    try {
+      const { data } = await walletAPI.patch(
+        `/api/transactions/${id}`,
+        updatedTransaction
+      );
+
+      thunkApi.dispatch(getBalanceThunk());
+      thunkApi.dispatch(getTransactions());
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+>>>>>>> main
     }
   }
 );
