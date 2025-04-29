@@ -9,18 +9,18 @@ import { addTrnValidSchema } from '../../helpers/index.js';
 import { useDispatch } from 'react-redux';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import enUS from 'date-fns/locale/en-US';
+// import enUS from 'date-fns/locale/en-US';
 import {
   categories,
   getTransactionId,
 } from '../../constants/TransactionConstants';
 
-import { addTransaction } from '../../redux/transactions/operations';
+import { addTransactions } from '../../redux/transactions/operations';
 import { getBalanceThunk } from '../../redux/auth/operations';
 
 import { FiCalendar } from 'react-icons/fi';
 
-registerLocale('en-US', enUS);
+// registerLocale('en-US', enUS);
 
 const AddTransactionForm = ({ closeModal }) => {
   const [isOnIncomeTab, setIsOnIncomeTab] = useState(false);
@@ -50,7 +50,7 @@ const AddTransactionForm = ({ closeModal }) => {
     };
 
     
-    dispatch(addTransaction(transactionData))
+    dispatch(addTransactions(transactionData))
       .unwrap()
       .then(() => {
         closeModal();
