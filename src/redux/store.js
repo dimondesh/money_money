@@ -13,6 +13,8 @@ import storage from "redux-persist/lib/storage";
 
 import { authReducer } from "./auth/slice";
 
+import { statisticsReducer } from "./statistics/slice";
+
 // import currencyReducer from "./currency/currencySlice";
 // import globalReducer from "./global/globalSlice";
 // import financeReducer from "./finance/financeSlice";
@@ -49,6 +51,8 @@ export const store = configureStore({
     transactions: transactionsReducer,
     categories: categoriesReducer,
     // finance: financeReducer,
+
+    statistics: statisticsReducer,
 
     modals: modalsReducer,
   },
