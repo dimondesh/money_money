@@ -54,20 +54,35 @@
 
 // export default ModalAddTransaction;
 
+// import React from 'react';
+// import Modal from '../Modal/Modal';
+// import AddTransactionForm from '../AddTransactionForm/AddTransactionForm';
+
+
+// export const AddTransactionModal = ({ onClose }) => {
+
+
+//   return (
+//     <Modal onClose={onClose}>
+//       <div>
+//         <AddTransactionForm/>
+//         {/* <h2>Add transaction</h2>
+//         <p>Transaction Form Placeholder...</p>
+//          <button type="button" onClick={onClose} style={{marginTop: '20px'}}>Close Me</button> */}
+//       </div>
+//     </Modal>
+//   );
+// };
+
 import React from 'react';
 import Modal from '../Modal/Modal';
+import AddTransactionForm from '../AddTransactionForm/AddTransactionForm';
 
 
 export const AddTransactionModal = ({ onClose }) => {
-
-
   return (
     <Modal onClose={onClose}>
-      <div>
-        <h2>Add transaction</h2>
-        <p>Transaction Form Placeholder...</p>
-         <button type="button" onClick={onClose} style={{marginTop: '20px'}}>Close Me</button>
-      </div>
+      <AddTransactionForm closeModal={onClose} />
     </Modal>
   );
 };
