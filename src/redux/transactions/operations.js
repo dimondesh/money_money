@@ -20,7 +20,6 @@ export const addTransactions = createAsyncThunk(
   async (transaction, thunkApi) => {
     try {
       const { data } = await walletAPI.post("/api/transactions", transaction);
-      console.log("Відповідь з бекенду:", data);
       thunkApi.dispatch(getBalanceThunk());
       return data;
     } catch (error) {

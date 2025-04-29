@@ -23,11 +23,12 @@ import { statisticsReducer } from "./statistics/slice";
 // import modalReducer from "./modal/modalSlice";
 // import transactionsReducer from "./transactions/transactionsSlice";
 
-import currencyReducer from "./currency/currencySlice";
-import globalReducer from "./global/globalSlice";
+// import currencyReducer from "./currency/currencySlice";
+// import globalReducer from "./global/globalSlice";
 // import financeReducer from "./finance/financeSlice";
 import { transactionsReducer } from "./transactions/slice";
 import { categoriesReducer } from "./categories/slice";
+import { currencySlice } from "./currency/currencySlice";
 import { modalReducer } from "./modal/modalSlice";
 
 // import { modalsReducer } from "./modals/slice";
@@ -42,8 +43,8 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
-    currency: currencyReducer,
-    global: globalReducer,
+    currency: currencySlice.reducer,
+    // global: globalReducer,
     transactions: transactionsReducer,
     categories: categoriesReducer,
     statistics: statisticsReducer,
