@@ -8,7 +8,6 @@ import Loader from "../../components/Loader/Loader";
 
 import {
   selectSummary,
-  selectCategories,
   selectStatisticsLoading,
   selectStatisticsError,
   selectIncomeSummaryByPeriod,
@@ -16,6 +15,7 @@ import {
 } from "../../redux/statistics/selectors";
 
 import css from "./StatisticsTab.module.css";
+import { selectCategories } from "../../redux/categories/selectors";
 
 const StatisticsTab = () => {
   const summary = useSelector(selectSummary);

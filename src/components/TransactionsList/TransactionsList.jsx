@@ -1,56 +1,50 @@
+import { useSelector } from "react-redux";
+// import TransactionItem from "../TransactionsDescItem/TransactionsDescItem";
+import TransactionsMobileItem from "../TransactionsMobileItem/TransactionsMobileItem";
+import Loader from "../Loader/Loader";
+import { useMedia } from "../../hooks/useMedia";
 
-// import { useSelector } from 'react-redux';
-// import TransactionItem from '../TransactionsDescItem/TransactionsDescItem';
-// import TransactionsMobileItem from '../TransactionsMobileItem/TransactionsMobileItem';
-// import Loader from '../Loader/Loader';
-// import { useMedia } from '../../hooks/useMedia';
+import styles from "./TransactionsList.module.css";
+import {
+  selectLoading,
+  selectTransactions,
+} from "../../redux/transactions/selectors";
+import TransactionsDescItem from "../TransactionsDescItem/TransactionsDescItem";
 
-// import styles from './TransactionsList.module.css';
+const TransactionsList = () => {
+  const transactions = useSelector(selectTransactions) || [];
+  const loading = useSelector(selectLoading);
+  const { isMobile } = useMedia();
 
-// const TransactionsList = () => {
-//   const { transactions, loading } = useSelector(state => state.transactions);
-//   const { isMobile } = useMedia();
+  if (loading) {
+    return <Loader />;
+  }
 
-//   if (loading) {
-//     return <Loader />;
-//   }
-
-//   if (!transactions.length) {
-//     return (
-//       <div className={styles.emptyMessage}>
-//         <p>You have no transactions yet.</p>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <ul className={styles.list}>
-//       {transactions.map(transaction =>
-//         isMobile ? (
-//           <TransactionsMobileItem key={transaction.id} transaction={transaction} />
-//         ) : (
-//           <TransactionItem key={transaction.id} transaction={transaction} />
-//         )
-//       )}
-//     </ul>
-//   );
-// };
-
-// export default TransactionsList;
-
-
-
-import React from 'react';
-
-
-export const TransactionsList = () => {
-
+  if (transactions.length === 0) {
+    return (
+      <div className={styles.emptyMessage}>
+        <p>You have no transactions yet.</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h2>Transaction List Placeholder</h2>
-      <p>Table content will be here...</p>
-    </div>
+    <ul className={styles.list}>
+      {transactions.map((transaction) =>
+        isMobile ? (
+          <TransactionsMobileItem
+            key={transaction._id}
+            transaction={transaction}
+          />
+        ) : (
+          <TransactionsDescItem
+            key={transaction.id}
+            transaction={transaction}
+          />
+        )
+      )}
+    </ul>
   );
 };
 
+export default TransactionsList;

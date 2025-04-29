@@ -28,8 +28,9 @@ import globalReducer from "./global/globalSlice";
 // import financeReducer from "./finance/financeSlice";
 import { transactionsReducer } from "./transactions/slice";
 import { categoriesReducer } from "./categories/slice";
+import { modalReducer } from "./modal/modalSlice";
 
-import { modalsReducer } from "./modals/slice";
+// import { modalsReducer } from "./modals/slice";
 
 const authPersistConfig = {
   key: "auth",
@@ -43,18 +44,10 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     currency: currencyReducer,
     global: globalReducer,
-    // finance: financeReducer,
-    transactions: transactionsReducer,
-    // modal: modalReducer,
-    // categories: categoriesReducer,
-
     transactions: transactionsReducer,
     categories: categoriesReducer,
-    // finance: financeReducer,
-
     statistics: statisticsReducer,
-
-    modals: modalsReducer,
+    modal: modalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -62,6 +55,9 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 
         ignoredPaths: ["auth.reducers.clearAuthData"], // Додано ігнорування
+      },
+      immutableCheck: {
+        ignoredPaths: ["transactions.items", "statistics.summary"],
       },
     }),
 });

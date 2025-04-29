@@ -13,12 +13,12 @@
 
 .modalContent {
   position: relative;
-  background: linear-gradient(180deg, #6E54EB 3%, #553382 90%);
+  background: linear-gradient(180deg, #6e54eb 3%, #553382 90%);
   border: 1px solid var(--white-40);
   border-radius: 15px;
   padding: 32px;
-  min-width: 300px;
-  max-width: 500px;
+  /* min-width: 300px;
+  max-width: 500px; */
   color: var(--white);
   box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.4);
 }
