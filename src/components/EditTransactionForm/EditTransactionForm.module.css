@@ -31,6 +31,7 @@
     color: var(--white);
     text-align: center;
     font-size: 24px;
+    font-style: normal;
     font-weight: 400;
     line-height: normal;
     display: flex;
@@ -52,6 +53,7 @@
     color: var(--white);
     font-family: inherit;
     font-size: 18px;
+    font-style: normal;
     font-weight: 400;
     line-height: normal;
     padding-left: 20px;
@@ -59,12 +61,12 @@
     width: 280px;
     text-align: left;
     margin-bottom: 40px;
-    transition: all 0.3s ease;
-}
+    transition: all 0.3 ease;
 
-.categoryLabel:hover,
-.categoryLabel:focus {
-    border-bottom: solid 1px var(--yellow);
+    &:hover,
+    &:focus {
+        border-bottom: solid 1px var(--yellow);
+    }
 }
 
 .numInput,
@@ -78,18 +80,15 @@
     outline: none;
     font-family: inherit;
     font-size: 18px;
+    font-style: normal;
     font-weight: 400;
     line-height: normal;
-    transition: all 0.3s ease;
-}
+    transition: all 0.3 ease;
 
-.numInput:hover,
-.numInput:focus,
-.dateInput:hover,
-.dateInput:focus,
-.textInput:hover,
-.textInput:focus {
-    border-bottom: solid 1px var(--yellow);
+    &:hover,
+    &:focus {
+        border-bottom: solid 1px var(--yellow);
+    }
 }
 
 .numInput {
@@ -121,6 +120,8 @@
         font-size: 30px;
         width: 381px;
         height: 40px;
+        flex-direction: column;
+        flex-shrink: 0;
         padding: 40px 0;
         margin: 0;
     }
@@ -144,12 +145,16 @@
     .dateInput {
         width: 181px;
         padding: 0;
+        justify-content: space-between;
+        align-items: normal;
+        border: none;
     }
 
     .twoInput {
         flex-direction: row;
         gap: 32px;
         max-width: 394px;
+        flex-shrink: 0;
         align-items: end;
     }
 
@@ -166,7 +171,8 @@
     gap: 20px;
 }
 
-.button {
+.saveButton,
+.cancelButton {
     width: 280px;
     padding: 12px 0;
     text-align: center;
@@ -178,24 +184,22 @@
     box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
     background-position: left center;
     transition: all 0.3s ease;
-}
 
-.button:hover,
-.button:focus {
-    background-size: 200%;
-    background-position: right center;
-    transform: var(--scale);
-    outline: none;
+    &:hover,
+    &:focus {
+        background-size: 200%;
+        background-position: right center;
+        transform: var(--scale);
+        outline: none;
+    }
 }
 
 .saveButton {
-    composes: button;
     background: var(--button-gradient);
     color: var(--white);
 }
 
 .cancelButton {
-    composes: button;
     background: var(--white);
     color: var(--text-button);
 }

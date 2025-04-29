@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AddTransactionForm from '../AddTransactionForm/AddTransactionForm';
 import DatePicker from 'react-datepicker';
+import { EditTransactionSchema } from './EditTransactionSchema'; // ОНОВЛЕНИЙ імпорт
 import { Loader } from '../Loader/Loader';
 import { closeModal } from '../../redux/modal/slice';
 import css from './EditTransactionForm.module.css';
-import { editTransactionSchema } from './editTransactionSchema'; // ОНОВЛЕНИЙ імпорт
 import { editTransactions } from '../../redux/transactions/operations';
 import { selectCategories } from '../../redux/transactions/selectors';
 import { selectCurrentTransaction } from '../../redux/transactions/selectors';
@@ -36,7 +36,7 @@ const EditTransactionForm = () => {
       amount: Math.abs(transaction.amount),
       comment: transaction.comment,
     },
-    resolver: yupResolver(editTransactionSchema), // ОНОВЛЕНО
+    resolver: yupResolver(EditTransactionSchema), // ОНОВЛЕНО
   });
 
   const currentCategory = categories.find(cat => cat.id === transaction.categoryId)?.name;
