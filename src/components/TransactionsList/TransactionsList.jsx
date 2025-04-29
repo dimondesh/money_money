@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import TransactionItem from "../TransactionsDescItem/TransactionsDescItem";
 import TransactionsMobileItem from "../TransactionsMobileItem/TransactionsMobileItem";
 import Loader from "../Loader/Loader";
@@ -10,11 +10,19 @@ import {
   selectTransactions,
 } from "../../redux/transactions/selectors";
 import TransactionsDescItem from "../TransactionsDescItem/TransactionsDescItem";
+import { getTransactions } from "../../redux/transactions/operations";
+import { useEffect } from "react";
 
 const TransactionsList = () => {
+  const dispatch = useDispatch();
+
   const transactions = useSelector(selectTransactions) || [];
   const loading = useSelector(selectLoading);
   const { isMobile } = useMedia();
+
+  useEffect(() => {
+    dispatch(getTransactions());
+  }, [dispatch]);
 
   if (loading) {
     return <Loader />;

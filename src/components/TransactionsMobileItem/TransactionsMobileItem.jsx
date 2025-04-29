@@ -1,16 +1,15 @@
+import { FaPen } from "react-icons/fa";
+import styles from "./TransactionsMobileItem.module.css";
 import { useDispatch } from "react-redux";
-import { FaPen, FaTrash } from "react-icons/fa";
 import {
   deleteTransactions,
   editTransactions,
 } from "../../redux/transactions/operations";
 import { openModalEditTransaction } from "../../redux/modal/modalSlice";
 
-import styles from "./TransactionsMobileItem.module.css";
-
 const TransactionsMobileItem = ({ transaction }) => {
   const dispatch = useDispatch();
-  const isIncome = transaction.amount > 0;
+  const isIncome = transaction.type === "income";
 
   const handleEdit = () => {
     dispatch(editTransactions(transaction));
@@ -18,7 +17,7 @@ const TransactionsMobileItem = ({ transaction }) => {
   };
 
   const handleDelete = async () => {
-    await dispatch(deleteTransactions(transaction.id));
+    await dispatch(deleteTransactions(transaction._id));
   };
 
   return (
@@ -26,7 +25,7 @@ const TransactionsMobileItem = ({ transaction }) => {
       className={`${styles.card} ${isIncome ? styles.income : styles.expense}`}
     >
       <p>
-        <b>Date:</b> {transaction.date}
+        <b>Date:</b> {new Date(transaction.date).toLocaleDateString()}
       </p>
       <p>
         <b>Type:</b> {isIncome ? "Income" : "Expense"}
@@ -35,17 +34,17 @@ const TransactionsMobileItem = ({ transaction }) => {
         <b>Category:</b> {transaction.category}
       </p>
       <p>
-        <b>Comment:</b> {transaction.comment}
+        <b>Comment:</b> {transaction.comment || "—"}
       </p>
       <p>
-        <b>Amount:</b> {Math.abs(transaction.amount)} UAH
+        <b>Amount:</b> {transaction.sum.toLocaleString()} UAH
       </p>
 
       <div className={styles.actions}>
-        <button type="button" onClick={handleEdit}>
+        <button type="button" onClick={handleEdit} title="Edit">
           <FaPen />
         </button>
-        <button type="button" onClick={handleDelete}>
+        <button type="button" onClick={handleDelete} title="Delete">
           Delete
         </button>
       </div>

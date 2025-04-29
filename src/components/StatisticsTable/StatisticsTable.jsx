@@ -1,5 +1,7 @@
 import React from "react";
 import css from "./StatisticsTable.module.css";
+import { getCategories } from "redux/categories/operations";
+import { selectIsLoggedIn } from "redux/auth/selectors";
 
 const formatNumber = (number) => {
   return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -31,6 +33,12 @@ const StatisticsTable = ({
   };
 
   const expenseItems = summary.filter((item) => item.type === "EXPENSE");
+
+  useEffect(() => {
+    if (selectIsLoggedIn) {
+      dispatch(getCategories());
+    }
+  }, [dispatch, isLoggedIn]);
 
   return (
     <div className={css.wrapper}>
