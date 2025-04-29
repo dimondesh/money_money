@@ -1,9 +1,42 @@
-export const selectSummary = (state) => state.summary;
+import { createSlice } from "@reduxjs/toolkit";
+import { getIncomeAndExpenseSummaryByPeriod } from "./operations";
 
-export const selectStatisticsLoading = (state) =>
-  state.statistics.isStatisticsLoading;
-export const selectStatisticsError = (state) =>
-  state.statistics.isStatisticsError;
+const initialState = {
+  summary: [],
+  isStatisticsLoading: false,
+  isStatisticsError: null,
+  incomeSummaryByPeriod: 0,
+  expenseSummaryByPeriod: 0,
+};
 
-export const selectIncomeSummaryByPeriod = (state) => state.statistics.income;
-export const selectExpenseSummaryByPeriod = (state) => state.statistics.expense;
+const slice = createSlice({
+  name: "statistics",
+  initialState,
+  extraReducers: (builder) => {
+    builder
+      .addCase(
+        getIncomeAndExpenseSummaryByPeriod.fulfilled,
+        (state, { payload }) => {
+          state.isStatisticsLoading = false;
+          state.incomeSummaryByPeriod = payload.incomeSummaryByPeriod;
+          state.expenseSummaryByPeriod = payload.expenseSummaryByPeriod;
+        }
+      )
+      .addMatcher(
+        isAnyOf(getIncomeAndExpenseSummaryByPeriod.rejected),
+        (state, { payload }) => {
+          state.isStatisticsLoading = false;
+          state.isStatisticsError = payload;
+        }
+      )
+      .addMatcher(
+        isAnyOf(getIncomeAndExpenseSummaryByPeriod.pending),
+        (state) => {
+          state.isStatisticsLoading = true;
+          state.isStatisticsError = null;
+        }
+      );
+  },
+});
+
+export const statisticsReducer = slice.reducer;
