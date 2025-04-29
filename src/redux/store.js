@@ -13,13 +13,22 @@ import storage from "redux-persist/lib/storage";
 
 import { authReducer } from "./auth/slice";
 
+// import currencyReducer from "./currency/currencySlice";
+// import globalReducer from "./global/globalSlice";
+// import financeReducer from "./finance/financeSlice";
+
+// import categoriesReducer from "./categories/slice";
+// import modalReducer from "./modal/modalSlice";
+// import transactionsReducer from "./transactions/transactionsSlice";
+
 import currencyReducer from "./currency/currencySlice";
 import globalReducer from "./global/globalSlice";
 // import financeReducer from "./finance/financeSlice";
 import { transactionsReducer } from "./transactions/slice";
 import { categoriesReducer } from "./categories/slice";
 
-import { modalsReducer } from './modals/slice'; 
+import { modalsReducer } from "./modals/slice";
+main;
 
 const authPersistConfig = {
   key: "auth",
@@ -33,13 +42,17 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     currency: currencyReducer,
     global: globalReducer,
-    transactions: transactionsReducer,
-    categories: categoriesReducer,
+    HEAD,
+    // finance: financeReducer,
+    // transactions: transactionsReducer,
+    // modal: modalReducer,
+    // categories: categoriesReducer,
+
+    // transactions: transactionsReducer,
+    // categories: categoriesReducer,
     // finance: financeReducer,
 
-  
-    modals: modalsReducer, 
-
+    // modals: modalsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -47,8 +60,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 
         ignoredPaths: ["auth.reducers.clearAuthData"], // Додано ігнорування
-
-
       },
     }),
 });

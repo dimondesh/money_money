@@ -1,4 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
+
+
+
+// const categoriesSlice = createSlice({
+//   name: "categories",
+//   initialState: {
+//     categories: [],
+//     loading: false,
+//     error: null,
+//   },
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(fetchCategories.pending, (state) => {
+//         state.loading = true;
+//       })
+//       .addCase(fetchCategories.fulfilled, (state, action) => {
+//         state.loading = false;
+//         state.categories = action.payload;
+//       })
+//       .addCase(fetchCategories.rejected, (state, action) => {
+//         state.loading = false;
+//         state.error = action.payload;
+=======
 import { getCategories } from "./operations";
 
 const initialState = {
@@ -24,8 +48,13 @@ const slice = createSlice({
       .addCase(getCategories.pending, (state) => {
         state.isLoading = true;
         state.isError = null;
+>>>>>>> main
       });
   },
 });
 
+<<<<<<< HEAD
+// export default categoriesSlice.reducer;
+=======
 export const categoriesReducer = slice.reducer;
+>>>>>>> main

@@ -11,6 +11,23 @@ import Currency from "../../components/Currency/Currency";
 import { AddTransactionModal } from "../../components/ModalAddTransaction/ModalAddTransaction";
 import ButtonAddTransactions from "../../components/ButtonAddTransactions/ButtonAddTransactions";
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+const Dashboard = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logoutThunk());
+    navigate("/login");
+  };
+=======
+const DashboardPage = () => {
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const isTabletOrDesktop = useMediaQuery({ query: '(min-width: 768px)' });
+>>>>>>> main
+=======
 import styles from "./Dashboard.module.css";
 import { SidebarGraph } from "../../components/SidebarGraph/SidebarGraph";
 
@@ -30,6 +47,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(closeAddModal());
   }, [location, dispatch]);
+>>>>>>> main
 
   return (
     <div className={styles.pageWrapper}>
@@ -66,4 +84,9 @@ const Dashboard = () => {
   );
 };
 
+<<<<<<< HEAD
+export default DashboardPage;
+
+=======
 export default Dashboard;
+>>>>>>> main
