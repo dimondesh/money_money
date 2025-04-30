@@ -1,4 +1,3 @@
-
 import { useDispatch } from "react-redux";
 
 import {
@@ -13,15 +12,16 @@ import {
   deleteTransactions,
   editTransactions,
 } from "../../redux/transactions/operations";
-import { prettyMoneyFormat } from '../../helpers/prettyMoneyFormat';
-import { motion } from 'framer-motion';
+import { prettyMoneyFormat } from "../../helpers/prettyMoneyFormat";
+import { motion } from "framer-motion";
+import { getCategories } from "@redux/categories/operations";
 
 const TransactionsDescItem = ({
   transaction,
   openDeleteModal,
   openEditModal,
 }) => {
-  const { id, type, category, comment, sum, transactionDate } = transaction;
+  const { id, type, category, comment, amount, transactionDate } = transaction;
   const dispatch = useDispatch();
 
   const handleDeleteClick = () => {
@@ -39,10 +39,7 @@ const TransactionsDescItem = ({
   const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
 
   return (
-    
-    <motion.li
-      className = {`${styles.TransactionItem} ${borderClass}`
-}>
+    <motion.li className={`${styles.TransactionItem} ${borderClass}`}>
       <div className={`${styles.row} ${styles.firstRow}`}>
         <span className={styles.fixData}>Date</span>
         <span className={styles.dynamicData}>
@@ -55,9 +52,7 @@ const TransactionsDescItem = ({
       </div>
       <div className={`${styles.row} ${styles.thirdRow}`}>
         <span className={styles.fixData}>Category</span>
-        <span className={styles.dynamicData}>
-          {getTransactionCategory(category)}
-        </span>
+        <span className={styles.dynamicData}>{getCategories()}</span>
       </div>
       <div className={`${styles.row} ${styles.forthRow}`}>
         <span className={styles.fixData}>Comment</span>
@@ -66,8 +61,8 @@ const TransactionsDescItem = ({
       <div className={`${styles.row} ${styles.fifthRow}`}>
         <span className={styles.fixData}>Sum</span>
         <span className={`${styles.dynamicData} ${textClass}`}>
-              {prettyMoneyFormat(sum)}
-</span>
+          {prettyMoneyFormat(sum)}
+        </span>
       </div>
       <div className={`${styles.row} ${styles.sixthRow}`}>
         <button
@@ -89,7 +84,6 @@ const TransactionsDescItem = ({
         </button>
       </div>
     </motion.li>
-    
   );
 };
 
