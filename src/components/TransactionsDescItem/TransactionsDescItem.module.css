@@ -1,0 +1,132 @@
+
+.TransactionItem {
+    position: relative;
+    padding: 16px;
+    background: rgba(82, 59, 126, 0.6);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    list-style: none;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.fixData {
+    font-family: var(--font-family);
+    font-weight: 600;
+    color: var(--white);
+    opacity: 0.7;
+}
+
+.dynamicData {
+    font-family: var(--font-family);
+    font-weight: 400;
+    color: var(--white);
+    text-align: right;
+}
+
+
+.incomeText {
+    color: var(--yellow) !important;
+}
+
+.expenseText {
+    color: var(--dashboard-text) !important;
+}
+
+
+.incomeBorder {
+    border-left: 4px solid var(--yellow);
+}
+
+.expenseBorder {
+    border-left: 4px solid var(--dashboard-text);
+}
+
+
+.editButton {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--white);
+    cursor: pointer;
+}
+
+.deleteButton {
+    background: linear-gradient(167deg,
+            #ffc727 0%,
+            #9e40ba 61.46%,
+            #7000ff 90.54%);
+    border: none;
+    border-radius: 18px;
+    padding: 4px 12px;
+    color: var(--white);
+    cursor: pointer;
+    box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+}
+
+.editIcon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+
+@media (min-width: 768px) {
+    .TransactionItem {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        align-items: center;
+        padding: 0;
+        background: transparent;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 0;
+        height: 56px;
+    }
+
+    .row {
+        display: contents;
+    }
+
+    .fixData {
+        display: none;
+    }
+
+    .dynamicData {
+        padding: 16px 10px;
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .incomeBorder,
+    .expenseBorder {
+        border-left: none;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { walletAPI } from "helpers/api";
+import { walletAPI } from "../../helpers/api";
 import { getBalanceThunk } from "../auth/operations";
 
 export const getTransactions = createAsyncThunk(
