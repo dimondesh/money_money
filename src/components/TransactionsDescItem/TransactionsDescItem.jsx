@@ -1,3 +1,4 @@
+
 import { useDispatch } from "react-redux";
 
 import {
@@ -12,6 +13,8 @@ import {
   deleteTransactions,
   editTransactions,
 } from "../../redux/transactions/operations";
+import { prettyMoneyFormat } from '../../helpers/prettyMoneyFormat';
+import { motion } from 'framer-motion';
 
 const TransactionsDescItem = ({
   transaction,
@@ -36,7 +39,10 @@ const TransactionsDescItem = ({
   const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
 
   return (
-    <li className={`${styles.TransactionItem} ${borderClass}`}>
+    
+    <motion.li
+      className = {`${styles.TransactionItem} ${borderClass}`
+}>
       <div className={`${styles.row} ${styles.firstRow}`}>
         <span className={styles.fixData}>Date</span>
         <span className={styles.dynamicData}>
@@ -59,9 +65,9 @@ const TransactionsDescItem = ({
       </div>
       <div className={`${styles.row} ${styles.fifthRow}`}>
         <span className={styles.fixData}>Sum</span>
-        {/* <span className={`${styles.dynamicData} ${textClass}`}>
-          
-        </span> */}
+        <span className={`${styles.dynamicData} ${textClass}`}>
+              {prettyMoneyFormat(sum)}
+</span>
       </div>
       <div className={`${styles.row} ${styles.sixthRow}`}>
         <button
@@ -82,7 +88,8 @@ const TransactionsDescItem = ({
           Delete
         </button>
       </div>
-    </li>
+    </motion.li>
+    
   );
 };
 
