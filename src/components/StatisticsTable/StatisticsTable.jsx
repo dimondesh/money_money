@@ -17,6 +17,7 @@ const StatisticsTable = ({
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const categories = useSelector(selectCategories);
+
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getCategories());
