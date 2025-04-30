@@ -10,23 +10,21 @@ import { useDispatch } from "react-redux";
 import ReactDatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import enUS from "date-fns/locale/en-US";
-import {
-  categories,
-  getTransactionId,
-} from "../../constants/TransactionConstants";
+import { categories } from "../../constants/TransactionConstants";
 
 import { addTransactions } from "../../redux/transactions/operations";
 import { getBalanceThunk } from "../../redux/auth/operations";
 
 import { FiCalendar } from "react-icons/fi";
-// import { toast } from "react-toastify";
 
 registerLocale("en-US", enUS);
 
 const AddTransactionForm = ({ closeModal }) => {
   const [isOnIncomeTab, setIsOnIncomeTab] = useState(false);
   const { isTablet } = useMedia();
+
   const dispatch = useDispatch();
+
   const [startDate, setStartDate] = useState(new Date());
 
   const initialValues = {
@@ -35,35 +33,12 @@ const AddTransactionForm = ({ closeModal }) => {
     category: "",
   };
 
-  // const handleSubmit = (values, { setSubmitting, setStatus, resetForm }) => {
-  //   setSubmitting(true);
-
-  //   const transactionData = {
-  //     type: isOnIncomeTab ? "income" : "expense",
-  //     category: values.category || (isOnIncomeTab ? "Income" : ""),
-  //     sum: Number(values.sum),
-  //     comment: values.comment || "",
-  //     date: startDate.toISOString(),
-  //   };
-
-  //   dispatch(addTransactions(transactionData))
-  //     .unwrap()
-  //     .then(() => {
-  //       resetForm();
-  //       closeModal();
-  //       dispatch(getBalanceThunk());
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error", error);
-  //       setStatus({ success: false, error: error });
-  //       setSubmitting(false);
-  //     });
-  // };
 const handleSubmit = async (values, { setSubmitting, resetForm }) => {
   try {
     setSubmitting(true);
     
     const transactionData = {
+
       type: isOnIncomeTab ? "income" : "expense",
       category: values.category || (isOnIncomeTab ? "Income" : "Main"),
       sum: Number(values.sum),
@@ -81,6 +56,7 @@ const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setSubmitting(false);
   }
 };
+
   return (
     <div className={styles.modalContent}>
       {isTablet && (

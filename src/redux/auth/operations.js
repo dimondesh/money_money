@@ -13,7 +13,8 @@ export const loginThunk = createAsyncThunk(
       setToken(res.data.data.accessToken);
       return res.data.data;
     } catch (error) {
-      const message = error.response?.data?.message || error.message || "Login failed";
+      const message =
+        error.response?.data?.message || error.message || "Login failed";
       toast.error(message);
       return thunkApi.rejectWithValue(message);
     }
@@ -28,34 +29,38 @@ export const registerThunk = createAsyncThunk(
       const registeredUser = res.data.data;
 
       if (!registeredUser || !registeredUser.username) {
-        console.error("Registration response from backend is missing user data:", res.data);
+        console.error(
+          "Registration response from backend is missing user data:",
+          res.data
+        );
         throw new Error("Registration response missing user data.");
       }
 
       const { username } = registeredUser;
 
-      toast.success(`Welcome, ${username}! Registration successful. Please log in.`);
+      toast.success(
+        `Welcome, ${username}! Registration successful. Please log in.`
+      );
 
       return registeredUser;
-
     } catch (error) {
       let message = "Registration failed";
       if (error.response?.status === 409) {
-
-         message = error.response.data?.message || "Email already in use.";
+        message = error.response.data?.message || "Email already in use.";
       } else if (error.response?.status === 400) {
-
-         message = error.response.data?.message || "Bad Request. Check input data.";
-      }
-      else {
-         message = error.response?.data?.message || error.message || "Registration failed";
+        message =
+          error.response.data?.message || "Bad Request. Check input data.";
+      } else {
+        message =
+          error.response?.data?.message ||
+          error.message ||
+          "Registration failed";
       }
       toast.error(message);
       return thunkApi.rejectWithValue(message);
     }
   }
 );
-
 
 export const logoutThunk = createAsyncThunk(
   "auth/logout",
@@ -65,7 +70,8 @@ export const logoutThunk = createAsyncThunk(
       await walletAPI.post("/api/auth/logout");
       clearToken();
     } catch (error) {
-      const message = error.response?.data?.message || error.message || "Logout failed";
+      const message =
+        error.response?.data?.message || error.message || "Logout failed";
       toast.error(message);
       return thunkApi.rejectWithValue(message);
     }
@@ -74,19 +80,24 @@ export const logoutThunk = createAsyncThunk(
 
 export const refreshUserThunk = createAsyncThunk(
   "auth/refresh",
-  async (_, thunkApi) => {
-    const savedToken = thunkApi.getState().auth.token;
-    if (!savedToken) { return thunkApi.rejectWithValue("Token doesn't exist"); }
-    setToken(savedToken);
+  async (_, { getState, rejectWithValue }) => {
+    const token = getState().auth.token;
+
+    if (!token) {
+      return rejectWithValue("Token doesn't exist");
+    }
+
+    setToken(token);
+
     try {
-      // Используем walletAPI
       const { data } = await walletAPI.get("/api/users/current");
-      return data.data;
+      return data.data || data; // залежить від структури відповіді бекенду
     } catch (error) {
-       const message = error.response?.data?.message || error.message || "Refresh failed";
-       toast.error(message);
-       clearToken();
-       return thunkApi.rejectWithValue(message);
+      const message =
+        error.response?.data?.message || error.message || "Refresh failed";
+      toast.error(message);
+      clearToken();
+      return rejectWithValue(message);
     }
   }
 );
@@ -94,15 +105,20 @@ export const refreshUserThunk = createAsyncThunk(
 export const getBalanceThunk = createAsyncThunk(
   "getBalance",
   async (_, thunkApi) => {
-     const savedToken = thunkApi.getState().auth.token;
-     if (!savedToken) { return thunkApi.rejectWithValue("Not authenticated"); }
-     setToken(savedToken);
+    const savedToken = thunkApi.getState().auth.token;
+    if (!savedToken) {
+      return thunkApi.rejectWithValue("Not authenticated");
+    }
+    setToken(savedToken);
     try {
       // Используем walletAPI
       const { data } = await walletAPI.get("/api/users/current");
       return data.data.balance;
     } catch (error) {
-      const message = error.response?.data?.message || error.message || "Failed to get balance";
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to get balance";
       toast.error(message);
       return thunkApi.rejectWithValue(message);
     }

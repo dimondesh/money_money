@@ -9,10 +9,13 @@ import { openModalEditTransaction } from "../../redux/modal/modalSlice";
 import { motion } from "framer-motion";
 import { prettyMoneyFormat } from "../../helpers/prettyMoneyFormat";
 
+
 const TransactionsMobileItem = ({ transaction }) => {
   const dispatch = useDispatch();
   const isIncome = transaction.type === "income";
+
   // const borderStyle = isIncome ? styles.table_plus : styles.table_minus;
+
 
   const handleEdit = () => {
     dispatch(editTransactions(transaction));

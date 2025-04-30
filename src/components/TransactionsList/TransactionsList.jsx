@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+
 import TransactionsMobileItem from "../TransactionsMobileItem/TransactionsMobileItem";
 import Loader from "../Loader/Loader";
 import { useMedia } from "../../hooks/useMedia";
@@ -14,9 +15,14 @@ import clsx from 'clsx';
 
 const TransactionsList = () => {
   const dispatch = useDispatch();
+
   const transactions = useSelector(selectTransactions) || [];
   const loading = useSelector(selectLoading);
   const { isTablet } = useMedia(); 
+
+  useEffect(() => {
+    dispatch(getTransactions());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getTransactions());
