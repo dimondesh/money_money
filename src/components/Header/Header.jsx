@@ -12,10 +12,10 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userName = useSelector((state) => state.auth?.user?.username);
 
   const userEmail = useSelector((state) => state.auth?.user?.email);
   const isLoggedIn = useSelector((state) => !!state.auth?.token);
-  const userName = userEmail ? userEmail.split("@")[0] : "User";
 
   const handleLogout = async () => {
     try {

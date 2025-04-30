@@ -6,29 +6,30 @@ import { useMedia } from "../../hooks/useMedia";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { addTrnValidSchema } from "../../helpers/index.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ReactDatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import enUS from "date-fns/locale/en-US";
-import { categories } from "../../constants/TransactionConstants";
+// import { categories } from "../../constants/TransactionConstants";
 
 import { addTransactions } from "@redux/transactions/operations";
 import { getBalanceThunk } from "@redux/auth/operations";
 
 import { FiCalendar } from "react-icons/fi";
+import { selectCategories } from "@redux/categories/selectors";
 
 registerLocale("en-US", enUS);
 
 const AddTransactionForm = ({ closeModal }) => {
   const [isOnIncomeTab, setIsOnIncomeTab] = useState(false);
   const { isTablet } = useMedia();
-
+  const categories = useSelector(selectCategories);
   const dispatch = useDispatch();
 
   const [startDate, setStartDate] = useState(new Date());
 
   const initialValues = {
-    sum: "",
+    amount: "",
     comment: "",
     category: "",
   };
