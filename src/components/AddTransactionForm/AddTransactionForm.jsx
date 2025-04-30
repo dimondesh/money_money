@@ -12,8 +12,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import enUS from "date-fns/locale/en-US";
 import { categories } from "../../constants/TransactionConstants";
 
-import { addTransactions } from "../../redux/transactions/operations";
-import { getBalanceThunk } from "../../redux/auth/operations";
+import { addTransactions } from "@redux/transactions/operations";
+import { getBalanceThunk } from "@redux/auth/operations";
 
 import { FiCalendar } from "react-icons/fi";
 
@@ -33,29 +33,28 @@ const AddTransactionForm = ({ closeModal }) => {
     category: "",
   };
 
-const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-  try {
-    setSubmitting(true);
-    
-    const transactionData = {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      setSubmitting(true);
 
-      type: isOnIncomeTab ? "income" : "expense",
-      category: values.category || (isOnIncomeTab ? "Income" : "Main"),
-      sum: Number(values.sum),
-      comment: values.comment,
-      date: startDate.toISOString(), 
-    };
+      const transactionData = {
+        type: isOnIncomeTab ? "income" : "expense",
+        category: values.category || (isOnIncomeTab ? "Income" : "Main"),
+        sum: Number(values.sum),
+        comment: values.comment,
+        date: startDate.toISOString(),
+      };
 
-    await dispatch(addTransactions(transactionData)).unwrap();
-    resetForm();
-    await dispatch(getBalanceThunk());
-  } catch (error) {
-    console.error("Submission error:", error);
-  } finally {
-    closeModal();
-    setSubmitting(false);
-  }
-};
+      await dispatch(addTransactions(transactionData)).unwrap();
+      resetForm();
+      await dispatch(getBalanceThunk());
+    } catch (error) {
+      console.error("Submission error:", error);
+    } finally {
+      closeModal();
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className={styles.modalContent}>
@@ -153,34 +152,6 @@ const handleSubmit = async (values, { setSubmitting, resetForm }) => {
 
 export default AddTransactionForm;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import { useEffect, useState } from 'react';
 // import styles from './AddTransactionForm.module.css';
 // import FormButton from '../common/FormButton/FormButton';
@@ -197,7 +168,6 @@ export default AddTransactionForm;
 // import { addTrnValidSchema } from '../../helpers/addTrnValidSchema';
 // import { useMedia } from '../../hooks/useMedia';
 // import { selectCategories } from '../../redux/categories/selectors';
-
 
 // const AddTransactionForm = ({ closeModal }) => {
 //   const [isOnIncomeTab, setIsOnIncomeTab] = useState(false);
@@ -219,7 +189,7 @@ export default AddTransactionForm;
 //     dispatch(
 //       addTransactions({
 //         transactionDate: startDate,
-//  
+//
 //         type: isOnIncomeTab ? 'income' : 'expense',
 //         categoryId: isOnIncomeTab
 //           ? 'c15023f1-5812-42b2-93c3-54d66c539e5b'
@@ -335,6 +305,3 @@ export default AddTransactionForm;
 // };
 
 // export default AddTransactionForm;
-
-
-

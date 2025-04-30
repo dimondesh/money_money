@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logoutThunk } from "../../redux/auth/operations";
-import { clearAuthData } from "../../redux/auth/slice";
+import { logoutThunk } from "@redux/auth/operations";
+import { clearAuthData } from "@redux/auth/slice";
 import Modal from "../Modal/Modal";
 import { toast } from "react-toastify";
 import styles from "./Header.module.css";

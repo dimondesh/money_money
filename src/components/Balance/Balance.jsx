@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styles from "./Balance.module.css";
-import { selectUserBalance } from "../../redux/auth/selectors";
+import { selectUserBalance } from "@redux/auth/selectors";
 import { prettyBalanceFormat } from "helpers/prettyBalanceFormat";
 
 const Balance = () => {

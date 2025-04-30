@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import css from "./StatisticsTable.module.css";
-import { getCategories } from "redux/categories/operations";
-import { selectIsLoggedIn } from "redux/auth/selectors";
+import { getCategories } from "@redux/categories/operations";
+import { selectIsLoggedIn } from "@redux/auth/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCategories } from "@redux/categories/selectors";
 
 const formatNumber = (number) => {
   return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };
 
 const StatisticsTable = ({
-  summary,
-  categories,
+  summary = [],
   incomeSummaryByPeriod,
   expensesSummaryByPeriod,
 }) => {
-  const getCategoryName = (id) => {
-    return categories.find((cat) => cat.id === id)?.name || "Unknown";
-  };
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const categories = useSelector(selectCategories);
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getCategories());
+    }
+  }, [dispatch, isLoggedIn]);
+
+  const getCategoryName = (id) =>
+    categories.find((cat) => cat.id === id)?.name || "Unknown";
 
   const getCategoryColor = (index) => {
     const colors = [
@@ -32,13 +41,9 @@ const StatisticsTable = ({
     return colors[index % colors.length];
   };
 
-  const expenseItems = summary.filter((item) => item.type === "EXPENSE");
-
-  useEffect(() => {
-    if (selectIsLoggedIn) {
-      dispatch(getCategories());
-    }
-  }, [dispatch, isLoggedIn]);
+  const expenseItems = summary.filter(
+    (item) => item.type?.toLowerCase() === "expense"
+  );
 
   return (
     <div className={css.wrapper}>

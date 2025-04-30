@@ -13,9 +13,9 @@ const slice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(getCategories.fulfilled, (state, { payload }) => {
+      .addCase(getCategories.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.categories = payload;
+        state.categories = action.payload;
       })
 
       .addCase(getCategories.rejected, (state, { payload }) => {
