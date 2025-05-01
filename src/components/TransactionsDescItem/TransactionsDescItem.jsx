@@ -16,7 +16,7 @@ const TransactionsDescItem = ({
   openDeleteModal,
   openEditModal,
 }) => {
-  const { id, type, categoryId, comment, sum, transactionDate } = transaction;
+  const { id, type, categoryId, comment, sum, date } = transaction;
   const dispatch = useDispatch();
 
   const handleDeleteClick = () => {
@@ -37,9 +37,7 @@ const TransactionsDescItem = ({
     <motion.tr className={`${styles.TransactionItem} ${borderClass}`}>
       <td className={`${styles.row} ${styles.firstRow}`}>
         <span className={styles.fixData}>Date</span>
-        <span className={styles.dynamicData}>
-          {dateFormat(transaction.date)}
-        </span>
+        <span className={styles.dynamicData}>{dateFormat(date)}</span>
       </td>
       <td className={`${styles.row} ${styles.secondRow}`}>
         <span className={styles.fixData}>Type</span>

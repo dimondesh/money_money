@@ -16,6 +16,8 @@ import {
 
 import css from "./StatisticsTab.module.css";
 import { getIncomeAndExpenseSummaryByPeriod } from "@redux/statistics/operations";
+import { selectCategories } from "@redux/categories/selectors";
+import { getCategories } from "@redux/categories/operations";
 
 const StatisticsTab = () => {
   const dispatch = useDispatch();
@@ -25,11 +27,15 @@ const StatisticsTab = () => {
   const incomeSummaryByPeriod = useSelector(selectIncomeSummaryByPeriod);
   const expensesSummaryByPeriod = useSelector(selectExpenseSummaryByPeriod);
 
+  const categories = useSelector(selectCategories) || [];
   const currentDate = new Date();
   const initialMonth = currentDate.getMonth() + 1;
   const initialYear = currentDate.getFullYear();
   const [selectedMonth, setSelectedMonth] = useState(initialMonth);
   const [selectedYear, setSelectedYear] = useState(initialYear);
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(
@@ -48,8 +54,6 @@ const StatisticsTab = () => {
       </div>
     );
 
-  const categories = expensesSummaryByPeriod?.categories || [];
-
   return (
     <div className={css.statistics}>
       <div>
@@ -59,6 +63,10 @@ const StatisticsTab = () => {
             summary={summary}
             categories={categories}
             expensesSummaryByPeriod={expensesSummaryByPeriod}
+            selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
           />
         </div>
       </div>
