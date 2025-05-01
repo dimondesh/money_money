@@ -1,117 +1,168 @@
-
 .TransactionItem {
     position: relative;
-    padding: 16px;
-    background: rgba(82, 59, 126, 0.6);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    list-style: none;
+    padding: 12px;
+    margin-bottom: 10px;
+    /* background: .; */
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(12, 11, 11, 0.05);
+    transition: transform 0.2s ease;
+    width: 100%;
 }
 
 .row {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+    display: flex;
     align-items: center;
-    padding: 8px 0;
+    padding: 6px 0;
+    
+}
+.column1 {
+    width: 105px;
+}
+
+.column2 {
+    width: 105px;
+    text-align: center;
+}
+
+.column3 {
+    width: 155px;
+}
+
+.column4 {
+    width: 105px;
+}
+
+.column5 {
+    width: 105px;
+}
+
+.column6 {
+    width: 140px;
+}
+
+.firstRow>.fixData {
+    width: 33.33%;
+}
+
+.firstRow>.dynamicData {
+    width: 66.67%;
 }
 
 .fixData {
-    font-family: var(--font-family);
-    font-weight: 600;
-    color: var(--white);
-    opacity: 0.7;
+    font-size: 9px;
+    color: #fbfbfb;
+    font-weight: 500;
+    width: 120px;
+    flex-shrink: 0;
 }
 
 .dynamicData {
-    font-family: var(--font-family);
-    font-weight: 400;
-    color: var(--white);
+    font-size: 10px;
     text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    padding-left: 15px;
+
+    font-weight: 400;
+        padding: 16px 0;
+        word-wrap: break-word;
 }
-
-
-.incomeText {
-    color: var(--yellow) !important;
-}
-
-.expenseText {
-    color: var(--dashboard-text) !important;
-}
-
 
 .incomeBorder {
-    border-left: 4px solid var(--yellow);
+   
 }
 
 .expenseBorder {
-    border-left: 4px solid var(--dashboard-text);
+   
+}
+
+.incomeText {
+   
+}
+
+.expenseText {
+    
+}
+
+.sixthRow {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 10px;
+    border: none;
 }
 
 
-.editButton {
-    background: transparent;
-    border: none;
+.buttonGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.editButton,
+.deleteButton {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: var(--white);
-    cursor: pointer;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.editButton {
+    
+            color: #9ca3af;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+    
+            &:hover,
+            &:focus {
+                color: var(--white);
+            }
+       
+   
 }
 
 .deleteButton {
-    background: linear-gradient(167deg,
-            #ffc727 0%,
-            #9e40ba 61.46%,
-            #7000ff 90.54%);
-    border: none;
-    border-radius: 18px;
-    padding: 4px 12px;
-    color: var(--white);
-    cursor: pointer;
-    box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+    
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            color: rgba(251, 251, 251, 1);
+            background: linear-gradient(96.76deg,
+                    #ffc727 -16.42%,
+                    #9e40ba 97.04%,
+                    #7000ff 150.71%);
+            box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+            width: 69px;
+            height: 29px;
+            transition: all 300ms ease-in-out;
+            
+            bottom: 20px;
+            right: 20px;
+      
+   
 }
 
+.deleteButton:hover {
+    transform: scale(1.05);
+    background-image: linear-gradient(to right,
+            #7000ff 0%,
+            #9e40ba 31%,
+            #ffc727 100%);
+    background-size: 200%;
+    background-position: right center;
+    transition: all 1s ease 0s;
+}
 .editIcon {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
+    width: 16px;
+    height: 16px;
+    stroke-width: 1.5;
 }
-
-
-@media (min-width: 768px) {
-    .TransactionItem {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        align-items: center;
-        padding: 0;
-        background: transparent;
-        border-radius: 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        margin-bottom: 0;
-        height: 56px;
-    }
-
-    .row {
-        display: contents;
-    }
-
-    .fixData {
-        display: none;
-    }
-
-    .dynamicData {
-        padding: 16px 10px;
-        font-size: 14px;
-        text-align: left;
-    }
-
-    .incomeBorder,
-    .expenseBorder {
-        border-left: none;
-    }
-}
-
-
 
 
 

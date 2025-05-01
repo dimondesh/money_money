@@ -5,7 +5,7 @@ import styles from "./TransactionsDescItem.module.css";
 import {
   deleteTransactions,
   editTransactions,
-} from "../../redux/transactions/operations";
+} from "@redux/transactions/operations";
 import { prettyMoneyFormat } from "../../helpers/prettyMoneyFormat";
 import { motion } from "framer-motion";
 import { getCategories } from "@redux/categories/operations";
@@ -34,50 +34,68 @@ const TransactionsDescItem = ({
   const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
 
   return (
-    <motion.tr className={`${styles.TransactionItem} ${borderClass}`}>
-      <td className={`${styles.row} ${styles.firstRow}`}>
-        <span className={styles.fixData}>Date</span>
-        <span className={styles.dynamicData}>{dateFormat(date)}</span>
+
+     <motion.tr 
+      className={`${styles.TransactionItem} ${borderClass} ${styles.animatedRow}`}
+    >
+      
+      <td className={`${styles.dynamicData} ${styles.column1}`}>
+        {dateFormat(transaction.date)}
       </td>
-      <td className={`${styles.row} ${styles.secondRow}`}>
-        <span className={styles.fixData}>Type</span>
-        <span className={styles.dynamicData}>{isIncome ? "+" : "-"}</span>
-      </td>
-      <td className={`${styles.row} ${styles.thirdRow}`}>
-        <span className={styles.fixData}>Category</span>
-        <span className={styles.dynamicData}>{categoryId}</span>
-      </td>
-      <td className={`${styles.row} ${styles.forthRow}`}>
-        <span className={styles.fixData}>Comment</span>
-        <span className={styles.dynamicData}>{comment || "-"}</span>
-      </td>
-      <td className={`${styles.row} ${styles.fifthRow}`}>
-        <span className={styles.fixData}>Sum</span>
-        <span className={`${styles.dynamicData} ${textClass}`}>
-          {prettyMoneyFormat(sum)}
+
+     
+      <td className={`${styles.dynamicData} ${styles.column2}`}>
+        <span className={styles.typeIndicator}>
+          {isIncome ? "+" : "-"}
         </span>
       </td>
-      <td className={`${styles.row} ${styles.sixthRow}`}>
-        <button
-          className={styles.editButton}
-          type="button"
-          onClick={handleEditClick}
-        >
-          <svg className={styles.editIcon}>
-            <use href={`${icons}#icon-edit`}></use>
-          </svg>
-          <span className={styles.editText}>Edit</span>
-        </button>
-        <button
-          type="button"
-          className={styles.deleteButton}
-          onClick={handleDeleteClick}
-        >
-          Delete
-        </button>
+
+      
+      <td className={`${styles.dynamicData} ${styles.column3}`}>
+        {categoryId}
+      </td>
+
+     
+      <td className={`${styles.dynamicData} ${styles.column4}`}>
+        <div className={styles.commentWrapper}>
+          {comment || <span className={styles.noComment}>—</span>}
+        </div>
+      </td>
+
+     
+      <td className={`${styles.dynamicData} ${styles.column5} ${textClass}`}>
+        {prettyMoneyFormat(sum)}
+      </td>
+
+      
+      <td className={`${styles.sixthRow} ${styles.column6}`}>
+        <div className={styles.buttonGroup}>
+          <button
+            className={styles.editButton}
+            type="button"
+            onClick={handleEditClick}
+            aria-label="Edit"
+          >
+            <svg className={styles.editIcon}>
+              <use href={`${icons}#icon-edit`}></use>
+            </svg>
+         
+          </button>
+          
+          <button
+            type="button"
+            className={styles.deleteButton}
+            onClick={handleDeleteClick}
+            aria-label="Delete"
+          >
+            Delete
+          </button>
+        </div>
+
       </td>
     </motion.tr>
   );
+  
 };
 
 export default TransactionsDescItem;

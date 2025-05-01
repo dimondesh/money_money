@@ -18,7 +18,7 @@ const TransactionsList = () => {
 
   const transactions = useSelector(selectTransactions) || [];
   const loading = useSelector(selectLoading);
-  const { isTablet } = useMedia();
+  const { isMobile } = useMedia();
 
   useEffect(() => {
     dispatch(getTransactions());
@@ -38,8 +38,17 @@ const TransactionsList = () => {
 
   return (
     <>
-      {isTablet ? (
-        <table className={styles.table}>
+      {isMobile ? (
+<ul className={styles.list}>
+          {transactions.map((transaction) => (
+            <TransactionsMobileItem
+              key={transaction._id}
+              transaction={transaction}
+            />
+          ))}
+        </ul>
+  ) : (
+         <table className={styles.table}>
           <thead className={styles.thead}>
             <tr className={styles.t_row}>
               <th className={styles.title}>Date</th>
@@ -58,15 +67,6 @@ const TransactionsList = () => {
             ))}
           </tbody>
         </table>
-      ) : (
-        <ul className={styles.list}>
-          {transactions.map((transaction) => (
-            <TransactionsMobileItem
-              key={transaction._id}
-              transaction={transaction}
-            />
-          ))}
-        </ul>
       )}
     </>
   );
