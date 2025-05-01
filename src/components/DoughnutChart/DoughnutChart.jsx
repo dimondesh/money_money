@@ -31,7 +31,7 @@ const DoughnutChart = ({ summary, categories, expensesSummaryByPeriod }) => {
 
   const labels = hasExpenses
     ? expensesOnly.map((item) => {
-        const category = categories.find((cat) => cat.id === item.categoryId);
+        const category = categories.find((cat) => cat.id === item.category);
         return category ? category.name : "Невідомо";
       })
     : ["Немає даних"];
