@@ -55,14 +55,14 @@ const StatisticsTable = ({
       <table className={css.table}>
         <tbody>
           {expenseItems.map((item, index) => (
-            <tr key={item.categoryId} className={css.row}>
+            <tr key={item.category} className={css.row}>
               <td className={css.dotCell}>
                 <span
                   className={css.dot}
                   style={{ backgroundColor: getCategoryColor(index) }}
                 />
               </td>
-              <td className={css.name}>{getCategoryName(item.categoryId)}</td>
+              <td className={css.name}>{getCategoryName(item.category)}</td>
               <td className={css.amount}>{formatNumber(item.total)}</td>
             </tr>
           ))}
