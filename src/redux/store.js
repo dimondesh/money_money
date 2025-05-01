@@ -57,9 +57,6 @@ export const store = configureStore({
 
         ignoredPaths: ["auth.reducers.clearAuthData"], // Додано ігнорування
       },
-      immutableCheck: {
-        ignoredPaths: ["transactions.items", "statistics.summary"],
-      },
     }),
 });
 

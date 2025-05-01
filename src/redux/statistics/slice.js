@@ -18,9 +18,9 @@ const slice = createSlice({
         getIncomeAndExpenseSummaryByPeriod.fulfilled,
         (state, { payload }) => {
           state.isStatisticsLoading = false;
-          state.incomeSummaryByPeriod = payload;
-          state.expenseSummaryByPeriod = payload;
-          state.summary = payload; // 👈 ОБОВ'ЯЗКОВО ДОДАЙ!
+          state.incomeSummaryByPeriod = payload.incomeSummaryByPeriod;
+          state.expenseSummaryByPeriod = payload.expenseSummaryByPeriod;
+          state.summary = payload.summary; // 👈 ОБОВ'ЯЗКОВО ДОДАЙ!
         }
       )
       .addMatcher(
