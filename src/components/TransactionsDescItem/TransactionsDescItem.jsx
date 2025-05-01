@@ -1,9 +1,6 @@
 import { useDispatch } from "react-redux";
-
 import { getTransactionCategory } from "../../constants/TransactionConstants";
-
 import icons from "../../images/icons/sprite.svg";
-
 import styles from "./TransactionsDescItem.module.css";
 import {
   deleteTransactions,
@@ -37,32 +34,32 @@ const TransactionsDescItem = ({
   const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
 
   return (
-    <motion.li className={`${styles.TransactionItem} ${borderClass}`}>
-      <div className={`${styles.row} ${styles.firstRow}`}>
+    <motion.tr className={`${styles.TransactionItem} ${borderClass}`}>
+      <td className={`${styles.row} ${styles.firstRow}`}>
         <span className={styles.fixData}>Date</span>
         <span className={styles.dynamicData}>
           {dateFormat(transaction.date)}
         </span>
-      </div>
-      <div className={`${styles.row} ${styles.secondRow}`}>
+      </td>
+      <td className={`${styles.row} ${styles.secondRow}`}>
         <span className={styles.fixData}>Type</span>
         <span className={styles.dynamicData}>{isIncome ? "+" : "-"}</span>
-      </div>
-      <div className={`${styles.row} ${styles.thirdRow}`}>
+      </td>
+      <td className={`${styles.row} ${styles.thirdRow}`}>
         <span className={styles.fixData}>Category</span>
         <span className={styles.dynamicData}>{categoryId}</span>
-      </div>
-      <div className={`${styles.row} ${styles.forthRow}`}>
+      </td>
+      <td className={`${styles.row} ${styles.forthRow}`}>
         <span className={styles.fixData}>Comment</span>
         <span className={styles.dynamicData}>{comment || "-"}</span>
-      </div>
-      <div className={`${styles.row} ${styles.fifthRow}`}>
+      </td>
+      <td className={`${styles.row} ${styles.fifthRow}`}>
         <span className={styles.fixData}>Sum</span>
         <span className={`${styles.dynamicData} ${textClass}`}>
           {prettyMoneyFormat(sum)}
         </span>
-      </div>
-      <div className={`${styles.row} ${styles.sixthRow}`}>
+      </td>
+      <td className={`${styles.row} ${styles.sixthRow}`}>
         <button
           className={styles.editButton}
           type="button"
@@ -80,8 +77,8 @@ const TransactionsDescItem = ({
         >
           Delete
         </button>
-      </div>
-    </motion.li>
+      </td>
+    </motion.tr>
   );
 };
 

@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-// import {
-//   getIncomeAndExpenseSummaryByPeriod,
-// } from "../../redux/statistics/operations";
+import { getIncomeAndExpenseSummaryByPeriod } from "../../redux/statistics/operations";
 
 import css from "./StatisticDatePicker.module.css";
 
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  { label: "January", value: 1 },
+  { label: "February", value: 2 },
+  { label: "March", value: 3 },
+  { label: "April", value: 4 },
+  { label: "May", value: 5 },
+  { label: "June", value: 6 },
+  { label: "July", value: 7 },
+  { label: "August", value: 8 },
+  { label: "September", value: 9 },
+  { label: "October", value: 10 },
+  { label: "November", value: 11 },
+  { label: "December", value: 12 },
 ];
 
 const years = Array.from(
   { length: new Date().getFullYear() - 2020 + 1 },
-  (_, i) => `${2020 + i}`
+  (_, i) => {
+    const year = 2020 + i;
+    return { label: year.toString(), value: year };
+  }
 );
 
 const Dropdown = ({ options, value, onChange, label }) => {
@@ -42,10 +43,12 @@ const Dropdown = ({ options, value, onChange, label }) => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [isOpen]);
 
-  const handleSelect = (option) => {
-    onChange(option);
+  const handleSelect = (optionValue) => {
+    onChange(optionValue);
     setIsOpen(false);
   };
+
+  const selectedOption = options.find((option) => option.value === value);
 
   return (
     <div className={`${css.dropdownWrapper} ${isOpen ? css.open : ""}`}>
@@ -56,22 +59,22 @@ const Dropdown = ({ options, value, onChange, label }) => {
         aria-expanded={isOpen}
         type="button"
       >
-        {value}
+        {selectedOption ? selectedOption.label : "Select"}
       </button>
 
       {isOpen && (
         <div className={css.dropdownList} role="listbox">
           {options.map((option) => (
             <div
-              key={option}
+              key={option.value}
               className={`${css.dropdownItem} ${
-                value === option ? css.dropdownItemActive : ""
+                value === option.value ? css.dropdownItemActive : ""
               }`}
-              onClick={() => handleSelect(option)}
+              onClick={() => handleSelect(option.value)}
               role="option"
-              aria-selected={value === option}
+              aria-selected={value === option.value}
             >
-              {option}
+              {option.label}
             </div>
           ))}
         </div>
@@ -84,19 +87,19 @@ const StatisticsDatePicker = () => {
   const dispatch = useDispatch();
 
   const currentDate = new Date();
-  const initialMonth = months[currentDate.getMonth()];
-  const initialYear = currentDate.getFullYear().toString();
+  const initialMonth = currentDate.getMonth() + 1; // 1-12
+  const initialYear = currentDate.getFullYear();
 
   const [selectedMonth, setSelectedMonth] = useState(initialMonth);
   const [selectedYear, setSelectedYear] = useState(initialYear);
 
-  // useEffect(() => {
-  //   const period =
-  //     selectedMonth === "All month"
-  //       ? { year: selectedYear }
-  //       : { month: selectedMonth, year: selectedYear };
-  //   dispatch(getIncomeAndExpenseSummaryByPeriod(period));
-  // }, [dispatch, selectedMonth, selectedYear]);
+  useEffect(() => {
+    const period = {
+      year: selectedYear,
+      month: selectedMonth,
+    };
+    dispatch(getIncomeAndExpenseSummaryByPeriod(period));
+  }, [dispatch, selectedMonth, selectedYear]);
 
   return (
     <div className={css.wrapper}>

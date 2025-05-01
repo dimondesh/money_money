@@ -1,9 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import css from "./StatisticsTable.module.css";
-import { getCategories } from "@redux/categories/operations";
-import { selectIsLoggedIn } from "@redux/auth/selectors";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCategories } from "@redux/categories/selectors";
 
 const formatNumber = (number) => {
   return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -14,19 +10,6 @@ const StatisticsTable = ({
   incomeSummaryByPeriod,
   expensesSummaryByPeriod,
 }) => {
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const categories = useSelector(selectCategories);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(getCategories());
-    }
-  }, [dispatch, isLoggedIn]);
-
-  const getCategoryName = (id) =>
-    categories.find((cat) => cat.id === id)?.name || "Unknown";
-
   const getCategoryColor = (index) => {
     const colors = [
       "#FED057",
@@ -55,14 +38,14 @@ const StatisticsTable = ({
       <table className={css.table}>
         <tbody>
           {expenseItems.map((item, index) => (
-            <tr key={item.category} className={css.row}>
+            <tr key={item.categoryId || item.category} className={css.row}>
               <td className={css.dotCell}>
                 <span
                   className={css.dot}
                   style={{ backgroundColor: getCategoryColor(index) }}
                 />
               </td>
-              <td className={css.name}>{getCategoryName(item.category)}</td>
+              <td className={css.name}>{item.categoryName || item.category}</td>
               <td className={css.amount}>{formatNumber(item.total)}</td>
             </tr>
           ))}
