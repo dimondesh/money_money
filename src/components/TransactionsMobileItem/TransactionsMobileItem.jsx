@@ -4,17 +4,17 @@ import { useDispatch } from "react-redux";
 import {
   deleteTransactions,
   editTransactions,
-} from "../../redux/transactions/operations";
-import { openModalEditTransaction } from "../../redux/modal/modalSlice";
+} from "@redux/transactions/operations";
+import { openModalEditTransaction } from "@redux/modal/modalSlice";
 import { motion } from "framer-motion";
 import { prettyMoneyFormat } from "../../helpers/prettyMoneyFormat";
 import dateFormat from "helpers/dateFormat";
 
-const TransactionsMobileItem = ({ transaction }) => {
+const TransactionsMobileItem = ({ transaction,index }) => {
   const dispatch = useDispatch();
   const isIncome = transaction.type === "income";
 
-  // const borderStyle = isIncome ? styles.table_plus : styles.table_minus;
+  const borderStyle = isIncome ? styles.table_plus : styles.table_minus;
 
   const handleEdit = () => {
     dispatch(editTransactions(transaction));
@@ -46,7 +46,7 @@ const TransactionsMobileItem = ({ transaction }) => {
 
         <p className={styles.t_row}>
           <span className={styles.title}>Category:</span>
-          <span className={styles.value}>{transaction.categoryId}</span>
+          <span className={styles.value}>{transaction.category}</span>
         </p>
 
         <p className={styles.t_row}>
