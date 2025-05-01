@@ -31,7 +31,7 @@ const AddTransactionForm = ({ closeModal }) => {
   const initialValues = {
     amount: "",
     comment: "",
-    category: "",
+    categoryId: "",
   };
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {

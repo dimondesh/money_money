@@ -24,7 +24,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getTransactions.fulfilled, (state, { payload }) => {
-        state.transactions = payload.data;
+        state.transactions = payload;
       })
       .addCase(addTransactions.fulfilled, (state, { payload }) => {
         state.transactions.push(payload);

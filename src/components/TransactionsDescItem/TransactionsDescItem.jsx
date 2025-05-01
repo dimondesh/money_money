@@ -21,7 +21,7 @@ const TransactionsDescItem = ({
   openDeleteModal,
   openEditModal,
 }) => {
-  const { id, type, category, comment, amount, transactionDate } = transaction;
+  const { id, type, categoryId, comment, sum, transactionDate } = transaction;
   const dispatch = useDispatch();
 
   const handleDeleteClick = () => {
