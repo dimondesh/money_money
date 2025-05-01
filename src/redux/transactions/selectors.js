@@ -3,10 +3,12 @@ export const selectSummary = (state) => state.statistics.summary;
 
 export const selectStatLoading = (state) =>
   state.statistics.isStatisticsLoading;
+
 export const selectStatError = (state) => state.statistics.isStatisticsError;
 
 export const selectIncomeSummaryByPeriod = (state) =>
   state.statistics.incomeSummaryByPeriod;
+
 export const selectExpenseSummaryByPeriod = (state) =>
   state.statistics.expenseSummaryByPeriod;
 
@@ -16,4 +18,6 @@ export const selectBalance = (state) => state.transactions.balance;
 export const selectLoading = (state) => state.transactions.loading;
 export const selectError = (state) => state.transactions.error;
 
-export const selectCategories = (state) => state.transactions.categories;
+export const selectCurrentTransaction = (state) => ({
+  transaction: state.transactions.transactionForUpdate,
+});
