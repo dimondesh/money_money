@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import styles from "./Balance.module.css";
 import { selectUserBalance } from "@redux/auth/selectors";
 import { prettyBalanceFormat } from "helpers/prettyBalanceFormat";
+// import { selectBalance } from "@redux/transactions/selectors";
 
 const Balance = () => {
   const totalBalance = useSelector(selectUserBalance);
