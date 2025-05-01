@@ -2,14 +2,19 @@ import React, { useState, useRef, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import css from "./DoughnutChart.module.css";
+import { formatNumber } from "helpers/getformatNumber";
 
 ChartJS.register(ArcElement, Tooltip);
 
-const formatNumber = (number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-};
-
-const DoughnutChart = ({ summary, categories, expensesSummaryByPeriod }) => {
+const DoughnutChart = ({
+  summary,
+  categories,
+  expensesSummaryByPeriod,
+  selectedMonth,
+  setSelectedMonth,
+  selectedYear,
+  setSelectedYear,
+}) => {
   const chartRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -26,12 +31,12 @@ const DoughnutChart = ({ summary, categories, expensesSummaryByPeriod }) => {
     "#D35400",
   ];
 
-  const expensesOnly = summary?.filter((item) => item.type === "EXPENSE") || [];
-  const hasExpenses = expensesOnly.length > 0;
+  // const expensesOnly = summary?.filter((item) => item.type === "expense") || [];
+  const hasExpenses = summary.length > 0;
 
   const labels = hasExpenses
-    ? expensesOnly.map((item) => {
-        const category = categories.find((cat) => cat.id === item.category);
+    ? summary.map((item) => {
+        const category = categories.find((cat) => cat.name === item.category);
         return category ? category.name : "Невідомо";
       })
     : ["Немає даних"];
@@ -40,9 +45,9 @@ const DoughnutChart = ({ summary, categories, expensesSummaryByPeriod }) => {
     labels,
     datasets: [
       {
-        data: hasExpenses ? expensesOnly.map((item) => item.EXPENSE) : [1],
+        data: hasExpenses ? summary.map((item) => item.total) : [1],
         backgroundColor: hasExpenses
-          ? expensesOnly.map((_, i) =>
+          ? summary.map((_, i) =>
               activeIndex === null
                 ? colors[i]
                 : i === activeIndex
@@ -116,9 +121,7 @@ const DoughnutChart = ({ summary, categories, expensesSummaryByPeriod }) => {
 
   const activeCategory = activeIndex !== null ? labels[activeIndex] : null;
   const activeAmount =
-    activeIndex !== null
-      ? expensesOnly[activeIndex]?.EXPENSE?.toFixed(2)
-      : null;
+    activeIndex !== null ? summary[activeIndex]?.total?.toFixed(2) : null;
 
   return (
     <div className={css.chartWrapper}>

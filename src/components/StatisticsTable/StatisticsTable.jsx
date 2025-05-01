@@ -1,32 +1,16 @@
 import React, { useEffect } from "react";
 import css from "./StatisticsTable.module.css";
-import { getCategories } from "@redux/categories/operations";
-import { selectIsLoggedIn } from "@redux/auth/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCategories } from "@redux/categories/selectors";
-
-const formatNumber = (number) => {
-  return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-};
+import { getCategories } from "@redux/categories/operations";
+import { formatNumber } from "helpers/getformatNumber";
 
 const StatisticsTable = ({
   summary = [],
+  categories = [],
   incomeSummaryByPeriod,
   expensesSummaryByPeriod,
 }) => {
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const categories = useSelector(selectCategories);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(getCategories());
-    }
-  }, [dispatch, isLoggedIn]);
-
-  const getCategoryName = (id) =>
-    categories.find((cat) => cat.id === id)?.name || "Unknown";
-
   const getCategoryColor = (index) => {
     const colors = [
       "#FED057",
@@ -42,9 +26,9 @@ const StatisticsTable = ({
     return colors[index % colors.length];
   };
 
-  const expenseItems = summary.filter(
-    (item) => item.type?.toLowerCase() === "expense"
-  );
+  // const expenseItems = summary.filter(
+  //   (item) => item.type?.toLowerCase() === "expense"
+  // );
 
   return (
     <div className={css.wrapper}>
@@ -54,7 +38,7 @@ const StatisticsTable = ({
       </div>
       <table className={css.table}>
         <tbody>
-          {expenseItems.map((item, index) => (
+          {summary.map((item, index) => (
             <tr key={item.category} className={css.row}>
               <td className={css.dotCell}>
                 <span
@@ -62,7 +46,7 @@ const StatisticsTable = ({
                   style={{ backgroundColor: getCategoryColor(index) }}
                 />
               </td>
-              <td className={css.name}>{getCategoryName(item.category)}</td>
+              <td className={css.name}>{item.category}</td>
               <td className={css.amount}>{formatNumber(item.total)}</td>
             </tr>
           ))}

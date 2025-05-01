@@ -1,9 +1,6 @@
 import { useDispatch } from "react-redux";
-
 import { getTransactionCategory } from "../../constants/TransactionConstants";
-
 import icons from "../../images/icons/sprite.svg";
-
 import styles from "./TransactionsDescItem.module.css";
 import {
   deleteTransactions,
@@ -19,7 +16,7 @@ const TransactionsDescItem = ({
   openDeleteModal,
   openEditModal,
 }) => {
-  const { id, type, categoryId, comment, sum, transactionDate } = transaction;
+  const { id, type, categoryId, comment, sum, date } = transaction;
   const dispatch = useDispatch();
 
   const handleDeleteClick = () => {
@@ -37,6 +34,7 @@ const TransactionsDescItem = ({
   const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
 
   return (
+
      <motion.tr 
       className={`${styles.TransactionItem} ${borderClass} ${styles.animatedRow}`}
     >
@@ -93,6 +91,7 @@ const TransactionsDescItem = ({
             Delete
           </button>
         </div>
+
       </td>
     </motion.tr>
   );
