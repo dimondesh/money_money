@@ -27,14 +27,14 @@ const slice = createSlice({
         isAnyOf(getIncomeAndExpenseSummaryByPeriod.rejected),
         (state, { payload }) => {
           state.isStatisticsLoading = false;
-          state.isStatisticsError = payload;
+          state.isStatisticsError = true;
         }
       )
       .addMatcher(
         isAnyOf(getIncomeAndExpenseSummaryByPeriod.pending),
         (state) => {
           state.isStatisticsLoading = true;
-          state.isStatisticsError = null;
+          state.isStatisticsError = false;
         }
       );
   },

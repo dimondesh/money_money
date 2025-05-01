@@ -2,21 +2,24 @@ import React, { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { useSelector, useDispatch } from "react-redux";
-import { closeAddModal } from "../../redux/modals/slice";
+// import { closeModalAddTransaction } from "../../redux/modal/operations";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import Balance from "../../components/Balance/Balance";
 import Currency from "../../components/Currency/Currency";
-import { AddTransactionModal } from "../../components/ModalAddTransaction/ModalAddTransaction";
+// import { AddTransactionModal } from "../../components/ModalAddTransaction/ModalAddTransaction";
 import ButtonAddTransactions from "../../components/ButtonAddTransactions/ButtonAddTransactions";
 import styles from "./Dashboard.module.css";
 import { SidebarGraph } from "../../components/SidebarGraph/SidebarGraph";
+import { selectIsModalAddTransactionOpen } from "../../redux/modal/selectors";
+import { closeModalAddTransaction } from "../../redux/modal/modalSlice";
+import ModalAddTransaction from "../../components/ModalAddTransaction/ModalAddTransaction";
 
 const Dashboard = () => {
-  const isAddModalOpen = useSelector((state) => state.modals.isAddModalOpen);
+  const isAddModalOpen = useSelector(selectIsModalAddTransactionOpen);
   const dispatch = useDispatch();
 
-  const handleCloseModal = () => dispatch(closeAddModal());
+  const handleCloseModal = () => dispatch(closeModalAddTransaction());
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({
@@ -26,7 +29,7 @@ const Dashboard = () => {
 
   const location = useLocation();
   useEffect(() => {
-    dispatch(closeAddModal());
+    dispatch(handleCloseModal());
   }, [location, dispatch]);
 
   return (
@@ -59,7 +62,7 @@ const Dashboard = () => {
         )}
       </div>
 
-      {isAddModalOpen && <AddTransactionModal onClose={handleCloseModal} />}
+      {isAddModalOpen && <ModalAddTransaction onClose={handleCloseModal} />}
     </div>
   );
 };

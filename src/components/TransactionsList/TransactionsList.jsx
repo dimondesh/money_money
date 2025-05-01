@@ -1,56 +1,75 @@
+import { useDispatch, useSelector } from "react-redux";
 
-// import { useSelector } from 'react-redux';
-// import TransactionItem from '../TransactionsDescItem/TransactionsDescItem';
-// import TransactionsMobileItem from '../TransactionsMobileItem/TransactionsMobileItem';
-// import Loader from '../Loader/Loader';
-// import { useMedia } from '../../hooks/useMedia';
+import TransactionsMobileItem from "../TransactionsMobileItem/TransactionsMobileItem";
+import Loader from "../Loader/Loader";
+import { useMedia } from "../../hooks/useMedia";
+import styles from "./TransactionsList.module.css";
+import {
+  selectLoading,
+  selectTransactions,
+} from "../../redux/transactions/selectors";
+import TransactionsDescItem from "../TransactionsDescItem/TransactionsDescItem";
+import { getTransactions } from "../../redux/transactions/operations";
+import { useEffect } from "react";
+import clsx from "clsx";
 
-// import styles from './TransactionsList.module.css';
+const TransactionsList = () => {
+  const dispatch = useDispatch();
 
-// const TransactionsList = () => {
-//   const { transactions, loading } = useSelector(state => state.transactions);
-//   const { isMobile } = useMedia();
+  const transactions = useSelector(selectTransactions) || [];
+  const loading = useSelector(selectLoading);
+  const { isMobile } = useMedia();
 
-//   if (loading) {
-//     return <Loader />;
-//   }
+  useEffect(() => {
+    dispatch(getTransactions());
+  }, [dispatch]);
 
-//   if (!transactions.length) {
-//     return (
-//       <div className={styles.emptyMessage}>
-//         <p>You have no transactions yet.</p>
-//       </div>
-//     );
-//   }
+  if (loading) {
+    return <Loader />;
+  }
 
-//   return (
-//     <ul className={styles.list}>
-//       {transactions.map(transaction =>
-//         isMobile ? (
-//           <TransactionsMobileItem key={transaction.id} transaction={transaction} />
-//         ) : (
-//           <TransactionItem key={transaction.id} transaction={transaction} />
-//         )
-//       )}
-//     </ul>
-//   );
-// };
-
-// export default TransactionsList;
-
-
-
-import React from 'react';
-
-
-export const TransactionsList = () => {
-
+  if (transactions.length === 0) {
+    return (
+      <div className={styles.empty}>
+        <p>You have no transactions yet.</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h2>Transaction List Placeholder</h2>
-      <p>Table content will be here...</p>
-    </div>
+    <>
+      {isMobile ? (
+<ul className={styles.list}>
+          {transactions.map((transaction) => (
+            <TransactionsMobileItem
+              key={transaction._id}
+              transaction={transaction}
+            />
+          ))}
+        </ul>
+  ) : (
+         <table className={styles.table}>
+          <thead className={styles.thead}>
+            <tr className={styles.t_row}>
+              <th className={styles.title}>Date</th>
+              <th className={styles.title}>Type</th>
+              <th className={styles.title}>Category</th>
+              <th className={styles.title}>Comment</th>
+              <th className={clsx(styles.title, styles.sum)}>Sum</th>
+            </tr>
+          </thead>
+          <tbody className={styles.tbody}>
+            {transactions.map((transaction) => (
+              <TransactionsDescItem
+                key={transaction._id}
+                transaction={transaction}
+              />
+            ))}
+          </tbody>
+        </table>
+      )}
+    </>
   );
 };
 
+export default TransactionsList;

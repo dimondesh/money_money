@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { walletAPI, setToken } from "helpers/api";
+import { walletAPI, setToken } from "../../helpers/api";
 
 export const getIncomeAndExpenseSummaryByPeriod = createAsyncThunk(
   "statistics/getIncomeAndExpenseSummaryByPeriod",

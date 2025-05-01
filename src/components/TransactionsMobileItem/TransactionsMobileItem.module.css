@@ -1,0 +1,87 @@
+.card {
+    padding: 24px;
+    margin: 13px 0;
+    border-radius: 16px;
+    background: var(--bg-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.income {
+    
+}
+
+.expense {
+   
+}
+
+.t_body {
+    margin-bottom: 19px;
+}
+
+.t_row {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 0;
+    /* border-bottom: 1px solid ; */
+}
+
+.title {
+    font-size: 14px;
+    color: rgba(251, 251, 251, 1);
+    min-width: 30%;
+}
+
+.value {
+    font-size: 15px;
+    text-align: right;
+    max-width: 65%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.value_strong {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.plus {
+    /* color:  */
+}
+
+.minus {
+    /* color:  */
+}
+
+.actions {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    margin-top: 19px;
+}
+
+.btn_delete,
+.btn_edit {
+    padding: 12px 22px;
+    border-radius: 25px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease;
+}
+
+.btn_edit {
+    /* background:  */
+    /* color:  */
+}
+
+.btn_delete {
+    background: linear-gradient(rgba(255, 199, 39, 1), rgba(158, 64, 186, 1), rgba(112, 0, 255, 1));
+    color: var(--delete-color);
+}
+
+
+
+
+
+

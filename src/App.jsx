@@ -7,7 +7,7 @@ import Loader from "./components/Loader/Loader";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
 import { refreshUserThunk } from "./redux/auth/operations";
-import { selectIsRefreshing } from "./redux/auth/selectors";
+import { selectIsRefreshing, selectToken } from "./redux/auth/selectors";
 import { useMediaQuery } from "react-responsive";
 
 const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
@@ -26,6 +26,8 @@ function App() {
   const isRefreshing = useSelector(selectIsRefreshing);
   const globalIsLoading = useSelector((state) => state.global?.isLoading);
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+
+
 
   useEffect(() => {
     dispatch(refreshUserThunk());

@@ -1,20 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { walletAPI } from "helpers/index.js";
-
-
-
+import { walletAPI } from "../../helpers/api";
 
 export const getCategories = createAsyncThunk(
-  "/categories",
+  "categories",
   async (_, thunkApi) => {
-    const savedToken = thunkApi.getState().auth.token;
-
-    if (!savedToken) {
-      return thunkApi.rejectWithValue("No token");
-    }
-
-    setToken(savedToken);
-
     try {
       const { data } = await walletAPI.get("/api/categories");
       return data.data;
@@ -22,18 +11,6 @@ export const getCategories = createAsyncThunk(
       return thunkApi.rejectWithValue(
         error.message || "Failed to fetch categories"
       );
-
     }
   }
 );
-
-
-
-// export const fetchCategories = createAsyncThunk(
-//   "categories/fetchAll",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const { data } = await walletAPI.get("/api/categories");
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue(error.response?.data?.message || error.message);

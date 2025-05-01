@@ -1,20 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import css from "./StatisticsTable.module.css";
-
-const formatNumber = (number) => {
-  return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-};
+import { useDispatch, useSelector } from "react-redux";
+import { selectCategories } from "@redux/categories/selectors";
+import { getCategories } from "@redux/categories/operations";
+import { formatNumber } from "helpers/getformatNumber";
 
 const StatisticsTable = ({
-  summary,
-  categories,
+  summary = [],
+  categories = [],
   incomeSummaryByPeriod,
   expensesSummaryByPeriod,
 }) => {
-  const getCategoryName = (id) => {
-    return categories.find((cat) => cat.id === id)?.name || "Unknown";
-  };
-
   const getCategoryColor = (index) => {
     const colors = [
       "#FED057",
@@ -30,7 +26,9 @@ const StatisticsTable = ({
     return colors[index % colors.length];
   };
 
-  const expenseItems = summary.filter((item) => item.type === "EXPENSE");
+  // const expenseItems = summary.filter(
+  //   (item) => item.type?.toLowerCase() === "expense"
+  // );
 
   return (
     <div className={css.wrapper}>
@@ -40,15 +38,15 @@ const StatisticsTable = ({
       </div>
       <table className={css.table}>
         <tbody>
-          {expenseItems.map((item, index) => (
-            <tr key={item.categoryId} className={css.row}>
+          {summary.map((item, index) => (
+            <tr key={item.category} className={css.row}>
               <td className={css.dotCell}>
                 <span
                   className={css.dot}
                   style={{ backgroundColor: getCategoryColor(index) }}
                 />
               </td>
-              <td className={css.name}>{getCategoryName(item.categoryId)}</td>
+              <td className={css.name}>{item.category}</td>
               <td className={css.amount}>{formatNumber(item.total)}</td>
             </tr>
           ))}

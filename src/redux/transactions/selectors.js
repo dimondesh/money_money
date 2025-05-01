@@ -13,10 +13,10 @@ export const selectExpenseSummaryByPeriod = (state) =>
   state.statistics.expenseSummaryByPeriod;
 
 export const selectTransactions = (state) => state.transactions.transactions;
-export const selectBalance = (state) => state.transactions.balance;
+export const selectBalance = (state) => state.transactions.currentTransaction;
 
-export const selectLoading = (state) => state.transactions.loading;
-export const selectError = (state) => state.transactions.error;
+export const selectLoading = (state) => state.transactions.isTransactionsLoading;
+export const selectError = (state) => state.transactions.isTransactionsError;
 
 export const selectCurrentTransaction = (state) => ({
   transaction: state.transactions.transactionForUpdate,
