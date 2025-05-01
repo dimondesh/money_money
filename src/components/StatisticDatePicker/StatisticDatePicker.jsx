@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getIncomeAndExpenseSummaryByPeriod } from "../../redux/statistics/operations";
-
 import css from "./StatisticDatePicker.module.css";
 
 const months = [
@@ -83,24 +80,12 @@ const Dropdown = ({ options, value, onChange, label }) => {
   );
 };
 
-const StatisticsDatePicker = () => {
-  const dispatch = useDispatch();
-
-  const currentDate = new Date();
-  const initialMonth = currentDate.getMonth() + 1; // 1-12
-  const initialYear = currentDate.getFullYear();
-
-  const [selectedMonth, setSelectedMonth] = useState(initialMonth);
-  const [selectedYear, setSelectedYear] = useState(initialYear);
-
-  useEffect(() => {
-    const period = {
-      year: selectedYear,
-      month: selectedMonth,
-    };
-    dispatch(getIncomeAndExpenseSummaryByPeriod(period));
-  }, [dispatch, selectedMonth, selectedYear]);
-
+const StatisticDatePicker = ({
+  selectedMonth,
+  setSelectedMonth,
+  selectedYear,
+  setSelectedYear,
+}) => {
   return (
     <div className={css.wrapper}>
       <Dropdown
@@ -109,7 +94,6 @@ const StatisticsDatePicker = () => {
         onChange={setSelectedMonth}
         label="month"
       />
-
       <Dropdown
         options={years}
         value={selectedYear}
@@ -120,4 +104,4 @@ const StatisticsDatePicker = () => {
   );
 };
 
-export default StatisticsDatePicker;
+export default StatisticDatePicker;

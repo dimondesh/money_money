@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import DoughnutChart from "../../components/DoughnutChart/DoughnutChart";
@@ -15,24 +15,30 @@ import {
 } from "@redux/statistics/selectors";
 
 import css from "./StatisticsTab.module.css";
-import { selectCategories } from "@redux/categories/selectors";
 import { getIncomeAndExpenseSummaryByPeriod } from "@redux/statistics/operations";
 
 const StatisticsTab = () => {
   const dispatch = useDispatch();
   const summary = useSelector(selectSummary);
-  const categories = useSelector(selectCategories);
   const isLoading = useSelector(selectStatisticsLoading);
   const error = useSelector(selectStatisticsError);
   const incomeSummaryByPeriod = useSelector(selectIncomeSummaryByPeriod);
   const expensesSummaryByPeriod = useSelector(selectExpenseSummaryByPeriod);
 
+  const currentDate = new Date();
+  const initialMonth = currentDate.getMonth() + 1;
+  const initialYear = currentDate.getFullYear();
+  const [selectedMonth, setSelectedMonth] = useState(initialMonth);
+  const [selectedYear, setSelectedYear] = useState(initialYear);
+
   useEffect(() => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1;
-    dispatch(getIncomeAndExpenseSummaryByPeriod({ year, month }));
-  }, [dispatch]);
+    dispatch(
+      getIncomeAndExpenseSummaryByPeriod({
+        year: selectedYear,
+        month: selectedMonth,
+      })
+    );
+  }, [dispatch, selectedYear, selectedMonth]);
 
   if (isLoading) return <Loader />;
   if (error)
@@ -41,6 +47,8 @@ const StatisticsTab = () => {
         <p className={css.error}>{error}</p>
       </div>
     );
+
+  const categories = expensesSummaryByPeriod?.categories || [];
 
   return (
     <div className={css.statistics}>
@@ -57,7 +65,12 @@ const StatisticsTab = () => {
 
       <div className={css.statisticsData}>
         <div className={css.statisticDatePicker}>
-          <StatisticDatePicker />
+          <StatisticDatePicker
+            selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+          />
         </div>
 
         <StatisticsTable
