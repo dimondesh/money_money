@@ -11,3 +11,4 @@ export const selectIncomeSummaryByPeriod = (state) =>
   state.statistics.incomeSummaryByPeriod;
 export const selectExpenseSummaryByPeriod = (state) =>
   state.statistics.expenseSummaryByPeriod;
+
