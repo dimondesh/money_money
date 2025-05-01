@@ -1,9 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import {
-  formatData,
-  getTransactionCategory,
-} from "../../constants/TransactionConstants";
+import { getTransactionCategory } from "../../constants/TransactionConstants";
 
 import icons from "../../images/icons/sprite.svg";
 
@@ -15,6 +12,7 @@ import {
 import { prettyMoneyFormat } from "../../helpers/prettyMoneyFormat";
 import { motion } from "framer-motion";
 import { getCategories } from "@redux/categories/operations";
+import dateFormat from "helpers/dateFormat";
 
 const TransactionsDescItem = ({
   transaction,
@@ -34,7 +32,7 @@ const TransactionsDescItem = ({
     dispatch(editTransactions({ id, type }));
   };
 
-  const isIncome = type === "INCOME";
+  const isIncome = type === "income";
   const textClass = isIncome ? styles.incomeText : styles.expenseText;
   const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
 
@@ -43,7 +41,7 @@ const TransactionsDescItem = ({
       <div className={`${styles.row} ${styles.firstRow}`}>
         <span className={styles.fixData}>Date</span>
         <span className={styles.dynamicData}>
-          {formatData(transactionDate)}
+          {dateFormat(transaction.date)}
         </span>
       </div>
       <div className={`${styles.row} ${styles.secondRow}`}>
@@ -52,7 +50,7 @@ const TransactionsDescItem = ({
       </div>
       <div className={`${styles.row} ${styles.thirdRow}`}>
         <span className={styles.fixData}>Category</span>
-        <span className={styles.dynamicData}>{getCategories()}</span>
+        <span className={styles.dynamicData}>{categoryId}</span>
       </div>
       <div className={`${styles.row} ${styles.forthRow}`}>
         <span className={styles.fixData}>Comment</span>
