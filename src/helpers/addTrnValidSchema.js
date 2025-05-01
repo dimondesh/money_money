@@ -9,6 +9,6 @@ export const addTrnValidSchema = (isOnIncomeTab) => {
     : Yup.object({
         sum: Yup.string().required("Required*"),
         comment: Yup.string().required("Required*"),
-        category: Yup.string().required("Required*"),
+        categoryId: Yup.string().required("Required*"),
       });
 };

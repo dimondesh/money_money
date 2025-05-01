@@ -11,18 +11,14 @@ import {
 import TransactionsDescItem from "../TransactionsDescItem/TransactionsDescItem";
 import { getTransactions } from "../../redux/transactions/operations";
 import { useEffect } from "react";
-import clsx from 'clsx'; 
+import clsx from "clsx";
 
 const TransactionsList = () => {
   const dispatch = useDispatch();
 
   const transactions = useSelector(selectTransactions) || [];
   const loading = useSelector(selectLoading);
-  const { isTablet } = useMedia(); 
-
-  useEffect(() => {
-    dispatch(getTransactions());
-  }, [dispatch]);
+  const { isTablet } = useMedia();
 
   useEffect(() => {
     dispatch(getTransactions());
@@ -34,7 +30,7 @@ const TransactionsList = () => {
 
   if (transactions.length === 0) {
     return (
-      <div className={styles.empty}> 
+      <div className={styles.empty}>
         <p>You have no transactions yet.</p>
       </div>
     );
@@ -54,7 +50,7 @@ const TransactionsList = () => {
             </tr>
           </thead>
           <tbody className={styles.tbody}>
-            {transactions.map(transaction => (
+            {transactions.map((transaction) => (
               <TransactionsDescItem
                 key={transaction._id}
                 transaction={transaction}
@@ -64,7 +60,7 @@ const TransactionsList = () => {
         </table>
       ) : (
         <ul className={styles.list}>
-          {transactions.map(transaction => (
+          {transactions.map((transaction) => (
             <TransactionsMobileItem
               key={transaction._id}
               transaction={transaction}

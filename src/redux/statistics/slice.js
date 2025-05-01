@@ -18,23 +18,23 @@ const slice = createSlice({
         getIncomeAndExpenseSummaryByPeriod.fulfilled,
         (state, { payload }) => {
           state.isStatisticsLoading = false;
-          state.incomeSummaryByPeriod = payload.incomeSummaryByPeriod;
-          state.expenseSummaryByPeriod = payload.expenseSummaryByPeriod;
-          state.summary = payload.summary; // 👈 ОБОВ'ЯЗКОВО ДОДАЙ!
+          state.incomeSummaryByPeriod = payload;
+          state.expenseSummaryByPeriod = payload;
+          state.summary = payload; // 👈 ОБОВ'ЯЗКОВО ДОДАЙ!
         }
       )
       .addMatcher(
         isAnyOf(getIncomeAndExpenseSummaryByPeriod.rejected),
         (state, { payload }) => {
           state.isStatisticsLoading = false;
-          state.isStatisticsError = payload;
+          state.isStatisticsError = true;
         }
       )
       .addMatcher(
         isAnyOf(getIncomeAndExpenseSummaryByPeriod.pending),
         (state) => {
           state.isStatisticsLoading = true;
-          state.isStatisticsError = null;
+          state.isStatisticsError = false;
         }
       );
   },
