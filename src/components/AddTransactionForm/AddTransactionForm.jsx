@@ -12,24 +12,27 @@ import "react-datepicker/dist/react-datepicker.css";
 import enUS from "date-fns/locale/en-US";
 // import { categories } from "../../constants/TransactionConstants";
 
-import { addTransactions } from "@redux/transactions/operations";
-import { getBalanceThunk } from "@redux/auth/operations";
+// import { addTransactions } from "@redux/transactions/operations";
+// import { getBalanceThunk } from "@redux/auth/operations";
 
 import { FiCalendar } from "react-icons/fi";
 import { selectCategories } from "@redux/categories/selectors";
+import { addTransactions } from "@redux/transactions/operations";
+import { useMediaQuery } from "react-responsive";
+// import { closeModalAddTransaction } from "@redux/modal/modalSlice";
 
 registerLocale("en-US", enUS);
 
 const AddTransactionForm = ({ closeModal }) => {
   const [isOnIncomeTab, setIsOnIncomeTab] = useState(false);
-  const { isTablet } = useMedia();
+  const { isTablet } = useMediaQuery({ query: "(min-width: 768px)" });
   const categories = useSelector(selectCategories);
   const dispatch = useDispatch();
 
   const [startDate, setStartDate] = useState(new Date());
 
   const initialValues = {
-    amount: "",
+    sum: "",
     comment: "",
     categoryId: "",
   };
@@ -37,10 +40,9 @@ const AddTransactionForm = ({ closeModal }) => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       setSubmitting(true);
-
       const transactionData = {
         type: isOnIncomeTab ? "income" : "expense",
-        category: values.category || (isOnIncomeTab ? "Income" : "Main"),
+        ...(isOnIncomeTab ? {} : { categoryId: values.categoryId }),
         sum: Number(values.sum),
         comment: values.comment,
         date: startDate.toISOString(),
@@ -48,11 +50,10 @@ const AddTransactionForm = ({ closeModal }) => {
 
       await dispatch(addTransactions(transactionData)).unwrap();
       resetForm();
-      await dispatch(getBalanceThunk());
+      closeModal();
     } catch (error) {
       console.error("Submission error:", error);
     } finally {
-      closeModal();
       setSubmitting(false);
     }
   };
@@ -62,13 +63,13 @@ const AddTransactionForm = ({ closeModal }) => {
       {isTablet && (
         <button className={styles.closeButton} onClick={() => closeModal()}>
           <svg>
-            <use href={`${icons}#icon-close`}></use>
+            <use href={`${icons}#icon-close`} />
           </svg>
         </button>
       )}
       <Formik
         initialValues={initialValues}
-        validationSchema={addTrnValidSchema(isOnIncomeTab)}
+        validationSchema={addTrnValidSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
@@ -76,7 +77,7 @@ const AddTransactionForm = ({ closeModal }) => {
             <h2 className={styles.formTitle}>Add transaction</h2>
 
             <div className={styles.switcheWrapper}>
-              <span className={`${isOnIncomeTab ? styles.income : null}`}>
+              <span className={`${isOnIncomeTab ? styles.income : ""}`}>
                 Income
               </span>
 
@@ -88,7 +89,7 @@ const AddTransactionForm = ({ closeModal }) => {
               />
               <label htmlFor="switcherButton"></label>
 
-              <span className={`${!isOnIncomeTab ? styles.expense : null}`}>
+              <span className={`${!isOnIncomeTab ? styles.expense : ""}`}>
                 Expense
               </span>
             </div>
@@ -96,15 +97,15 @@ const AddTransactionForm = ({ closeModal }) => {
             <div className={styles.inputWrapper}>
               {!isOnIncomeTab && (
                 <div className={`${styles.inputField} ${styles.category}`}>
-                  <Field as="select" name="category" autoFocus required>
+                  <Field as="select" name="categoryId" autoFocus required>
                     <option value="">Select your category</option>
                     {categories.slice(0, -1).map((item) => (
-                      <option key={item.id} value={item.name}>
+                      <option key={item.id} value={item.id}>
                         {item.name}
                       </option>
                     ))}
                   </Field>
-                  <ErrorMessage name="category" component="p" />
+                  <ErrorMessage name="categoryId" component="p" />
                 </div>
               )}
 
@@ -132,15 +133,15 @@ const AddTransactionForm = ({ closeModal }) => {
 
             <div className={styles.buttonsWrapper}>
               <FormButton
-                type={"submit"}
-                text={"Add"}
-                variant={"multiColorButtton"}
+                type="submit"
+                text="Add"
+                variant="multiColorButtton"
                 isDisabled={isSubmitting}
               />
               <FormButton
-                type={"button"}
-                text={"cancel"}
-                variant={"whiteButtton"}
+                type="button"
+                text="Cancel"
+                variant="whiteButtton"
                 handlerFunction={() => closeModal()}
               />
             </div>

@@ -26,9 +26,9 @@ const StatisticsTable = ({
     return colors[index % colors.length];
   };
 
-  // const expenseItems = summary.filter(
-  //   (item) => item.type?.toLowerCase() === "expense"
-  // );
+  const expenseItems = summary.filter(
+    (item) => item.id?.toLowerCase() === "expense"
+  );
 
   return (
     <div className={css.wrapper}>
