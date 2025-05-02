@@ -39,7 +39,7 @@ const TransactionsList = () => {
   return (
     <>
       {isMobile ? (
-<ul className={styles.list}>
+        <ul className={styles.list}>
           {transactions.map((transaction) => (
             <TransactionsMobileItem
               key={transaction._id}
@@ -47,14 +47,18 @@ const TransactionsList = () => {
             />
           ))}
         </ul>
-  ) : (
-         <table className={styles.table}>
+      ) : (
+        <table className={styles.table}>
           <thead className={styles.thead}>
             <tr className={styles.t_row}>
-              <th className={styles.title}>Date</th>
-              <th className={styles.title}>Type</th>
-              <th className={styles.title}>Category</th>
-              <th className={styles.title}>Comment</th>
+              <th className={clsx(styles.title, styles.titleDate)}>Date</th>
+              <th className={clsx(styles.title, styles.titleType)}>Type</th>
+              <th className={clsx(styles.title, styles.titleCategory)}>
+                Category
+              </th>
+              <th className={clsx(styles.title, styles.titleComment)}>
+                Comment
+              </th>
               <th className={clsx(styles.title, styles.sum)}>Sum</th>
             </tr>
           </thead>

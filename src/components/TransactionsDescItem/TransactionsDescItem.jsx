@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { getTransactionCategory } from "../../constants/TransactionConstants";
+import { useDispatch, useSelector } from "react-redux";
+import { formatData } from "../../constants/TransactionConstants";
 import icons from "../../images/icons/sprite.svg";
 import styles from "./TransactionsDescItem.module.css";
 import {
@@ -8,8 +8,9 @@ import {
 } from "@redux/transactions/operations";
 import { prettyMoneyFormat } from "../../helpers/prettyMoneyFormat";
 import { motion } from "framer-motion";
-import { getCategories } from "@redux/categories/operations";
+// import { getCategories } from "@redux/categories/operations";
 import dateFormat from "helpers/dateFormat";
+import { selectCategories } from "@redux/categories/selectors";
 
 const TransactionsDescItem = ({
   transaction,
@@ -18,6 +19,10 @@ const TransactionsDescItem = ({
 }) => {
   const { id, type, categoryId, comment, sum, date } = transaction;
   const dispatch = useDispatch();
+  const categories = useSelector(selectCategories);
+
+  const category = categories.find((cat) => cat.id === categoryId);
+  const categoryName = category ? category.name : "Income";
 
   const handleDeleteClick = () => {
     openDeleteModal();
@@ -34,40 +39,31 @@ const TransactionsDescItem = ({
   const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
 
   return (
-
-     <motion.tr 
+    <motion.tr
       className={`${styles.TransactionItem} ${borderClass} ${styles.animatedRow}`}
     >
-      
       <td className={`${styles.dynamicData} ${styles.column1}`}>
-        {dateFormat(transaction.date)}
+        {formatData(transaction.date)}
       </td>
 
-     
       <td className={`${styles.dynamicData} ${styles.column2}`}>
-        <span className={styles.typeIndicator}>
-          {isIncome ? "+" : "-"}
-        </span>
+        <span className={styles.typeIndicator}>{isIncome ? "+" : "-"}</span>
       </td>
 
-      
       <td className={`${styles.dynamicData} ${styles.column3}`}>
-        {categoryId}
+        {categoryName}
       </td>
 
-     
       <td className={`${styles.dynamicData} ${styles.column4}`}>
         <div className={styles.commentWrapper}>
           {comment || <span className={styles.noComment}>—</span>}
         </div>
       </td>
 
-     
       <td className={`${styles.dynamicData} ${styles.column5} ${textClass}`}>
         {prettyMoneyFormat(sum)}
       </td>
 
-      
       <td className={`${styles.sixthRow} ${styles.column6}`}>
         <div className={styles.buttonGroup}>
           <button
@@ -79,9 +75,8 @@ const TransactionsDescItem = ({
             <svg className={styles.editIcon}>
               <use href={`${icons}#icon-edit`}></use>
             </svg>
-         
           </button>
-          
+
           <button
             type="button"
             className={styles.deleteButton}
@@ -91,11 +86,9 @@ const TransactionsDescItem = ({
             Delete
           </button>
         </div>
-
       </td>
     </motion.tr>
   );
-  
 };
 
 export default TransactionsDescItem;
