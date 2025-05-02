@@ -86,18 +86,20 @@
   }
 
   .titleType {
-    margin-right: 51px;
+    margin-right: 80px;
   }
   .titleCategory {
-    margin-right: 69px;
+    margin-right: 60px;
   }
 
   .titleComment {
-    margin-right: 104px;
+    margin-right: 60px;
   }
 
   .thead {
-    padding: 20px;
+    padding-left: 30px;
+    padding-top: 16px;
+    padding-bottom: 16px;
     position: sticky;
     top: 0;
     z-index: 1;
@@ -133,4 +135,13 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
   padding: 20px;
+}
+
+.title {
+  text-align: start;
+  /* padding: 16px; */
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--white);
 }
