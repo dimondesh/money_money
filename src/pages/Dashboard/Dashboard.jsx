@@ -46,12 +46,18 @@ const Dashboard = () => {
             {isDesktop && <SidebarGraph />}
           </aside>
         )}
-
-        <main className={styles.mainContent}>
+{   !isMobile &&    <main className={styles.mainContent}>
           {isTablet && <Balance />}
           <Outlet />
           {(isTablet || isDesktop) && <ButtonAddTransactions />}
-        </main>
+        </main>}
+
+
+        {/* <main className={styles.mainContent}>
+          {isTablet && <Balance />}
+          <Outlet />
+          {(isTablet || isDesktop) && <ButtonAddTransactions />}
+        </main> */}
 
         {isMobile && (
           <div className={styles.mobileOnlyContent}>
