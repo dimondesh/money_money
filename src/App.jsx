@@ -2,10 +2,10 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import React, { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import CustomToaster from './components/Toast/CustomToaster';
 import Loader from "./components/Loader/Loader";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
-import { ToastContainer } from "react-toastify";
 import { refreshUserThunk } from "./redux/auth/operations";
 import { selectIsRefreshing, selectToken } from "./redux/auth/selectors";
 import { useMediaQuery } from "react-responsive";
@@ -76,7 +76,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-      <ToastContainer />
+      <CustomToaster />
     </>
   );
 }
