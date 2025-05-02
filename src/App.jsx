@@ -27,8 +27,6 @@ function App() {
   const globalIsLoading = useSelector((state) => state.global?.isLoading);
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
-
-
   useEffect(() => {
     dispatch(refreshUserThunk());
   }, [dispatch]);
@@ -52,7 +50,7 @@ function App() {
             <Route path="statistics" element={<StatisticsTab />} />
             <Route
               path="currency"
-              element={isMobile ? <CurrencyTab /> : <Navigate to="/" replace />}
+              element={isMobile ? <CurrencyTab /> : <Navigate to="/" />}
             />
           </Route>
 

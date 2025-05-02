@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPortal } from "react-dom";
-import { closeModalAddTransaction } from "../../redux/modal/modalSlice";
-import { selectIsModalAddTransactionOpen } from "../../redux/modal/selectors";
+import { closeModalAddTransaction } from "@redux/modal/modalSlice";
+// import { selectIsModalAddTransactionOpen } from "@/redux/modal/selectors";
 import AddTransactionForm from "../AddTransactionForm/AddTransactionForm";
 import styles from "./ModalAddTransaction.module.css";
 import Modal from "components/Modal/Modal";
+import { selectIsModalAddTransactionOpen } from "@redux/modal/selectors";
 
 const modalRoot = document.getElementById("modal-root");
 

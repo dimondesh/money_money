@@ -26,7 +26,7 @@ export const registerThunk = createAsyncThunk(
   async (credentials, thunkApi) => {
     try {
       const res = await walletAPI.post("/api/auth/register", credentials);
-      const registeredUser = res.data.data;
+      const registeredUser = res.data.data || res.data; // Залежить від структури відповіді бекенду
 
       if (!registeredUser || !registeredUser.username) {
         console.error(

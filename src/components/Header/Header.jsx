@@ -7,15 +7,13 @@ import Modal from "../Modal/Modal";
 import { toast } from "react-toastify";
 import styles from "./Header.module.css";
 import { FaSignOutAlt } from "react-icons/fa";
+import { selectUserName } from "@redux/auth/selectors";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userName = useSelector((state) => state.auth?.user?.username);
-
-  const userEmail = useSelector((state) => state.auth?.user?.email);
-  const isLoggedIn = useSelector((state) => !!state.auth?.token);
+  const userName = useSelector(selectUserName);
 
   const handleLogout = async () => {
     try {

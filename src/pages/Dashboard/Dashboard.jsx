@@ -28,6 +28,7 @@ const Dashboard = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1200px)" });
 
   const location = useLocation();
+
   useEffect(() => {
     dispatch(handleCloseModal());
   }, [location, dispatch]);
