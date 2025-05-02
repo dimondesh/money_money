@@ -37,9 +37,6 @@
   color: var(--white-60);
 }
 
-.userName {
-
-}
 
 .exitButton {
   background: transparent;
@@ -59,9 +56,7 @@
   margin-left: 15px;
 }
 
-.exitText {
 
-}
 
 .exitButton:hover {
   color: var(--white);
