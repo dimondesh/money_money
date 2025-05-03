@@ -4,7 +4,7 @@ import styles from "./Navigation.module.css";
 import { FaHome, FaChartBar, FaDollarSign } from "react-icons/fa";
 
 const Navigation = () => {
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 767.98px)" });
   const isTabletOrDesktop = useMediaQuery({ query: "(min-width: 768px)" });
 
   const getNavLinkClass = ({ isActive }) =>
@@ -15,19 +15,19 @@ const Navigation = () => {
       <NavLink to="/" className={getNavLinkClass}>
         <FaHome className={styles.navIcon} />
         {isTabletOrDesktop && <span className={styles.navText}>Home</span>}
-        {isMobile && <span className={styles.navText}>Home</span>}
+        {isMobile && <span className={styles.navText}></span>}
       </NavLink>
       <NavLink to="/statistics" className={getNavLinkClass}>
         <FaChartBar className={styles.navIcon} />
         {isTabletOrDesktop && (
           <span className={styles.navText}>Statistics</span>
         )}
-        {isMobile && <span className={styles.navText}>Statistics</span>}
+        {isMobile && <span className={styles.navText}></span>}
       </NavLink>
       {isMobile && (
         <NavLink to="/currency" className={getNavLinkClass}>
           <FaDollarSign className={styles.navIcon} />
-          <span className={styles.navText}>Currency</span>
+          <span className={styles.navText}></span>
         </NavLink>
       )}
     </nav>

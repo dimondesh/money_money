@@ -28,13 +28,13 @@
   background: linear-gradient(180deg, #6e54eb 3%, #553382 90%);
   overflow-y: auto;
   position: relative;
-
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 
-@media only screen and (min-width: 767px) {
+/* Планшет */
+@media only screen and (min-width: 768px) and (max-width: 1199.98px) {
   .mainContent {
     background-image: url("../../images/Dashboard/background-tab.png");
     display: flex;
@@ -42,10 +42,19 @@
     align-items: center;
     flex-direction: column;
     gap: 30px;
+    padding: 32px;
+  }
+
+  .sidebar {
+    width: 100px;
+    padding: 40px 15px;
+    gap: 50px;
+    align-items: center;
+    background: linear-gradient(180deg, #352863 3%, #2a1a40 100%);
   }
 }
 
-/* Десктоп*/
+/* Десктоп */
 @media only screen and (min-width: 1200px) {
   .contentWrapper {
     background-image: url("../../images/Dashboard/background-desc.png");
@@ -54,26 +63,16 @@
   }
 }
 
-@media (min-width: 767px) and (max-width: 1199px) {
-  .sidebar {
-    width: 100px;
-    padding: 40px 15px;
-    gap: 50px;
-    align-items: center;
-    background: linear-gradient(180deg, #352863 3%, #2a1a40 100%);
-  }
-  .mainContent {
-    padding: 32px;
-  }
-}
-
-@media (max-width: 767px) {
+/* Мобілка */
+@media (max-width: 767.98px) {
   .contentWrapper {
     flex-direction: column;
   }
+
   .sidebar {
     display: none;
   }
+
   .mobileOnlyContent {
     display: flex;
     flex-direction: column;
@@ -88,6 +87,7 @@
     background-position: center;
     position: relative;
   }
+
   .mainContent {
     padding: 0;
     background: transparent;
@@ -99,15 +99,16 @@
   display: flex;
   gap: 28px;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .navBalCur {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 32px;
+  width: 100%;
 }
 
 .currencyGraph {
@@ -116,7 +117,7 @@
 
 .desktopWrapper {
   display: flex;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 69px;
 }

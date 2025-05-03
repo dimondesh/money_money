@@ -26,9 +26,9 @@ const Dashboard = () => {
 
   const handleCloseModal = () => dispatch(closeModalAddTransaction());
 
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 767.98px)" });
   const isTablet = useMediaQuery({
-    query: "(min-width: 768px) and (max-width: 1199px)",
+    query: "(min-width: 768px) and (max-width: 1199.98px)",
   });
   const isDesktop = useMediaQuery({ query: "(min-width: 1200px)" });
 

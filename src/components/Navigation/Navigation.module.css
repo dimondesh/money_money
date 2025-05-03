@@ -1,5 +1,6 @@
 @media (max-width: 767px) {
   .navWrapper {
+    display: flex;
     gap: 30px;
     margin-bottom: 0;
   }
@@ -34,6 +35,7 @@
 @media (min-width: 768px) and (max-width: 1199px) {
   .navWrapper {
     margin-bottom: 0;
+    flex-direction: column;
     gap: 25px;
   }
   .navText {
@@ -68,7 +70,7 @@
 
 .navWrapper {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   gap: 18px;
   flex-grow: 0;
   /* width: 100%; */
@@ -122,4 +124,10 @@
   font-size: 18px;
   font-weight: 400;
   color: var(--white);
+}
+
+@media (min-width: 1199px) {
+  .navWrapper {
+    flex-direction: column;
+  }
 }
