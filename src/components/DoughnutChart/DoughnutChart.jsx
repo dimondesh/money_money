@@ -19,16 +19,15 @@ const DoughnutChart = ({
   const [activeIndex, setActiveIndex] = useState(null);
 
   const colors = [
-    "#FF6384",
-    "#36A2EB",
-    "#FFCE56",
-    "#8E44AD",
-    "#2ECC71",
-    "#F39C12",
-    "#E74C3C",
-    "#3498DB",
-    "#1ABC9C",
-    "#D35400",
+    "#FED057",
+    "#FFD8D0",
+    "#FD9498",
+    "#C5BAFF",
+    "#6E78E8",
+    "#4A56E2",
+    "#81E1FF",
+    "#24CCA7",
+    "#00AD84",
   ];
 
   // const expensesOnly = summary?.filter((item) => item.type === "expense") || [];
