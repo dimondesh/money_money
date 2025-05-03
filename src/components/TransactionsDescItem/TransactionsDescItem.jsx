@@ -22,7 +22,7 @@ const TransactionsDescItem = ({
   const categories = useSelector(selectCategories);
 
   const category = categories.find((cat) => cat.id === categoryId);
-  const categoryName = category ? category.name : "Income";
+  const categoryName = category ? category.name : "income";
 
   const handleDeleteClick = () => {
     openDeleteModal();

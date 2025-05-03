@@ -1,42 +1,57 @@
-import { FaPen } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { formatData } from "../../constants/TransactionConstants";
+import icons from "../../images/icons/sprite.svg";
 import styles from "./TransactionsMobileItem.module.css";
-import { useDispatch } from "react-redux";
 import {
   deleteTransactions,
   editTransactions,
 } from "@redux/transactions/operations";
-import { openModalEditTransaction } from "@redux/modal/modalSlice";
-import { motion } from "framer-motion";
 import { prettyMoneyFormat } from "../../helpers/prettyMoneyFormat";
+import { motion } from "framer-motion";
+
 import dateFormat from "helpers/dateFormat";
+import { selectCategories } from "@redux/categories/selectors";
+import { FaPen } from "react-icons/fa";
 
-const TransactionsMobileItem = ({ transaction,index }) => {
+
+
+const TransactionsMobileItem = ({ 
+ transaction,
+  openDeleteModal,
+  openEditModal,
+}) => {
+  const { id, type, categoryId, comment, sum, date } = transaction;
   const dispatch = useDispatch();
-  const isIncome = transaction.type === "income";
+  const categories = useSelector(selectCategories);
 
-  const borderStyle = isIncome ? styles.table_plus : styles.table_minus;
+  const category = categories.find((cat) => cat.id === categoryId);
+  const categoryName = category ? category.name : "income";
 
-  const handleEdit = () => {
-    dispatch(editTransactions(transaction));
-    dispatch(openModalEditTransaction());
+  const handleDeleteClick = () => {
+    openDeleteModal();
+    dispatch(deleteTransactions(id));
   };
 
-  const handleDelete = async () => {
-    await dispatch(deleteTransactions(transaction._id));
+  const handleEditClick = () => {
+    openEditModal();
+    dispatch(editTransactions({ id, type }));
   };
+
+  const isIncome = type === "income";
+  const textClass = isIncome ? styles.incomeText : styles.expenseText;
+  const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
+
 
   return (
     <motion.li
-      className={`${styles.card} ${isIncome ? styles.income : styles.expense}`}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 50 }}
-      transition={{ delay: 0.3 * index }}
+  
+      className={`${styles.card} ${borderClass}`}
+  
     >
       <div className={styles.t_body}>
         <p className={styles.t_row}>
           <span className={styles.title}>Date:</span>
-          <span className={styles.value}>{dateFormat(transaction.date)}</span>
+          <span className={styles.value}>{formatData(transaction.date)}</span>
         </p>
 
         <p className={styles.t_row}>
@@ -46,22 +61,20 @@ const TransactionsMobileItem = ({ transaction,index }) => {
 
         <p className={styles.t_row}>
           <span className={styles.title}>Category:</span>
-          <span className={styles.value}>{transaction.category}</span>
+          <span className={styles.value}>{categoryName}</span>
         </p>
 
         <p className={styles.t_row}>
           <span className={styles.title}>Comment:</span>
-          <span className={styles.value}>{transaction.comment || "—"}</span>
+          <span className={styles.value}>{comment || <span className={styles.noComment}>—</span>}</span>
         </p>
 
         <p className={styles.t_row}>
-          <span className={styles.title}>Amount:</span>
+          <span className={styles.title}>Sum:</span>
           <span
-            className={`${styles.value_strong} ${
-              isIncome ? styles.plus : styles.minus
-            }`}
+             className={`${styles.value_strong} ${textClass}`}
           >
-            {prettyMoneyFormat(transaction.sum)} UAH
+            {prettyMoneyFormat(sum)} UAH
           </span>
         </p>
       </div>
@@ -69,12 +82,12 @@ const TransactionsMobileItem = ({ transaction,index }) => {
       <div className={styles.actions}>
         <button
           className={styles.btn_delete}
-          onClick={handleDelete}
+          onClick={handleDeleteClick}
           type="button"
         >
           Delete
         </button>
-        <button className={styles.btn_edit} onClick={handleEdit} type="button">
+        <button className={styles.btn_edit} onClick={handleEditClick} type="button">
           <FaPen /> Edit
         </button>
       </div>

@@ -28,6 +28,25 @@
   background: linear-gradient(180deg, #6E54EB 3%, #553382 90%);
   overflow-y: auto;
   position: relative;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+@media only screen and (min-width: 768px) and (max-width: 1279px) {
+  .mainContent {
+    background-image: url('../../images/Dashboard/background-tab.png');
+  }
+}
+
+/* Десктоп*/
+@media only screen and (min-width: 1280px) {
+  .mainContent {
+    background-image: url('../../images/Dashboard/background-desc.png');
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -52,6 +71,10 @@
      gap: 30px;
      flex-grow: 1;
      background: linear-gradient(180deg, #6E54EB 3%, #553382 90%);
+    background-image: url('../../images/Dashboard/background-mob.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
      position: relative;
   }
   .mainContent {
