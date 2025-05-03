@@ -70,7 +70,7 @@ const EditTransactionForm = ({ closeModal }) => {
         <p className={css.toggleRow}>
           <span
             className={`${css.toggle} ${
-              transaction.type === "incpme"
+              transaction.type === "income"
                 ? css.activeToggle
                 : css.inactiveToggle
             }`}
