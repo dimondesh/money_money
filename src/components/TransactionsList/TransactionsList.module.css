@@ -1,3 +1,12 @@
+@media screen and (max-width: 767.98px) {
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+  }
+}
+
 @media screen and (max-width: 1199px) {
   .table {
     width: 625px;
@@ -120,14 +129,5 @@
     font-weight: 600;
     font-size: 16px;
     color: var(--white);
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 0;
   }
 }

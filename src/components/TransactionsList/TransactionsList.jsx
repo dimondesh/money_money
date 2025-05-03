@@ -23,7 +23,7 @@ const TransactionsList = () => {
 
   const transactions = useSelector(selectTransactions) || [];
   const loading = useSelector(selectLoading);
-  const { isMobile } = useMedia();
+  const { isMobile } = useMedia({ query: "(max-width: 767.98px)" });
 
   useEffect(() => {
     dispatch(getTransactions());
