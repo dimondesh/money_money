@@ -46,6 +46,7 @@
 
 @media screen and (min-width: 1200px) {
   .table {
+    margin-top: 46px;
     max-width: 715px;
     display: flex;
     align-items: start;

@@ -17,7 +17,7 @@ import {
 } from "../../redux/modal/selectors";
 import { closeModalAddTransaction } from "@redux/modal/modalSlice";
 import ModalAddTransaction from "../../components/ModalAddTransaction/ModalAddTransaction";
-import ModalEditTransaction from "components/ModalEditTransaction/ModalEditTransaction";
+// import ModalEditTransaction from "components/ModalEditTransaction/ModalEditTransaction";
 
 const Dashboard = () => {
   const isAddModalOpen = useSelector(selectIsModalAddTransactionOpen);
@@ -43,26 +43,40 @@ const Dashboard = () => {
       <Header />
 
       <div className={styles.contentWrapper}>
-        {(isTablet || isDesktop) && (
-          <aside className={styles.sidebar}>
-            <Navigation />
-            {isDesktop && <Balance />}
-            {isDesktop && <Currency />}
-            {isDesktop && <SidebarGraph />}
-          </aside>
+        {isDesktop && (
+          <main className={styles.desktopWrapper}>
+            <aside className={styles.sidebar}>
+              <Navigation />
+              {isDesktop && <Balance />}
+              {isDesktop && <Currency />}
+              {isDesktop && <SidebarGraph />}
+            </aside>
+            <Outlet />
+          </main>
         )}
-        {!isMobile && (
+        {isTablet && (
           <main className={styles.mainContent}>
-            {isTablet && <Balance />}
+            <div className={styles.navBalCur}>
+              <div className={styles.navBal}>
+                {isTablet && <Navigation />}
+                {isTablet && <Balance />}
+              </div>{" "}
+              <div className={styles.currencyGraph}>
+                {isTablet && <Currency />} {isTablet && <SidebarGraph />}
+              </div>
+            </div>
+
             <Outlet />
             {(isTablet || isDesktop) && <ButtonAddTransactions />}
           </main>
         )}
+        {isMobile}
 
         {isMobile && (
           <div className={styles.mobileOnlyContent}>
-            <Balance />
             <Navigation />
+            <Balance />
+
             <Outlet />
             <ButtonAddTransactions />
           </div>
