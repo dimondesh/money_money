@@ -19,6 +19,8 @@ import { FiCalendar } from "react-icons/fi";
 import { selectCategories } from "@redux/categories/selectors";
 import { addTransactions } from "@redux/transactions/operations";
 import { useMediaQuery } from "react-responsive";
+import { getBalanceThunk } from "@redux/auth/operations";
+import { getIncomeAndExpenseSummaryByPeriod } from "@redux/statistics/operations";
 // import { closeModalAddTransaction } from "@redux/modal/modalSlice";
 
 registerLocale("en-US", enUS);
@@ -49,6 +51,8 @@ const AddTransactionForm = ({ closeModal }) => {
       };
 
       await dispatch(addTransactions(transactionData)).unwrap();
+      dispatch(getBalanceThunk());
+      dispatch(getIncomeAndExpenseSummaryByPeriod());
       resetForm();
       closeModal();
     } catch (error) {

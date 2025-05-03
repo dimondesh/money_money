@@ -1,29 +1,26 @@
-.card {
+@media screen and (max-width: 768px) {
+  .card {
     padding: 24px;
     margin: 13px 0;
     border-radius: 16px;
     background: rgb(82, 48, 125);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  
-}
+  }
 
-/* .t_body:not(:last-child) {
+  /* .t_body:not(:last-child) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 } */
 
-
-
-.t_body {
+  .t_body {
     margin-bottom: 19px;
-    
-}
+  }
 
-.t_row {
+  .t_row {
     display: flex;
     justify-content: space-between;
     padding: 13px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    
+
     /* border-bottom: 1px solid .incomeText {
   color: #ffc727;
   font-weight: bold;
@@ -35,48 +32,48 @@
   font-weight: bold;
   letter-spacing: 1px;
 }; */
-}
+  }
 
-.title {
+  .title {
     font-size: 16px;
     color: rgba(251, 251, 251, 1);
     min-width: 30%;
     font-weight: 600;
-}
+  }
 
-.value {
+  .value {
     font-size: 16px;
     text-align: right;
     max-width: 65%;
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: 400;
-}
+  }
 
-.value_strong {
+  .value_strong {
     font-weight: 600;
     font-size: 16px;
-}
+  }
 
-.plus {
+  .plus {
     /* color:  */
-}
+  }
 
-.minus {
+  .minus {
     /* color:  */
-}
+  }
 
-.actions {
+  .actions {
     display: flex;
     /* gap: 16px; */
     /* justify-content: flex-end; */
-   
-        justify-content: space-between;
-    margin-top: 19px;
-}
 
-.btn_delete,
-.btn_edit {
+    justify-content: space-between;
+    margin-top: 19px;
+  }
+
+  .btn_delete,
+  .btn_edit {
     padding: 12px 22px;
     border-radius: 25px;
     font-weight: 400;
@@ -85,61 +82,63 @@
     gap: 10px;
     transition: transform 0.2s ease;
     font-size: 14px;
-}
+  }
 
-.btn_edit {
+  .btn_edit {
     /* background: rgba(255, 255, 255, 0.6); */
     background-color: transparent;
     color: rgb(165, 148, 148);
     /* color: rgba(0, 0, 0, 0.8); */
     font-size: 16px;
-}
+  }
 
-.btn_delete {
-    background: linear-gradient(rgba(255, 199, 39, 1), rgba(158, 64, 186, 1), rgba(112, 0, 255, 1));
-color: rgba(255, 255, 255, 1);
-}
+  .btn_delete {
+    background: linear-gradient(
+      rgba(255, 199, 39, 1),
+      rgba(158, 64, 186, 1),
+      rgba(112, 0, 255, 1)
+    );
+    color: rgba(255, 255, 255, 1);
+  }
 
-.btn_delete:hover {
+  .btn_delete:hover {
     transform: scale(1.05);
-    background-image: linear-gradient(to right,
-            #7000ff 0%,
-            #9e40ba 31%,
-            #ffc727 100%);
+    background-image: linear-gradient(
+      to right,
+      #7000ff 0%,
+      #9e40ba 31%,
+      #ffc727 100%
+    );
     background-size: 200%;
     background-position: right center;
     transition: all 1s ease 0s;
-}
+  }
 
-.btn_edit:hover {
+  .btn_edit:hover {
     background: rgba(255, 255, 255, 0.6);
     color: #474545cc;
     transition: all 1s ease 0s;
-}
+  }
 
-
-.incomeText {
+  .incomeText {
     color: #ffc727;
     font-weight: bold;
     letter-spacing: 1px;
-}
+  }
 
-.expenseText {
+  .expenseText {
     color: #ff868d;
     font-weight: bold;
     letter-spacing: 1px;
-}
+  }
 
-.incomeBorder {
+  .incomeBorder {
     border-left: 5px solid #ffb627;
     transition: all 0.5s ease 0s;
-}
+  }
 
-.expenseBorder {
+  .expenseBorder {
     border-left: 5px solid #ff868d;
     transition: all 0.5s ease 0s;
+  }
 }
-
-
-
-

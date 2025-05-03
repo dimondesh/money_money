@@ -5,10 +5,10 @@ import { selectUserBalance } from "@redux/auth/selectors";
 import { prettyBalanceFormat } from "helpers/prettyBalanceFormat";
 import { selectIncomeSummaryByPeriod } from "@redux/statistics/selectors";
 import { selectExpenseSummaryByPeriod } from "@redux/statistics/selectors";
-// import { selectIncomeSummaryByPeriod } from "@redux/statistics/selectors";
-// import { selectBalance } from "@redux/transactions/selectors";
+import { selectBalance } from "@redux/transactions/selectors";
 
 const Balance = () => {
+  const totalBalance = useSelector(selectBalance);
   const income = useSelector(selectIncomeSummaryByPeriod);
   const expense = useSelector(selectExpenseSummaryByPeriod);
   const Balance = prettyBalanceFormat(income - expense);
@@ -16,7 +16,7 @@ const Balance = () => {
   return (
     <div className={styles.balanceWrapper}>
       <p className={styles.balanceText}>Your balance</p>
-      <p className={styles.balanceAmount}>₴ {Balance || "0.00"}</p>
+      <p className={styles.balanceAmount}>₴ {totalBalance || "0.00"}</p>
     </div>
   );
 };

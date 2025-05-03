@@ -1,6 +1,50 @@
+@media screen and (max-width: 1199px) {
+  .table {
+    width: 625px;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    border-collapse: collapse;
+  }
 
+  .t_row {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+  }
 
-@media screen and (min-width: 768px) {
+  .thead {
+    padding-left: 20px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    position: sticky;
+    top: 100px;
+    z-index: 1;
+    backdrop-filter: blur(100px);
+    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+    background: rgba(82, 59, 126, 0.6);
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .titleDate {
+    margin-right: 59px;
+  }
+
+  .titleType {
+    margin-right: 45px;
+  }
+  .titleCategory {
+    margin-right: 50px;
+  }
+
+  .titleComment {
+    margin-right: 50px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
   .table {
     max-width: 715px;
     display: flex;
@@ -45,37 +89,44 @@
     border-radius: 8px;
   }
 
- 
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    padding: 20px;
+  }
+
+  .title {
+    text-align: start;
+    /* padding: 16px; */
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--white);
+  }
 }
 
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 0;
-}
-
-.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.03);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 18px;
-  font-weight: 500;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  margin-top: 20px;
-  padding: 20px;
-}
-
-.title {
-  text-align: start;
-  /* padding: 16px; */
-  font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--white);
+@media screen and (max-width: 767px) {
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+  }
 }

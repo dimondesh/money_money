@@ -12,12 +12,8 @@ import { motion } from "framer-motion";
 import dateFormat from "helpers/dateFormat";
 import { selectCategories } from "@redux/categories/selectors";
 
-const TransactionsDescItem = ({
-  transaction,
-  openDeleteModal,
-  openEditModal,
-}) => {
-  const { id, type, categoryId, comment, sum, date } = transaction;
+const TransactionsDescItem = ({ transaction, openEditModal }) => {
+  const { _id, type, categoryId, comment, sum, date } = transaction;
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
 
@@ -25,13 +21,12 @@ const TransactionsDescItem = ({
   const categoryName = category ? category.name : "income";
 
   const handleDeleteClick = () => {
-    openDeleteModal();
-    dispatch(deleteTransactions(id));
+    dispatch(deleteTransactions(_id));
   };
 
   const handleEditClick = () => {
     openEditModal();
-    dispatch(editTransactions({ id, type }));
+    dispatch(editTransactions({ _id }));
   };
 
   const isIncome = type === "income";
