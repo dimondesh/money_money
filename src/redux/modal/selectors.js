@@ -5,3 +5,5 @@ export const selectIsModalEditTransactionOpen = (state) =>
 export const selectEditTransactionId = (state) => state.modal.editTransactionId;
 
 export const selectIsLogOutModalOpen = (state) => state.modal.isLogOutModalOpen;
+
+export const selectIsEditModalOpen = (state) => state.modal.isModalEditTransactionOpen;
