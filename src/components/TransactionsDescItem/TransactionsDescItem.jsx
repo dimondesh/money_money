@@ -11,8 +11,11 @@ import { motion } from "framer-motion";
 // import { getCategories } from "@redux/categories/operations";
 import dateFormat from "helpers/dateFormat";
 import { selectCategories } from "@redux/categories/selectors";
+// import { openModalAddTransaction } from "@redux/modal/modalSlice";
+// import { openModalEditTransactions } from "@redux/modal/modalSlice";
+import { openModalEditTransaction } from "@redux/modal/modalSlice";
 
-const TransactionsDescItem = ({ transaction, openEditModal }) => {
+const TransactionsDescItem = ({ transaction }) => {
   const { _id, type, categoryId, comment, sum, date } = transaction;
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
@@ -25,8 +28,7 @@ const TransactionsDescItem = ({ transaction, openEditModal }) => {
   };
 
   const handleEditClick = () => {
-    openEditModal();
-    dispatch(editTransactions({ _id }));
+    openModalEditTransaction();
   };
 
   const isIncome = type === "income";
@@ -64,7 +66,9 @@ const TransactionsDescItem = ({ transaction, openEditModal }) => {
           <button
             className={styles.editButton}
             type="button"
-            onClick={handleEditClick}
+            onClick={handleEditClick(() => {
+              openModalEditTransaction(_id);
+            })}
             aria-label="Edit"
           >
             <svg className={styles.editIcon}>

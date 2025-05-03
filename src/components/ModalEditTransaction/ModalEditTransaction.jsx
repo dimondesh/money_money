@@ -4,13 +4,10 @@ import { useSelector } from "react-redux";
 import Modal from "components/Modal/Modal";
 import { closeModalEditTransaction } from "@redux/modal/modalSlice";
 import { createPortal } from "react-dom";
-import { selectIsModalEditTransactionOpen } from "@redux/modal/selectors";
 
 const modalRoot = document.getElementById("modal-root");
 
 const ModalEditTransaction = () => {
-  const isOpen = useSelector(selectIsModalEditTransactionOpen);
-
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.code === "Escape") {
@@ -40,7 +37,7 @@ const ModalEditTransaction = () => {
   if (!isOpen) return null;
 
   return createPortal(
-    <Modal onClose={handleClose} isOpenModal={isOpen}>
+    <Modal onClose={handleClose}>
       <EditTransactionForm closeModal={handleClose} />
     </Modal>,
     modalRoot

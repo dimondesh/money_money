@@ -11,12 +11,17 @@ import Currency from "../../components/Currency/Currency";
 import ButtonAddTransactions from "../../components/ButtonAddTransactions/ButtonAddTransactions";
 import styles from "./Dashboard.module.css";
 import { SidebarGraph } from "../../components/SidebarGraph/SidebarGraph";
-import { selectIsModalAddTransactionOpen } from "../../redux/modal/selectors";
-import { closeModalAddTransaction } from "../../redux/modal/modalSlice";
+import {
+  selectIsModalAddTransactionOpen,
+  selectIsModalEditTransactionOpen,
+} from "../../redux/modal/selectors";
+import { closeModalAddTransaction } from "@redux/modal/modalSlice";
 import ModalAddTransaction from "../../components/ModalAddTransaction/ModalAddTransaction";
+import ModalEditTransaction from "components/ModalEditTransaction/ModalEditTransaction";
 
 const Dashboard = () => {
   const isAddModalOpen = useSelector(selectIsModalAddTransactionOpen);
+
   const dispatch = useDispatch();
 
   const handleCloseModal = () => dispatch(closeModalAddTransaction());
