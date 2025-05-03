@@ -52,6 +52,7 @@ const Dashboard = () => {
               {isDesktop && <SidebarGraph />}
             </aside>
             <Outlet />
+            {isDesktop && <ButtonAddTransactions />}
           </main>
         )}
         {isTablet && (
@@ -67,7 +68,7 @@ const Dashboard = () => {
             </div>
 
             <Outlet />
-            {(isTablet || isDesktop) && <ButtonAddTransactions />}
+            {isTablet && <ButtonAddTransactions />}
           </main>
         )}
         {isMobile}
