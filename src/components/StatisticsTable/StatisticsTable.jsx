@@ -7,7 +7,6 @@ import { formatNumber } from "helpers/getformatNumber";
 
 const StatisticsTable = ({
   summary = [],
-  categories = [],
   incomeSummaryByPeriod,
   expensesSummaryByPeriod,
 }) => {

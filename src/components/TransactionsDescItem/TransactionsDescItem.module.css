@@ -1,56 +1,196 @@
-.TransactionItem {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* gap: 67px; */
-  position: relative;
-  /* padding: 12px; */
-  margin-bottom: 10px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(12, 11, 11, 0.05);
-  transition: transform 0.2s ease;
-  width: 100%;
-}
-.animatedRow:not(:last-child) {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+@media screen and (max-width: 1199px) {
+  .TransactionItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(12, 11, 11, 0.05);
+    transition: transform 0.2s ease;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .column1 {
+    width: 105px;
+  }
+
+  .column2 {
+    width: 50px;
+    text-align: center;
+  }
+
+  .column3 {
+    width: 120px;
+  }
+
+  .column4 {
+    width: 105px;
+  }
+
+  .column5 {
+    width: 105px;
+  }
+
+  .column6 {
+    width: 140px;
+  }
+
+  .animatedRow:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    /* padding: 6px 0; */
+  }
+
+  .fixData {
+    font-size: 9px;
+    color: #fbfbfb;
+    font-weight: 500;
+    /* width: 120px; */
+    flex-shrink: 0;
+  }
+
+  .dynamicData {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    /* padding-left: 15px; */
+
+    font-weight: 400;
+    padding: 16px 0;
+    /* word-wrap: break-word; */
+  }
+
+  .sixthRow {
+    display: flex;
+    /* gap: 10px; */
+    justify-content: flex-end;
+    /* padding-top: 10px; */
+    border: none;
+  }
+
+  .incomeText {
+    color: #ffc727;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .expenseText {
+    color: #ff868d;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  padding: 6px 0;
-}
-.column1 {
-  width: 105px;
-}
+@media screen and (min-width: 1200px) {
+  .TransactionItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* gap: 67px; */
+    position: relative;
+    /* padding: 12px; */
+    margin-bottom: 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(12, 11, 11, 0.05);
+    transition: transform 0.2s ease;
+    width: 100%;
+  }
+  .animatedRow:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
 
-.column2 {
-  width: 105px;
-  text-align: center;
-}
+  .row {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+  }
+  .column1 {
+    width: 105px;
+  }
 
-.column3 {
-  width: 155px;
-}
+  .column2 {
+    width: 105px;
+    text-align: center;
+  }
 
-.column4 {
-  width: 105px;
-}
+  .column3 {
+    width: 155px;
+  }
 
-.column5 {
-  width: 105px;
-}
+  .column4 {
+    width: 105px;
+  }
 
-.column6 {
-  width: 140px;
-}
+  .column5 {
+    width: 105px;
+  }
 
-.firstRow > .fixData {
-  width: 33.33%;
-}
+  .column6 {
+    width: 140px;
+  }
 
-.firstRow > .dynamicData {
-  width: 66.67%;
+  .firstRow > .fixData {
+    width: 33.33%;
+  }
+
+  .firstRow > .dynamicData {
+    width: 66.67%;
+  }
+
+  .fixData {
+    font-size: 9px;
+    color: #fbfbfb;
+    font-weight: 500;
+    width: 120px;
+    flex-shrink: 0;
+  }
+
+  .dynamicData {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    padding-left: 15px;
+
+    font-weight: 400;
+    padding: 16px 0;
+    word-wrap: break-word;
+  }
+
+  .sixthRow {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 10px;
+    border: none;
+  }
+
+  .incomeText {
+    color: #ffc727;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .expenseText {
+    color: #ff868d;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
 }
 
 .fixData {
@@ -70,19 +210,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1;
-  padding-left: 15px;
 
   font-weight: 400;
-  padding: 16px 0;
   word-wrap: break-word;
-}
-
-.sixthRow {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  padding-top: 10px;
-  border: none;
 }
 
 .buttonGroup {
@@ -151,16 +281,4 @@
   width: 16px;
   height: 16px;
   stroke-width: 1.5;
-}
-
-.incomeText {
-  color: #ffc727;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-.expenseText {
-  color: #ff868d;
-  font-weight: bold;
-  letter-spacing: 1px;
 }
