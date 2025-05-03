@@ -59,12 +59,6 @@ const Dashboard = () => {
           </main>
         )}
 
-        {/* <main className={styles.mainContent}>
-          {isTablet && <Balance />}
-          <Outlet />
-          {(isTablet || isDesktop) && <ButtonAddTransactions />}
-        </main> */}
-
         {isMobile && (
           <div className={styles.mobileOnlyContent}>
             <Balance />
