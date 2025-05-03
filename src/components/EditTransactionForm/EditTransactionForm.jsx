@@ -1,30 +1,29 @@
 import "react-datepicker/dist/react-datepicker.css";
 
-import { Controller, useForm } from "react-hook-form";
 import {
   closeModalEditTransaction,
-  selectTransactionId
+  selectTransactionId,
 } from "../../redux/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import CustomIconForCalendar from "../AddTransactionForm/CustomIconForCalendar";
-import DatePicker from "react-datepicker";
 import FormButton from "../FormButton/FormButton";
+import ReactDatePicker from "react-datepicker";
 import css from "./EditTransactionForm.module.css";
 import { editTransactions } from "../../redux/transactions/operations";
 import { selectCategories } from "../../redux/categories/selectors";
 import { selectTransactions } from "../../redux/transactions/selectors";
-import { showToast } from "..//../components/Toast/CustomToaster";
+import { showToast } from "../Toast/CustomToaster";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { validationEditTransaction } from "../../helpers/editValidationSchema";
-import { yupResolver } from "@hookform/resolvers/yup"; // ✅ Працює як посередник між yup і react-hook-form
+import { yupResolver } from "@hookform/resolvers/yup";
 
-const EditTransactionForm = ({ closeModal }) => {
+const EditTransactionForm = () => {
   const dispatch = useDispatch();
 
-  const transactionId = useSelector(selectTransactionId); // ✅ Отримуємо ID
-  const allTransactions = useSelector(selectTransactions); // ✅ Усі транзакції
-  const transaction = allTransactions.find(t => t._id === transactionId); // ✅ Знаходимо потрібну
+  const transactionId = useSelector(selectTransactionId);
+  const allTransactions = useSelector(selectTransactions);
+  const transaction = allTransactions.find((t) => t._id === transactionId);
 
   if (!transaction) return null;
 
@@ -41,7 +40,6 @@ const EditTransactionForm = ({ closeModal }) => {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -49,12 +47,11 @@ const EditTransactionForm = ({ closeModal }) => {
       comment: transaction.comment,
       date: initialDate,
     },
-    resolver: yupResolver(validationEditTransaction), // ✅ Підключено Yup валідацію
+    resolver: yupResolver(validationEditTransaction),
   });
 
   const onSubmit = async (data) => {
     if (!_id) {
-      console.error("Transaction ID is undefined");
       showToast("error", "Something went wrong. Please reopen the modal.");
       return;
     }
@@ -65,13 +62,12 @@ const EditTransactionForm = ({ closeModal }) => {
         categoryId,
         sum: parseFloat(data.sum),
         comment: data.comment,
-        date: data.date.toISOString(), // ✅ Точна дата з форми
+        date: startDate.toISOString(),
       };
 
       await dispatch(editTransactions({ _id, updatedTransaction })).unwrap();
-      dispatch(closeModal());
+      dispatch(closeModalEditTransaction());
     } catch (error) {
-      console.error("Edit transaction error:", error);
       showToast("error", "Please try again.");
     }
   };
@@ -105,9 +101,7 @@ const EditTransactionForm = ({ closeModal }) => {
 
       {type === "expense" && (
         <p
-          className={
-            currentCategory ? css.categoryLabel : css.categoryLabelEmpty
-          }
+          className={currentCategory ? css.categoryLabel : css.categoryLabelEmpty}
         >
           {currentCategory}
         </p>
@@ -128,24 +122,17 @@ const EditTransactionForm = ({ closeModal }) => {
             )}
           </div>
 
-          <Controller
-            control={control}
-            name="date"
-            render={({ field }) => (
-              <DatePicker
-                {...field}
-                selected={field.value}
-                onChange={(date) => {
-                  field.onChange(date);
-                  setStartDate(date);
-                }}
-                calendarStartDay={1}
-                dateFormat="dd.MM.yyyy"
-                maxDate={new Date()}
-                customInput={<CustomIconForCalendar />}
-              />
-            )}
-          />
+          {/* Стандартний календар з ReactDatePicker */}
+          <div className={`${css.inputField} ${css.date}`}>
+            <ReactDatePicker
+              dateFormat="dd.MM.yyyy"
+              selected={startDate} // Вибір дати з стейту
+              onChange={(date) => setStartDate(date)} // Оновлення дати
+              locale="en-US"
+              calendarStartDay={1}
+            />
+          </div>
+          {errors.date && <span className={css.message}>{errors.date.message}</span>}
         </div>
 
         <div className={css.errorField}>
