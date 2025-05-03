@@ -8,6 +8,7 @@ import { loginValidatiSchema } from 'helpers';
 import FormButton from '../common/FormButton/FormButton';
 import { Link } from 'react-router-dom';
 import Logo from '../common/Logo/Logo';
+import { refreshUserThunk } from '../../redux/auth/operations';
 import InputFormField from 'components/InputFormField/InputFormField';
 import { motion } from 'framer-motion';
 export const LoginForm = () => {
@@ -16,10 +17,20 @@ export const LoginForm = () => {
     email: '',
     password: '',
   };
-  const handleSubmit = async (values, actions) => {
-   dispatch(loginThunk(values));    
-   actions.resetForm();
 
+const handleSubmit = async (values, actions) => {
+  try {
+    const response = await dispatch(loginThunk(values)); 
+
+    if (loginThunk.fulfilled.match(response)) {
+      await dispatch(refreshUserThunk());       
+      actions.resetForm();                   
+    } else {
+      console.error('Login failed:', response); 
+    }
+  } catch (error) {
+    console.error('Something went wrong:', error);
+  }
 };
 
   return (
