@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Modal from "components/Modal/Modal";
 import { closeModalEditTransaction } from "@redux/modal/modalSlice";
 import { createPortal } from "react-dom";
+import { useEffect } from "react";
 
 const modalRoot = document.getElementById("modal-root");
 
