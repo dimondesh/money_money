@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { formatData } from "../../constants/TransactionConstants";
-import icons from "../../images/icons/sprite.svg";
+// import icons from "../../images/icons/sprite.svg";
 import styles from "./TransactionsMobileItem.module.css";
 import {
   deleteTransactions,
@@ -9,49 +9,34 @@ import {
 import { prettyMoneyFormat } from "../../helpers/prettyMoneyFormat";
 import { motion } from "framer-motion";
 
-import dateFormat from "helpers/dateFormat";
+// import dateFormat from "helpers/dateFormat";
 import { selectCategories } from "@redux/categories/selectors";
 import { FaPen } from "react-icons/fa";
+import { openModalEditTransaction } from "@redux/modal/modalSlice";
+import { formatDate } from "helpers/dateFormat";
 
-
-
-const TransactionsMobileItem = ({ 
- transaction,
-  openDeleteModal,
-  openEditModal,
-}) => {
-  const { id, type, categoryId, comment, sum, date } = transaction;
+const TransactionsMobileItem = ({ transaction }) => {
+  const { _id, type, categoryId, comment, sum, date } = transaction;
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
 
   const category = categories.find((cat) => cat.id === categoryId);
-  const categoryName = category ? category.name : "income";
+  const categoryName = category ? category.name : "Income";
 
   const handleDeleteClick = () => {
-    openDeleteModal();
-    dispatch(deleteTransactions(id));
-  };
-
-  const handleEditClick = () => {
-    openEditModal();
-    dispatch(editTransactions({ id, type }));
+    dispatch(deleteTransactions(_id));
   };
 
   const isIncome = type === "income";
   const textClass = isIncome ? styles.incomeText : styles.expenseText;
   const borderClass = isIncome ? styles.incomeBorder : styles.expenseBorder;
 
-
   return (
-    <motion.li
-  
-      className={`${styles.card} ${borderClass}`}
-  
-    >
+    <motion.li className={`${styles.card} ${borderClass}`}>
       <div className={styles.t_body}>
         <p className={styles.t_row}>
           <span className={styles.title}>Date:</span>
-          <span className={styles.value}>{formatData(transaction.date)}</span>
+          <span className={styles.value}>{formatDate(date)}</span>
         </p>
 
         <p className={styles.t_row}>
@@ -66,14 +51,14 @@ const TransactionsMobileItem = ({
 
         <p className={styles.t_row}>
           <span className={styles.title}>Comment:</span>
-          <span className={styles.value}>{comment || <span className={styles.noComment}>—</span>}</span>
+          <span className={styles.value}>
+            {comment || <span className={styles.noComment}>—</span>}
+          </span>
         </p>
 
         <p className={styles.t_row}>
           <span className={styles.title}>Sum:</span>
-          <span
-             className={`${styles.value_strong} ${textClass}`}
-          >
+          <span className={`${styles.value_strong} ${textClass}`}>
             {prettyMoneyFormat(sum)} UAH
           </span>
         </p>
@@ -87,7 +72,13 @@ const TransactionsMobileItem = ({
         >
           Delete
         </button>
-        <button className={styles.btn_edit} onClick={handleEditClick} type="button">
+        <button
+          className={styles.btn_edit}
+          onClick={() => {
+            dispatch(openModalEditTransaction());
+          }}
+          type="button"
+        >
           <FaPen /> Edit
         </button>
       </div>
