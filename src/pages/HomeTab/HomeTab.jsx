@@ -9,7 +9,7 @@ import { getCategories } from "../../redux/categories/operations.js";
 import TransactionsList from "../../components/TransactionsList/TransactionsList.jsx";
 
 const HomeTab = () => {
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  // const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const dispatch = useDispatch();
 
   useEffect(() => {
