@@ -67,7 +67,7 @@ const TransactionsDescItem = ({ transaction }) => {
             className={styles.editButton}
             type="button"
             onClick={handleEditClick(() => {
-              openModalEditTransaction();
+              openModalEditTransaction(_id);
             })}
             aria-label="Edit"
           >

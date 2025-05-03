@@ -75,7 +75,7 @@ const TransactionsMobileItem = ({ transaction }) => {
         <button
           className={styles.btn_edit}
           onClick={() => {
-            dispatch(openModalEditTransaction());
+            dispatch(openModalEditTransaction(_id));
           }}
           type="button"
         >

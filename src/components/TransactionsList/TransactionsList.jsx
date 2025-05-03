@@ -12,9 +12,14 @@ import TransactionsDescItem from "../TransactionsDescItem/TransactionsDescItem";
 import { getTransactions } from "../../redux/transactions/operations";
 import { useEffect } from "react";
 import clsx from "clsx";
+import { selectIsModalEditTransactionOpen } from "@redux/modal/selectors";
+import { closeModalEditTransaction } from "@redux/modal/modalSlice";
+import ModalEditTransaction from "components/ModalEditTransaction/ModalEditTransaction";
 
 const TransactionsList = () => {
   const dispatch = useDispatch();
+  const isEditModalOpen = useSelector(selectIsModalEditTransactionOpen);
+  const handleCloseModal = () => dispatch(closeModalEditTransaction());
 
   const transactions = useSelector(selectTransactions) || [];
   const loading = useSelector(selectLoading);
@@ -72,6 +77,7 @@ const TransactionsList = () => {
           </tbody>
         </table>
       )}
+      {isEditModalOpen && <ModalEditTransaction onClose={handleCloseModal} />}
     </>
   );
 };

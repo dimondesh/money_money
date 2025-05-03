@@ -10,12 +10,12 @@ import { closeModalEditTransaction } from "../../redux/modal/modalSlice";
 import css from "./EditTransactionForm.module.css";
 import { editTransactions } from "../../redux/transactions/operations";
 import { selectCategories } from "../../redux/categories/selectors";
-import { selectCurrentTransaction } from "@redux/transactions";
+// import { selectCurrentTransaction } from "@redux/transactions";
 import { showToast } from "..//../components/Toast/CustomToaster";
 import { useState } from "react";
 import { validationEditTransaction } from "../../helpers/editValidationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { selectTransactions } from "redux/transactions/selectors";
+import { selectTransactions } from "@redux/transactions/selectors";
 
 const EditTransactionForm = ({ closeModal }) => {
   const dispatch = useDispatch();
