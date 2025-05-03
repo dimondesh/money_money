@@ -35,3 +35,5 @@ export const {
 } = modalSlice.actions;
 
 export const modalReducer = modalSlice.reducer;
+
+export const selectTransactionId = (state) => state.modal.editTransactionId;
