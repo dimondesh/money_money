@@ -1,17 +1,14 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./Balance.module.css";
+// import { selectUserBalance } from "@redux/auth/selectors";
+// import { getBalanceThunk } from "@redux/auth/operations";
+// import { selectBalance } from "@redux/transactions/selectors";
+// import { selectTransactions } from "@redux/transactions/selectors";
 import { selectUserBalance } from "@redux/auth/selectors";
-import { prettyBalanceFormat } from "helpers/prettyBalanceFormat";
-import { selectIncomeSummaryByPeriod } from "@redux/statistics/selectors";
-import { selectExpenseSummaryByPeriod } from "@redux/statistics/selectors";
-import { selectBalance } from "@redux/transactions/selectors";
 
 const Balance = () => {
-  const totalBalance = useSelector(selectBalance);
-  const income = useSelector(selectIncomeSummaryByPeriod);
-  const expense = useSelector(selectExpenseSummaryByPeriod);
-  const Balance = prettyBalanceFormat(income - expense);
+  const totalBalance = useSelector(selectUserBalance);
 
   return (
     <div className={styles.balanceWrapper}>
