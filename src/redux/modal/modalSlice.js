@@ -18,7 +18,7 @@ const modalSlice = createSlice({
     },
     openModalEditTransaction(state, action) {
       state.isModalEditTransactionOpen = true;
-      state.editTransactionId = action.payload;
+      state.editTransactionId = action.payload || null;
     },
     closeModalEditTransaction(state) {
       state.isModalEditTransactionOpen = false;
