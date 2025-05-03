@@ -1,31 +1,42 @@
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Controller, useForm } from "react-hook-form";
+import {
+  closeModalEditTransaction,
+  selectTransactionId
+} from "../../redux/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import CustomIconForCalendar from "../AddTransactionForm/CustomIconForCalendar";
 import DatePicker from "react-datepicker";
 import FormButton from "../FormButton/FormButton";
-import { closeModalEditTransaction } from "../../redux/modal/modalSlice";
 import css from "./EditTransactionForm.module.css";
 import { editTransactions } from "../../redux/transactions/operations";
 import { selectCategories } from "../../redux/categories/selectors";
-// import { selectCurrentTransaction } from "@redux/transactions";
+import { selectTransactions } from "../../redux/transactions/selectors";
 import { showToast } from "..//../components/Toast/CustomToaster";
 import { useState } from "react";
 import { validationEditTransaction } from "../../helpers/editValidationSchema";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { selectTransactions } from "@redux/transactions/selectors";
+import { yupResolver } from "@hookform/resolvers/yup"; // ✅ Працює як посередник між yup і react-hook-form
 
 const EditTransactionForm = ({ closeModal }) => {
   const dispatch = useDispatch();
-  const transaction = useSelector(selectTransactions);
-  const categories = useSelector(selectCategories);
-  const [startDate, setStartDate] = useState(new Date(transaction.date));
 
-  const { _id, type, categoryId, comment } = transaction;
+  const transactionId = useSelector(selectTransactionId); // ✅ Отримуємо ID
+  const allTransactions = useSelector(selectTransactions); // ✅ Усі транзакції
+  const transaction = allTransactions.find(t => t._id === transactionId); // ✅ Знаходимо потрібну
 
   if (!transaction) return null;
+
+  const { _id, type, categoryId } = transaction;
+  const categories = useSelector(selectCategories);
+
+  const initialDate =
+    transaction?.date && !isNaN(new Date(transaction.date))
+      ? new Date(transaction.date)
+      : new Date();
+
+  const [startDate, setStartDate] = useState(initialDate);
 
   const {
     register,
@@ -36,22 +47,28 @@ const EditTransactionForm = ({ closeModal }) => {
     defaultValues: {
       sum: Math.abs(transaction.sum),
       comment: transaction.comment,
+      date: initialDate,
     },
-    resolver: yupResolver(validationEditTransaction),
+    resolver: yupResolver(validationEditTransaction), // ✅ Підключено Yup валідацію
   });
 
   const onSubmit = async (data) => {
+    if (!_id) {
+      console.error("Transaction ID is undefined");
+      showToast("error", "Something went wrong. Please reopen the modal.");
+      return;
+    }
+
     try {
       const updatedTransaction = {
-        type: type,
-        categoryId: categoryId,
+        type,
+        categoryId,
         sum: parseFloat(data.sum),
-        comment: comment,
-        date: startDate.toISOString(),
+        comment: data.comment,
+        date: data.date.toISOString(), // ✅ Точна дата з форми
       };
 
       await dispatch(editTransactions({ _id, updatedTransaction })).unwrap();
-
       dispatch(closeModal());
     } catch (error) {
       console.error("Edit transaction error:", error);
@@ -70,9 +87,7 @@ const EditTransactionForm = ({ closeModal }) => {
         <p className={css.toggleRow}>
           <span
             className={`${css.toggle} ${
-              transaction.type === "income"
-                ? css.activeToggle
-                : css.inactiveToggle
+              type === "income" ? css.activeToggle : css.inactiveToggle
             }`}
           >
             Income
@@ -80,16 +95,15 @@ const EditTransactionForm = ({ closeModal }) => {
           /
           <span
             className={`${css.toggle} ${
-              transaction.type === "expense"
-                ? css.activeToggle
-                : css.inactiveToggle
+              type === "expense" ? css.activeToggle : css.inactiveToggle
             }`}
           >
             Expense
           </span>
         </p>
       </div>
-      {transaction.type === "expense" && (
+
+      {type === "expense" && (
         <p
           className={
             currentCategory ? css.categoryLabel : css.categoryLabelEmpty
@@ -98,6 +112,7 @@ const EditTransactionForm = ({ closeModal }) => {
           {currentCategory}
         </p>
       )}
+
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={css.twoInput}>
           <div className={css.errorField}>
@@ -106,19 +121,24 @@ const EditTransactionForm = ({ closeModal }) => {
               step="0.01"
               placeholder="0.00"
               className={css.numInput}
-              {...register("amount")}
+              {...register("sum")}
             />
-            {errors.amount && (
-              <span className={css.message}>{errors.amount.message}</span>
+            {errors.sum && (
+              <span className={css.message}>{errors.sum.message}</span>
             )}
           </div>
+
           <Controller
             control={control}
             name="date"
-            render={() => (
+            render={({ field }) => (
               <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                {...field}
+                selected={field.value}
+                onChange={(date) => {
+                  field.onChange(date);
+                  setStartDate(date);
+                }}
                 calendarStartDay={1}
                 dateFormat="dd.MM.yyyy"
                 maxDate={new Date()}
@@ -127,6 +147,7 @@ const EditTransactionForm = ({ closeModal }) => {
             )}
           />
         </div>
+
         <div className={css.errorField}>
           <input
             type="text"
@@ -138,6 +159,7 @@ const EditTransactionForm = ({ closeModal }) => {
             <span className={css.message}>{errors.comment.message}</span>
           )}
         </div>
+
         <div className={css.buttonsWrapper}>
           <FormButton
             type={"submit"}
