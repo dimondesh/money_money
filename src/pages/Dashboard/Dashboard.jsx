@@ -80,7 +80,6 @@ const Dashboard = () => {
             <Navigation />
             <Balance />
             <Outlet />
-            <ButtonAddTransactions />
           </div>
         )}
       </div>
