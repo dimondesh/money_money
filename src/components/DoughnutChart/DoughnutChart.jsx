@@ -28,6 +28,7 @@ const DoughnutChart = ({
     "#81E1FF",
     "#24CCA7",
     "#00AD84",
+    "#9C27B0",
   ];
 
   // const expensesOnly = summary?.filter((item) => item.type === "expense") || [];
