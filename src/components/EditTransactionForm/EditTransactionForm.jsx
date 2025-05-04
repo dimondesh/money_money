@@ -9,7 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import FormButton from "../FormButton/FormButton";
 import ReactDatePicker from "react-datepicker";
 import css from "./EditTransactionForm.module.css";
-import { editTransactions } from "../../redux/transactions/operations";
+import {
+  editTransactions,
+  getTransactions,
+} from "../../redux/transactions/operations";
 import { selectCategories } from "../../redux/categories/selectors";
 import { selectTransactions } from "../../redux/transactions/selectors";
 import { showToast } from "../Toast/CustomToaster";
@@ -17,6 +20,8 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { validationEditTransaction } from "../../helpers/editValidationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { getBalanceThunk } from "@redux/auth/operations";
+import { getIncomeAndExpenseSummaryByPeriod } from "@redux/statistics/operations";
 
 const EditTransactionForm = () => {
   const dispatch = useDispatch();
@@ -50,26 +55,35 @@ const EditTransactionForm = () => {
     resolver: yupResolver(validationEditTransaction),
     mode: "onChange", // Для оновлення isValid при кожній зміні
   });
-
   const onSubmit = async (data) => {
     if (!_id) {
       showToast("error", "Something went wrong. Please reopen the modal.");
       return;
     }
 
-    try {
-      const updatedTransaction = {
-        type,
-        categoryId,
-        sum: parseFloat(data.sum),
-        comment: data.comment,
-        date: startDate.toISOString(),
-      };
+    const updatedTransaction = {
+      type,
+      categoryId,
+      sum: parseFloat(data.sum),
+      comment: data.comment,
+      date: startDate.toISOString(),
+    };
 
-      await dispatch(editTransactions({ _id, updatedTransaction })).unwrap();
-      dispatch(closeModalEditTransaction());
+    try {
+      const result = await dispatch(
+        editTransactions({ id: _id, updatedTransaction })
+      );
+
+      if (editTransactions.fulfilled.match(result)) {
+        dispatch(getBalanceThunk());
+        dispatch(getIncomeAndExpenseSummaryByPeriod());
+        dispatch(closeModalEditTransaction());
+      } else {
+        throw new Error(result.error?.message || "Edit failed");
+      }
     } catch (error) {
       showToast("error", "Please try again.");
+      console.error("Edit error:", error);
     }
   };
 
@@ -102,7 +116,9 @@ const EditTransactionForm = () => {
 
       {type === "expense" && (
         <p
-          className={currentCategory ? css.categoryLabel : css.categoryLabelEmpty}
+          className={
+            currentCategory ? css.categoryLabel : css.categoryLabelEmpty
+          }
         >
           {currentCategory}
         </p>
@@ -133,7 +149,9 @@ const EditTransactionForm = () => {
               calendarStartDay={1}
             />
           </div>
-          {errors.date && <span className={css.message}>{errors.date.message}</span>}
+          {errors.date && (
+            <span className={css.message}>{errors.date.message}</span>
+          )}
         </div>
 
         <div className={css.errorField}>
