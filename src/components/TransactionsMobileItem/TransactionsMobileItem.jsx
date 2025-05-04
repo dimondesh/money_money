@@ -14,6 +14,7 @@ import { selectCategories } from "@redux/categories/selectors";
 import { FaPen } from "react-icons/fa";
 import { openModalEditTransaction } from "@redux/modal/modalSlice";
 import { formatDate } from "helpers/dateFormat";
+import { getBalanceThunk } from "@redux/auth/operations";
 
 const TransactionsMobileItem = ({ transaction }) => {
   const { _id, type, categoryId, comment, sum, date } = transaction;
@@ -24,7 +25,8 @@ const TransactionsMobileItem = ({ transaction }) => {
   const categoryName = category ? category.name : "Income";
 
   const handleDeleteClick = () => {
-    dispatch(deleteTransactions(_id));
+    dispatch(deleteTransactions(_id)).unwrap();
+    dispatch(getBalanceThunk());
   };
 
   const isIncome = type === "income";
