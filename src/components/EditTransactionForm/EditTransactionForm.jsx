@@ -22,6 +22,8 @@ import { validationEditTransaction } from "../../helpers/editValidationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getBalanceThunk } from "@redux/auth/operations";
 import { getIncomeAndExpenseSummaryByPeriod } from "@redux/statistics/operations";
+import { FiCalendar } from "react-icons/fi";
+import { formatNumber } from "helpers/getformatNumber";
 
 const EditTransactionForm = () => {
   const dispatch = useDispatch();
@@ -87,9 +89,7 @@ const EditTransactionForm = () => {
     }
   };
 
-  const currentCategory = categories.data?.find(
-    (cat) => cat.id === categoryId
-  )?.name;
+  const currentCategory = categories.find((cat) => cat.id === categoryId)?.name;
 
   return (
     <div className={css.modal}>
@@ -139,15 +139,15 @@ const EditTransactionForm = () => {
             )}
           </div>
 
-          {/* Стандартний календар з ReactDatePicker */}
-          <div className={`${css.inputField} ${css.date}`}>
+          <div className={`${css.dateInput} ${css.date}`}>
             <ReactDatePicker
               dateFormat="dd.MM.yyyy"
-              selected={startDate} // Вибір дати з стейту
-              onChange={(date) => setStartDate(date)} // Оновлення дати
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
               locale="en-US"
               calendarStartDay={1}
             />
+            <FiCalendar className={css.icon} />
           </div>
           {errors.date && (
             <span className={css.message}>{errors.date.message}</span>
