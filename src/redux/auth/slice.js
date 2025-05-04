@@ -8,6 +8,11 @@ import {
   refreshUserThunk,
   registerThunk,
 } from "./operations.js";
+import {
+  addTransactions,
+  deleteTransactions,
+  editTransactions,
+} from "@redux/transactions/operations.js";
 
 const initialState = {
   user: {
@@ -75,6 +80,7 @@ const slice = createSlice({
       .addCase(getBalanceThunk.fulfilled, (state, { payload }) => {
         state.user.balance = payload;
       })
+
       .addMatcher(
         isAnyOf(
           loginThunk.pending,

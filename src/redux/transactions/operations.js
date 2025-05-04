@@ -21,8 +21,6 @@ export const addTransactions = createAsyncThunk(
   async (transaction, thunkApi) => {
     try {
       const { data } = await walletAPI.post("/api/transactions", transaction);
-      // thunkApi.dispatch(getBalanceThunk());
-      // thunkApi.dispatch(getIncomeAndExpenseSummaryByPeriod());
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -35,7 +33,6 @@ export const deleteTransactions = createAsyncThunk(
   async (id, thunkApi) => {
     try {
       await walletAPI.delete(`/api/transactions/${id}`);
-      // thunkApi.dispatch(getBalanceThunk());
       return id;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -51,9 +48,6 @@ export const editTransactions = createAsyncThunk(
         `/api/transactions/${id}`,
         updatedTransaction
       );
-
-      // thunkApi.dispatch(getBalanceThunk());
-      // thunkApi.dispatch(getTransactions());
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);

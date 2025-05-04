@@ -23,7 +23,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { getBalanceThunk } from "@redux/auth/operations";
 import { getIncomeAndExpenseSummaryByPeriod } from "@redux/statistics/operations";
 import { FiCalendar } from "react-icons/fi";
-import { formatNumber } from "helpers/getformatNumber";
 
 const EditTransactionForm = () => {
   const dispatch = useDispatch();
@@ -64,25 +63,20 @@ const EditTransactionForm = () => {
     }
 
     const updatedTransaction = {
-      type,
-      categoryId,
-      sum: parseFloat(data.sum),
-      comment: data.comment,
       date: startDate.toISOString(),
+      comment: data.comment,
+      sum: parseFloat(data.sum),
+      type: transaction.type,
+      categoryId: transaction.categoryId,
     };
 
     try {
-      const result = await dispatch(
+      await dispatch(
         editTransactions({ id: _id, updatedTransaction })
-      );
-
-      if (editTransactions.fulfilled.match(result)) {
-        dispatch(getBalanceThunk());
-        dispatch(getIncomeAndExpenseSummaryByPeriod());
-        dispatch(closeModalEditTransaction());
-      } else {
-        throw new Error(result.error?.message || "Edit failed");
-      }
+      ).unwrap();
+      dispatch(getBalanceThunk());
+      dispatch(closeModalEditTransaction());
+      showToast("success", "Transaction updated successfully!");
     } catch (error) {
       showToast("error", "Please try again.");
       console.error("Edit error:", error);
