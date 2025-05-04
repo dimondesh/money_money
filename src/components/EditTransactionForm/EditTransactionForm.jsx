@@ -40,7 +40,7 @@ const EditTransactionForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     defaultValues: {
       sum: Math.abs(transaction.sum),
@@ -48,6 +48,7 @@ const EditTransactionForm = () => {
       date: initialDate,
     },
     resolver: yupResolver(validationEditTransaction),
+    mode: "onChange", // Для оновлення isValid при кожній зміні
   });
 
   const onSubmit = async (data) => {
