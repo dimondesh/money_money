@@ -28,8 +28,9 @@ const TransactionsDescItem = ({ transaction }) => {
   const categoryName = category ? category.name : "income";
 
   const handleDeleteClick = () => {
-    dispatch(deleteTransactions(_id)).unwrap();
-    dispatch(getBalanceThunk());
+    dispatch(deleteTransactions(_id))
+      .then(() => dispatch(getBalanceThunk()))
+      .catch((error) => console.error("error", error));
   };
 
   const handleEditClick = () => {
