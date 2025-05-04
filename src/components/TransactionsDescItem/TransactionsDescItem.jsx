@@ -12,13 +12,12 @@ import { openModalEditTransaction } from "@redux/modal/modalSlice";
 import { prettyMoneyFormat } from "../../helpers/prettyMoneyFormat";
 import { selectCategories } from "@redux/categories/selectors";
 import styles from "./TransactionsDescItem.module.css";
+import { getBalanceThunk } from "@redux/auth/operations";
 
 // import { getCategories } from "@redux/categories/operations";
 
-
 // import { openModalAddTransaction } from "@redux/modal/modalSlice";
 // import { openModalEditTransactions } from "@redux/modal/modalSlice";
-
 
 const TransactionsDescItem = ({ transaction }) => {
   const { _id, type, categoryId, comment, sum, date } = transaction;
@@ -30,11 +29,12 @@ const TransactionsDescItem = ({ transaction }) => {
 
   const handleDeleteClick = () => {
     dispatch(deleteTransactions(_id));
+    dispatch(getBalanceThunk());
   };
 
   const handleEditClick = () => {
-  dispatch(openModalEditTransaction(_id));
-};
+    dispatch(openModalEditTransaction(_id));
+  };
 
   const isIncome = type === "income";
   const textClass = isIncome ? styles.incomeText : styles.expenseText;
@@ -69,15 +69,15 @@ const TransactionsDescItem = ({ transaction }) => {
       <td className={`${styles.sixthRow} ${styles.column6}`}>
         <div className={styles.buttonGroup}>
           <button
-           className={styles.editButton}
-           type="button"
-           onClick={handleEditClick}
-           aria-label="Edit"
+            className={styles.editButton}
+            type="button"
+            onClick={handleEditClick}
+            aria-label="Edit"
           >
-           <svg className={styles.editIcon}>
-           <use href={`${icons}#icon-edit`}></use>
-           </svg>
-         </button>
+            <svg className={styles.editIcon}>
+              <use href={`${icons}#icon-edit`}></use>
+            </svg>
+          </button>
 
           <button
             type="button"

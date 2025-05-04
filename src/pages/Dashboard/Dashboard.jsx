@@ -77,7 +77,6 @@ const Dashboard = () => {
           <div className={styles.mobileOnlyContent}>
             <Navigation />
             <Balance />
-
             <Outlet />
             <ButtonAddTransactions />
           </div>
