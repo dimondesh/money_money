@@ -54,7 +54,7 @@ const Dashboard = () => {
               </div>
             </aside>
             <Outlet />
-            {isDesktop && <ButtonAddTransactions />}
+            {/* {isDesktop && <ButtonAddTransactions />} */}
           </main>
         )}
         {isTablet && (
@@ -70,7 +70,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <Outlet />
-              {isTablet && <ButtonAddTransactions />}
+              {/* {isTablet && <ButtonAddTransactions />} */}
             </div>
           </main>
         )}
