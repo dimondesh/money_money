@@ -22,6 +22,7 @@ export const addTransactions = createAsyncThunk(
   async (transaction, thunkApi) => {
     try {
       const { data } = await walletAPI.post("/api/transactions", transaction);
+      thunkApi.dispatch(getBalanceThunk());
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -50,6 +51,7 @@ export const editTransactions = createAsyncThunk(
         `/api/transactions/${id}`,
         updatedTransaction
       );
+      thunkApi.dispatch(getBalanceThunk());
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
