@@ -38,18 +38,20 @@ const StatisticsTable = ({
       </div>
       <table className={css.table}>
         <tbody>
-          {summary.map((item, index) => (
-            <tr key={item.category} className={css.row}>
-              <td className={css.dotCell}>
-                <span
-                  className={css.dot}
-                  style={{ backgroundColor: getCategoryColor(index) }}
-                />
-              </td>
-              <td className={css.name}>{item.category}</td>
-              <td className={css.amount}>{formatNumber(item.total)}</td>
-            </tr>
-          ))}
+          {summary
+            .filter((item) => item.total !== 0)
+            .map((item, index) => (
+              <tr key={item.category} className={css.row}>
+                <td className={css.dotCell}>
+                  <span
+                    className={css.dot}
+                    style={{ backgroundColor: getCategoryColor(index) }}
+                  />
+                </td>
+                <td className={css.name}>{item.category}</td>
+                <td className={css.amount}>{formatNumber(item.total)}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
       <div className={css.summaryRow}>
