@@ -87,13 +87,13 @@
 
   .sidebar {
     width: 395px;
-    background: linear-gradient(180deg, #4d3a9a 3%, #352051 90%);
+    background: transparent;
     padding: 40px 32px;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
     gap: 40px;
-    height: 100%;
+    /* min-height: 100vh; */
   }
 
   .mainContent {
@@ -136,7 +136,6 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 69px;
-  min-height: 100vh;
   height: inherit;
 }
 
