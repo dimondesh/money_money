@@ -48,8 +48,10 @@ const Dashboard = () => {
             <aside className={styles.sidebar}>
               <Navigation />
               {isDesktop && <Balance />}
-              {isDesktop && <Currency />}
-              {isDesktop && <SidebarGraph />}
+              <div className={styles.curGraph}>
+                {isDesktop && <Currency />}
+                {isDesktop && <SidebarGraph />}
+              </div>
             </aside>
             <Outlet />
             {isDesktop && <ButtonAddTransactions />}
@@ -57,21 +59,21 @@ const Dashboard = () => {
         )}
         {isTablet && (
           <main className={styles.mainContent}>
-            <div className={styles.navBalCur}>
-              <div className={styles.navBal}>
-                {isTablet && <Navigation />}
-                {isTablet && <Balance />}
-              </div>{" "}
-              <div className={styles.currencyGraph}>
-                {isTablet && <Currency />} {isTablet && <SidebarGraph />}
+            <div className={styles.tabletWrapper}>
+              <div className={styles.navBalCur}>
+                <div className={styles.navBal}>
+                  {isTablet && <Navigation />}
+                  {isTablet && <Balance />}
+                </div>{" "}
+                <div className={styles.currencyGraph}>
+                  {isTablet && <Currency />} {isTablet && <SidebarGraph />}
+                </div>
               </div>
+              <Outlet />
+              {isTablet && <ButtonAddTransactions />}
             </div>
-
-            <Outlet />
-            {isTablet && <ButtonAddTransactions />}
           </main>
         )}
-        {isMobile}
 
         {isMobile && (
           <div className={styles.mobileOnlyContent}>

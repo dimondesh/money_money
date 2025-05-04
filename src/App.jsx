@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import React, { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import CustomToaster from './components/Toast/CustomToaster';
+import CustomToaster from "./components/Toast/CustomToaster";
 import Loader from "./components/Loader/Loader";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
@@ -25,7 +25,7 @@ function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
   const globalIsLoading = useSelector((state) => state.global?.isLoading);
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 767.98px)" });
 
   useEffect(() => {
     dispatch(refreshUserThunk());

@@ -1,6 +1,7 @@
 /* Мобілка */
 .contentWrapper {
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .sidebar {
@@ -30,10 +31,12 @@
 }
 
 .pageWrapper {
-  min-height: 100vh;
+  height: 100vh;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1199.98px) {
+  .pageWrapper {
+  }
   .mainContent {
     display: flex;
     justify-content: center;
@@ -41,19 +44,21 @@
     flex-direction: column;
     gap: 30px;
     padding: 32px;
+    min-height: 100vh;
     background-image: url("../../images/Dashboard/background-tab.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
   }
 
-  .sidebar {
-    width: 100px;
-    padding: 40px 15px;
+  .tabletWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+  }
 
-    gap: 50px;
-    align-items: center;
-    background: linear-gradient(180deg, #352863 3%, #2a1a40 100%);
+  .contentWrapper {
   }
 }
 
@@ -69,6 +74,7 @@
     display: flex;
     flex-direction: column;
     background-color: var(--background);
+    min-height: 100vh;
   }
 
   .contentWrapper {
@@ -87,14 +93,12 @@
     flex-direction: column;
     flex-shrink: 0;
     gap: 40px;
-    min-height: 100vh;
-    padding-bottom: 300px;
+    height: 100%;
   }
 
   .mainContent {
     flex-grow: 1;
     padding: 40px;
-
     background: linear-gradient(180deg, #6e54eb 3%, #553382 90%);
     background-repeat: no-repeat;
     background-size: cover;
@@ -103,6 +107,7 @@
     background-repeat: repeat;
     background-size: cover;
     background-position: center;
+    height: 100%;
   }
 }
 
@@ -131,9 +136,16 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 69px;
-  height: 100%;
+  /* min-height: 100vh; */
+  height: inherit;
 }
 
 /* .sidebar {
   height: auto;
 } */
+
+.curGraph {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
