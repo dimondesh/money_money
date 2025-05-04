@@ -150,7 +150,7 @@ const DoughnutChart = ({
             </span>
           )
         ) : (
-          <p className={css.emptyText}>Немає витрат</p>
+          <p className={css.emptyText}>no costs</p>
         )}
       </div>
     </div>
