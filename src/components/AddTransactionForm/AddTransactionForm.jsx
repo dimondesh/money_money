@@ -23,6 +23,11 @@ import { getBalanceThunk } from "@redux/auth/operations";
 import { getIncomeAndExpenseSummaryByPeriod } from "@redux/statistics/operations";
 // import { closeModalAddTransaction } from "@redux/modal/modalSlice";
 
+import {
+  selectStatisticsMonth,
+  selectStatisticsYear,
+} from "@redux/statistics/selectors";
+
 registerLocale("en-US", enUS);
 
 const AddTransactionForm = ({ closeModal }) => {
@@ -30,6 +35,23 @@ const AddTransactionForm = ({ closeModal }) => {
   const { isTablet } = useMediaQuery({ query: "(min-width: 768px)" });
   const categories = useSelector(selectCategories);
   const dispatch = useDispatch();
+
+  // Отримуємо поточний місяць та рік із Redux (якщо такі селектори існують)
+  // Якщо селекторів немає, використовуємо поточну дату
+  const currentMonth = useSelector((state) => {
+    // Перевірка, чи існує селектор
+    if (typeof selectStatisticsMonth === "function") {
+      return selectStatisticsMonth(state) || new Date().getMonth() + 1;
+    }
+    return new Date().getMonth() + 1;
+  });
+  const currentYear = useSelector((state) => {
+    // Перевірка, чи існує селектор
+    if (typeof selectStatisticsYear === "function") {
+      return selectStatisticsYear(state) || new Date().getFullYear();
+    }
+    return new Date().getFullYear();
+  });
 
   const [startDate, setStartDate] = useState(new Date());
 
@@ -52,7 +74,12 @@ const AddTransactionForm = ({ closeModal }) => {
 
       await dispatch(addTransactions(transactionData)).unwrap();
       dispatch(getBalanceThunk());
-      dispatch(getIncomeAndExpenseSummaryByPeriod());
+      dispatch(
+        getIncomeAndExpenseSummaryByPeriod({
+          year: currentYear,
+          month: currentMonth,
+        })
+      );
       resetForm();
       closeModal();
     } catch (error) {
