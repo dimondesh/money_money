@@ -136,7 +136,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 69px;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   height: inherit;
 }
 
