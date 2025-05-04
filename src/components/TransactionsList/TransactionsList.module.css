@@ -8,6 +8,22 @@
 }
 
 @media screen and (max-width: 1199px) {
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    padding: 20px;
+  }
+
   .table {
     width: 625px;
     display: flex;
@@ -62,6 +78,23 @@
     justify-content: start;
     flex-direction: column;
     border-collapse: collapse;
+  }
+
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    padding: 20px;
+    width: 715px;
   }
 
   .t_row {
