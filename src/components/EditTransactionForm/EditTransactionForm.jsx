@@ -1,60 +1,74 @@
 import "react-datepicker/dist/react-datepicker.css";
 
-import { Controller, useForm } from "react-hook-form";
+import {
+  closeModalEditTransaction,
+  selectTransactionId,
+} from "../../redux/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import CustomIconForCalendar from "../AddTransactionForm/CustomIconForCalendar";
-import DatePicker from "react-datepicker";
 import FormButton from "../FormButton/FormButton";
-import { closeModalEditTransaction } from "../../redux/modal/modalSlice";
+import ReactDatePicker from "react-datepicker";
 import css from "./EditTransactionForm.module.css";
 import { editTransactions } from "../../redux/transactions/operations";
 import { selectCategories } from "../../redux/categories/selectors";
-// import { selectCurrentTransaction } from "@redux/transactions";
-import { showToast } from "..//../components/Toast/CustomToaster";
+import { selectTransactions } from "../../redux/transactions/selectors";
+import { showToast } from "../Toast/CustomToaster";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { validationEditTransaction } from "../../helpers/editValidationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { selectTransactions } from "@redux/transactions/selectors";
 
-const EditTransactionForm = ({ closeModal }) => {
+const EditTransactionForm = () => {
   const dispatch = useDispatch();
-  const transaction = useSelector(selectTransactions);
-  const categories = useSelector(selectCategories);
-  const [startDate, setStartDate] = useState(new Date(transaction.date));
 
-  const { _id, type, categoryId, comment } = transaction;
+  const transactionId = useSelector(selectTransactionId);
+  const allTransactions = useSelector(selectTransactions);
+  const transaction = allTransactions.find((t) => t._id === transactionId);
 
   if (!transaction) return null;
+
+  const { _id, type, categoryId } = transaction;
+  const categories = useSelector(selectCategories);
+
+  const initialDate =
+    transaction?.date && !isNaN(new Date(transaction.date))
+      ? new Date(transaction.date)
+      : new Date();
+
+  const [startDate, setStartDate] = useState(initialDate);
 
   const {
     register,
     handleSubmit,
-    control,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     defaultValues: {
       sum: Math.abs(transaction.sum),
       comment: transaction.comment,
+      date: initialDate,
     },
     resolver: yupResolver(validationEditTransaction),
+    mode: "onChange", // Для оновлення isValid при кожній зміні
   });
 
   const onSubmit = async (data) => {
+    if (!_id) {
+      showToast("error", "Something went wrong. Please reopen the modal.");
+      return;
+    }
+
     try {
       const updatedTransaction = {
-        type: type,
-        categoryId: categoryId,
+        type,
+        categoryId,
         sum: parseFloat(data.sum),
-        comment: comment,
+        comment: data.comment,
         date: startDate.toISOString(),
       };
 
       await dispatch(editTransactions({ _id, updatedTransaction })).unwrap();
-
-      dispatch(closeModal());
+      dispatch(closeModalEditTransaction());
     } catch (error) {
-      console.error("Edit transaction error:", error);
       showToast("error", "Please try again.");
     }
   };
@@ -70,9 +84,7 @@ const EditTransactionForm = ({ closeModal }) => {
         <p className={css.toggleRow}>
           <span
             className={`${css.toggle} ${
-              transaction.type === "income"
-                ? css.activeToggle
-                : css.inactiveToggle
+              type === "income" ? css.activeToggle : css.inactiveToggle
             }`}
           >
             Income
@@ -80,24 +92,22 @@ const EditTransactionForm = ({ closeModal }) => {
           /
           <span
             className={`${css.toggle} ${
-              transaction.type === "expense"
-                ? css.activeToggle
-                : css.inactiveToggle
+              type === "expense" ? css.activeToggle : css.inactiveToggle
             }`}
           >
             Expense
           </span>
         </p>
       </div>
-      {transaction.type === "expense" && (
+
+      {type === "expense" && (
         <p
-          className={
-            currentCategory ? css.categoryLabel : css.categoryLabelEmpty
-          }
+          className={currentCategory ? css.categoryLabel : css.categoryLabelEmpty}
         >
           {currentCategory}
         </p>
       )}
+
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={css.twoInput}>
           <div className={css.errorField}>
@@ -106,27 +116,26 @@ const EditTransactionForm = ({ closeModal }) => {
               step="0.01"
               placeholder="0.00"
               className={css.numInput}
-              {...register("amount")}
+              {...register("sum")}
             />
-            {errors.amount && (
-              <span className={css.message}>{errors.amount.message}</span>
+            {errors.sum && (
+              <span className={css.message}>{errors.sum.message}</span>
             )}
           </div>
-          <Controller
-            control={control}
-            name="date"
-            render={() => (
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                calendarStartDay={1}
-                dateFormat="dd.MM.yyyy"
-                maxDate={new Date()}
-                customInput={<CustomIconForCalendar />}
-              />
-            )}
-          />
+
+          {/* Стандартний календар з ReactDatePicker */}
+          <div className={`${css.inputField} ${css.date}`}>
+            <ReactDatePicker
+              dateFormat="dd.MM.yyyy"
+              selected={startDate} // Вибір дати з стейту
+              onChange={(date) => setStartDate(date)} // Оновлення дати
+              locale="en-US"
+              calendarStartDay={1}
+            />
+          </div>
+          {errors.date && <span className={css.message}>{errors.date.message}</span>}
         </div>
+
         <div className={css.errorField}>
           <input
             type="text"
@@ -138,11 +147,13 @@ const EditTransactionForm = ({ closeModal }) => {
             <span className={css.message}>{errors.comment.message}</span>
           )}
         </div>
+
         <div className={css.buttonsWrapper}>
           <FormButton
             type={"submit"}
             text={"Save"}
             variant={"multiColorButton"}
+            isDisabled={!isValid}
           />
           <FormButton
             type={"button"}
