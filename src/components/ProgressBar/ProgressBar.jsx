@@ -23,6 +23,7 @@ const ProgressBar = () => {
           scoreWordStyle={{ display: "none" }}
           score={getFakeStrength(confirmValue)}
           shortScoreWord=""
+          barColors={["#ff4d4f", "#ff4d4f", "#ff4d4f", "#ff4d4f", "#ff4d4f"]}
         />
       )}
     </>
