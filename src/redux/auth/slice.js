@@ -67,6 +67,10 @@ const slice = createSlice({
       .addCase(logoutThunk.fulfilled, () => {
         return initialState;
       })
+      .addCase(logoutThunk.rejected, () => {
+        return initialState;
+      })
+      
       .addCase(refreshUserThunk.pending, (state) => {
         state.isRefreshing = true;
         state.isLoading = true;

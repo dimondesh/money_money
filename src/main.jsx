@@ -11,6 +11,22 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastContainerStyles } from "components/Toast/toastStyles.js";
 
+
+
+import { walletAPI } from "./helpers/api.js";
+import { logoutThunk } from "./redux/auth/operations";
+
+walletAPI.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      store.dispatch(logoutThunk());
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
   <BrowserRouter
