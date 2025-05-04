@@ -21,6 +21,7 @@ const StatisticsTable = ({
       "#81E1FF",
       "#24CCA7",
       "#00AD84",
+      "#9C27B0",
     ];
     return colors[index % colors.length];
   };
