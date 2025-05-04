@@ -152,6 +152,7 @@ const EditTransactionForm = () => {
             type={"submit"}
             text={"Save"}
             variant={"multiColorButton"}
+            isDisabled={!isValid}
           />
           <FormButton
             type={"button"}
