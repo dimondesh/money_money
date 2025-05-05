@@ -13,7 +13,7 @@ import {
   editTransactions,
   getTransactions,
 } from "../../redux/transactions/operations";
-import { selectCategories } from "@redux/categories/selectors";
+import { selectCategories } from "../../redux/categories/selectors";
 import { selectTransactions } from "../../redux/transactions/selectors";
 import { showToast } from "../Toast/CustomToaster";
 import { useForm } from "react-hook-form";
@@ -30,11 +30,11 @@ const EditTransactionForm = () => {
   const transactionId = useSelector(selectTransactionId);
   const allTransactions = useSelector(selectTransactions);
   const transaction = allTransactions.find((t) => t._id === transactionId);
-  const categories = useSelector(selectCategories);
 
   if (!transaction) return null;
 
-  const { _id, type } = transaction;
+  const { _id, type, categoryId } = transaction;
+  const categories = useSelector(selectCategories);
 
   const initialDate =
     transaction?.date && !isNaN(new Date(transaction.date))
@@ -42,11 +42,6 @@ const EditTransactionForm = () => {
       : new Date();
 
   const [startDate, setStartDate] = useState(initialDate);
-  const [categoryIdv, setCategoryIdv] = useState(transaction.categoryId || "");
-
-  const handleChange = (e) => {
-    setCategoryIdv(e.target.value);
-  };
 
   const {
     register,
@@ -55,13 +50,12 @@ const EditTransactionForm = () => {
   } = useForm({
     defaultValues: {
       sum: Math.abs(transaction.sum),
-      comment: transaction.comment || "",
+      comment: transaction.comment,
       date: initialDate,
     },
     resolver: yupResolver(validationEditTransaction),
-    mode: "onChange",
+    mode: "onChange", // Для оновлення isValid при кожній зміні
   });
-
   const onSubmit = async (data) => {
     if (!_id) {
       showToast("error", "Something went wrong. Please reopen the modal.");
@@ -73,7 +67,7 @@ const EditTransactionForm = () => {
       comment: data.comment,
       sum: parseFloat(data.sum),
       type: transaction.type,
-      categoryId: categoryIdv,
+      categoryId: transaction.categoryId,
     };
 
     try {
@@ -89,9 +83,7 @@ const EditTransactionForm = () => {
     }
   };
 
-  const currentCategory = categories.find(
-    (cat) => cat.id === categoryIdv
-  )?.name;
+  const currentCategory = categories.find((cat) => cat.id === categoryId)?.name;
 
   return (
     <div className={css.modal}>
@@ -122,24 +114,7 @@ const EditTransactionForm = () => {
             currentCategory ? css.categoryLabel : css.categoryLabelEmpty
           }
         >
-          <div className={`${css.inputField} ${css.category}`}>
-            <select
-              name="categoryId"
-              value={categoryIdv}
-              onChange={handleChange}
-              required
-              className={css.selectTransparent}
-            >
-              <option value="" disabled hidden>
-                Select a category
-              </option>
-              {categories.slice(0, -1).map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          {currentCategory}
         </p>
       )}
 
@@ -187,15 +162,15 @@ const EditTransactionForm = () => {
 
         <div className={css.buttonsWrapper}>
           <FormButton
-            type="submit"
-            text="Save"
-            variant="multiColorButton"
-            isDisabled={!isValid || (type === "expense" && !categoryIdv)}
+            type={"submit"}
+            text={"Save"}
+            variant={"multiColorButton"}
+            isDisabled={!isValid}
           />
           <FormButton
-            type="button"
-            text="Cancel"
-            variant="whiteButton"
+            type={"button"}
+            text={"cancel"}
+            variant={"whiteButton"}
             handlerFunction={() => dispatch(closeModalEditTransaction())}
           />
         </div>
