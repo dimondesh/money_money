@@ -4,6 +4,37 @@ import { walletAPI, setToken, clearToken } from "../../helpers/api.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+walletAPI.interceptors.response.use(
+  response => response,
+  async error => {
+    const originalRequest = error.config;
+
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/auth/login") &&
+      !originalRequest.url.includes("/auth/register")
+    ) {
+      originalRequest._retry = true;
+      try {
+        const res = await walletAPI.post("/api/auth/refresh");
+
+        const newToken = res.data?.data?.accessToken;
+        if (newToken) {
+          setToken(newToken);
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          return walletAPI(originalRequest);
+        }
+      } catch (err) {
+        clearToken();
+        window.location.href = "/login";
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export const loginThunk = createAsyncThunk(
   "auth/login",
   async (credentials, thunkApi) => {
