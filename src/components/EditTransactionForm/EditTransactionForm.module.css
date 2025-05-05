@@ -280,3 +280,61 @@
   height: 24px;
   pointer-events: none;
 }
+
+form .inputWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.inputField input:focus,
+.inputField select:focus {
+  border-bottom: 1px solid #ffffff;
+
+  transition: all 0.35s ease-in-out;
+}
+
+.inputField input::placeholder {
+  transition: all 0.35s ease-in-out;
+}
+
+.inputField input:focus::placeholder {
+  transition: all 0.35s ease-in-out;
+}
+
+.inputField p {
+  color: rgb(255, 134, 141);
+  font-size: 14px;
+  padding-left: 12px;
+  /* padding-left: 20px; */
+}
+
+.inputField {
+  border: none;
+}
+
+.selectField {
+  border: none;
+  background-color: none;
+}
+
+.selectTransparent {
+  display: flex;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  appearance: none; /* прибирає стрілочку у більшості браузерів */
+  padding: 4px 8px;
+}
+
+.selectTransparent option {
+  backdrop-filter: blur(100px);
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+  background-color: rgba(80, 48, 154, 0.7);
+  color: #ffffff;
+  width: 100%;
+  outline: none;
+}
