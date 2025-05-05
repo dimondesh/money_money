@@ -4,18 +4,22 @@ import { walletAPI, setToken, clearToken } from "../../helpers/api.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 walletAPI.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;
 
+
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
       !originalRequest.url.includes("/auth/login") &&
-      !originalRequest.url.includes("/auth/register")
+      !originalRequest.url.includes("/auth/register") &&
+      !originalRequest.url.includes("/auth/refresh") 
     ) {
       originalRequest._retry = true;
+
       try {
         const res = await walletAPI.post("/api/auth/refresh");
 
@@ -23,11 +27,12 @@ walletAPI.interceptors.response.use(
         if (newToken) {
           setToken(newToken);
           originalRequest.headers.Authorization = `Bearer ${newToken}`;
-          return walletAPI(originalRequest);
+          return walletAPI(originalRequest); // Повторити запит
         }
       } catch (err) {
         clearToken();
-        window.location.href = "/login";
+        window.location.href = "/login"; 
+        return Promise.reject(err); 
       }
     }
 
