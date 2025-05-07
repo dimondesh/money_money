@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const walletAPI = axios.create({
-  baseURL: "https://money-money-backend.onrender.com",
+  baseURL: "https://money-money-backend-k4hn.onrender.com",
   withCredentials: true,
 });
 
